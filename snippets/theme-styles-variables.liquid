@@ -168,6 +168,7 @@
     --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
     --font-accent--style: {{ settings.type_accent_font.style }};
     --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --header-font-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
@@ -679,6 +680,15 @@
     --cart-secondary-font-family: var(--font-{{ settings.cart_price_font }}--family);
     --cart-secondary-font-style: var(--font-{{ settings.cart_price_font }}--style);
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
+
+    /* Homepage CTA buttons */
+    --ferxsport-homepage-btn-bg: {{ settings.ferxsport_homepage_btn_background | default: '#ff7223' }};
+    --ferxsport-homepage-btn-color: {{ settings.ferxsport_homepage_btn_text_color | default: '#ffffff' }};
+    --ferxsport-homepage-btn-padding-inline: {{ settings.ferxsport_homepage_btn_padding_inline | default: 28 }};
+    --ferxsport-homepage-btn-radius: {{ settings.ferxsport_homepage_btn_radius | default: 100 }};
+    --ferxsport-homepage-btn-height: {{ settings.ferxsport_homepage_btn_height | default: 44 }};
+    --ferxsport-homepage-btn-font-size: {{ settings.ferxsport_homepage_btn_font_size | default: 14 }};
+    --ferxsport-homepage-btn-hover-opacity: {{ settings.ferxsport_homepage_btn_hover_opacity | default: 88 | divided_by: 100.0 }};
   }
 {% endstyle %}
 

@@ -8,7 +8,7 @@
   background: var(--ride-section-bg);
   margin-inline: auto;
   overflow: hidden;
-  width: min(100%, calc(var(--ride-section-width, 1100) * var(--rem)));
+  width: min(100%, calc(var(--ride-section-width, 1280) * var(--rem)));
 }
 
 .ride-showcase__inner {

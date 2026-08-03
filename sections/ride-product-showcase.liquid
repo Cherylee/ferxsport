@@ -4,7 +4,7 @@
   id="RideShowcase-{{ section.id }}"
   class="ride-showcase"
   style="
-    --ride-section-width: {{ section.settings.content_min_width | default: 1100 }};
+    --ride-section-width: {{ section.settings.content_min_width | default: 1280 }};
     --ride-columns: {{ section.settings.columns | default: 3 }};
     {% if section.settings.background_color != blank %}
       --ride-section-bg: {{ section.settings.background_color }};
@@ -154,7 +154,7 @@
       "min": 900,
       "max": 1440,
       "step": 10,
-      "default": 1100,
+      "default": 1280,
       "info": "Minimum content width based on 1440 design. Scales with --rem."
     },
     {

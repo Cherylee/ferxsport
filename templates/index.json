@@ -8,87 +8,202 @@
  * ------------------------------------------------------------
  */{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "hero_banner_carousel_home": {
+      "type": "hero-banner-carousel",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "slide_summer_ride": {
+          "type": "slide",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "media_type": "image",
+            "media_background": "#000000",
+            "show_overlay": true,
+            "overlay_opacity": 100,
+            "heading_line_1": "Summer Ride",
+            "heading_line_1_color": "#ff7223",
+            "heading_line_2": "Savings Continue",
+            "heading_line_2_color": "#ffffff",
+            "body_text": "The holiday may be over, but your next ride is still within reach. Save up to $590 on select Valtinsu electric dirt bikes for a limited time.",
+            "body_color": "#ffffff",
+            "button_1_label": "Shop EM5",
+            "button_1_link": "",
+            "button_1_new_tab": false,
+            "button_2_label": "Compare Models",
+            "button_2_link": "",
+            "button_2_new_tab": false
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "slide_summer_ride"
       ],
-      "name": "t:names.hero",
+      "name": "Hero banner carousel",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_pagination": true,
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
+    },
+    "benefits_bar_home": {
+      "type": "benefits-bar",
+      "blocks": {
+        "benefit_delivery": {
+          "type": "benefit",
+          "settings": {
+            "icon": "delivery",
+            "heading": "Local Warehouse Delivery",
+            "emphasis_link_new_tab": false
+          }
+        },
+        "benefit_parts": {
+          "type": "benefit",
+          "settings": {
+            "icon": "parts",
+            "heading": "Fast Parts Support",
+            "emphasis_phrase": "Parts Support",
+            "emphasis_link_new_tab": false
+          }
+        },
+        "benefit_warranty": {
+          "type": "benefit",
+          "settings": {
+            "icon": "warranty",
+            "heading": "1-Year Warranty",
+            "emphasis_phrase": "Warranty",
+            "emphasis_link_new_tab": false
+          }
+        },
+        "benefit_support": {
+          "type": "benefit",
+          "settings": {
+            "icon": "support",
+            "heading": "Official After-Sales Support",
+            "emphasis_phrase": "After-Sales Support",
+            "emphasis_link_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "benefit_delivery",
+        "benefit_parts",
+        "benefit_warranty",
+        "benefit_support"
+      ],
+      "name": "Benefits bar",
+      "settings": {
+        "content_max_width": 1280,
+        "card_gap": 12,
+        "padding_block": 24,
+        "padding_inline": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "background_color": "#ffffff",
+        "card_background_color": "#f4f4f4",
+        "icon_color": "#ff7223",
+        "text_color": "#1a1a1a"
+      }
+    },
+    "feature_cards_home": {
+      "type": "feature-cards",
+      "blocks": {
+        "card_dealer": {
+          "type": "card",
+          "settings": {
+            "title": "Find a Valtinsu Dealer Nearby",
+            "subtitle": "Find your nearest dealer to explore Valtinsu in person, test ride our models, and get expert guidance.",
+            "button_label": "Find A Dealer",
+            "button_new_tab": false
+          }
+        },
+        "card_support": {
+          "type": "card",
+          "settings": {
+            "title": "Support That Stays With Your Ride",
+            "subtitle": "From setup to service, our team is here to help you get the most out of every ride.",
+            "button_label": "Get Support",
+            "button_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "card_dealer",
+        "card_support"
+      ],
+      "name": "Feature cards",
+      "settings": {
+        "content_max_width": 1280,
+        "card_gap": 16,
+        "padding_block": 24,
+        "padding_inline": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "background_color": "#ffffff",
+        "card_background_color": "#f4f4f4",
+        "title_color": "#1a1a1a",
+        "subtitle_color": "#8c8c8c"
+      }
+    },
+    "dirt_clips_carousel_home": {
+      "type": "dirt-clips-carousel",
+      "blocks": {
+        "clip_1": {
+          "type": "clip",
+          "settings": {
+            "source": "url",
+            "video_title": "Valtinsu EM-5 Pro Electric Dirt Bike Review",
+            "author": "@RunPlayBack",
+            "date": "April 11, 2026"
+          }
+        },
+        "clip_2": {
+          "type": "clip",
+          "settings": {
+            "source": "url",
+            "video_title": "First Ride on the EM-5 Pro",
+            "author": "@DirtRider",
+            "date": "March 28, 2026"
+          }
+        },
+        "clip_3": {
+          "type": "clip",
+          "settings": {
+            "source": "url",
+            "video_title": "Trail Test: Valtinsu Electric Bike",
+            "author": "@OffRoadTV",
+            "date": "March 15, 2026"
+          }
+        },
+        "clip_4": {
+          "type": "clip",
+          "settings": {
+            "source": "url",
+            "video_title": "EM-5 Pro vs Gas Dirt Bike",
+            "author": "@RideCompare",
+            "date": "February 20, 2026"
+          }
+        }
+      },
+      "block_order": [
+        "clip_1",
+        "clip_2",
+        "clip_3",
+        "clip_4"
+      ],
+      "name": "Dirt clips carousel",
+      "settings": {
+        "heading": "Dirt Clips From Thousands Of Creators",
+        "content_max_width": 1280,
+        "columns": 4,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "button_label": "Explore All Videos",
+        "button_link": "",
+        "button_new_tab": false,
+        "background_color": "#ffffff",
+        "heading_color": "#1a1a1a",
+        "padding_block": 64,
+        "padding_inline": 0
       }
     },
     "electric_ride_hero_home": {
@@ -145,7 +260,7 @@
         "explore_label": "Explore",
         "explore_background_color": "#000000",
         "explore_background_opacity": 55,
-        "content_min_width": 1100,
+        "content_min_width": 1280,
         "border_radius": 24,
         "margin_top": 40,
         "margin_bottom": 40,
@@ -243,7 +358,7 @@
       "name": "Ride product showcase",
       "settings": {
         "heading": "Find The Ride That Fits Your Dirt",
-        "content_min_width": 1100,
+        "content_min_width": 1280,
         "columns": 3,
         "background_color": "#ffffff",
         "nav_btn_background": "#ffffff",
@@ -259,7 +374,7 @@
       "settings": {
         "heading": "What 58,000+ Valtinsu Riders Are Saying",
         "subheading": "Master your bike, discover new trails, and stay ahead with the latest summer riding trends.",
-        "content_min_width": 1100,
+        "content_min_width": 1280,
         "click_label": "CLICK HERE",
         "photo_1_caption": "Weekend trail vibes",
         "photo_2_caption": "Built for dirt days",
@@ -456,7 +571,10 @@
     }
   },
   "order": [
-    "hero_jVaWmY",
+    "hero_banner_carousel_home",
+    "benefits_bar_home",
+    "feature_cards_home",
+    "dirt_clips_carousel_home",
     "electric_ride_hero_home",
     "ride_showcase_home",
     "rider_testimonials_home",

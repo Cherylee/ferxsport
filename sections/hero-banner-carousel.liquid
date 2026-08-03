@@ -1,0 +1,440 @@
+{{ 'section-hero-banner-carousel.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="HeroBannerCarousel-{{ section.id }}"
+  class="hero-banner-carousel"
+  style="
+    --hbc-margin-top: {{ section.settings.margin_top | default: 0 }};
+    --hbc-margin-bottom: {{ section.settings.margin_bottom | default: 0 }};
+    margin-block-start: calc(var(--hbc-margin-top) * var(--rem));
+    margin-block-end: calc(var(--hbc-margin-bottom) * var(--rem));
+  "
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 }}"
+>
+  <div class="hero-banner-carousel__frame">
+    <ul class="hero-banner-carousel__track" data-hbc-track role="list">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign media_type = block.settings.media_type | default: 'image'
+            assign media_bg = block.settings.media_background | default: '#000000'
+          %}
+          <li
+            class="hero-banner-carousel__slide{% if forloop.first %} is-active{% endif %}"
+            data-hbc-slide
+            data-slide-index="{{ forloop.index0 }}"
+            aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            {{ block.shopify_attributes }}
+            style="--hbc-media-bg: {{ media_bg }};"
+          >
+            <div class="hero-banner-carousel__media">
+              {% if media_type == 'video' and block.settings.video != blank %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: false,
+                    preload: 'metadata'
+                }}
+              {% elsif block.settings.image != blank %}
+                {% liquid
+                  if forloop.first
+                    assign slide_loading = 'eager'
+                  else
+                    assign slide_loading = 'lazy'
+                  endif
+                %}
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag:
+                    loading: slide_loading,
+                    widths: '832, 1200, 1600, 1920, 2560, 3840',
+                    sizes: '100vw',
+                    alt: block.settings.image.alt | default: block.settings.heading_line_2 | escape
+                }}
+              {% else %}
+                <div class="hero-banner-carousel__placeholder">
+                  {{ 'hero-apparel-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if block.settings.show_overlay %}
+              <div
+                class="hero-banner-carousel__overlay"
+                style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+              ></div>
+            {% endif %}
+
+            <div class="hero-banner-carousel__content">
+              {% if block.settings.heading_line_1 != blank %}
+                <p
+                  class="hero-banner-carousel__heading-line"
+                  style="color: {{ block.settings.heading_line_1_color | default: '#ff7223' }};"
+                >
+                  {{ block.settings.heading_line_1 }}
+                </p>
+              {% endif %}
+
+              {% if block.settings.heading_line_2 != blank %}
+                <p
+                  class="hero-banner-carousel__heading-line"
+                  style="color: {{ block.settings.heading_line_2_color | default: '#ffffff' }};"
+                >
+                  {{ block.settings.heading_line_2 }}
+                </p>
+              {% endif %}
+
+              {% if block.settings.body_text != blank %}
+                <p
+                  class="hero-banner-carousel__body"
+                  style="color: {{ block.settings.body_color | default: '#ffffff' }};"
+                >
+                  {{ block.settings.body_text }}
+                </p>
+              {% endif %}
+
+              {% if block.settings.button_1_label != blank or block.settings.button_2_label != blank %}
+                <div class="hero-banner-carousel__actions">
+                  {% if block.settings.button_1_label != blank %}
+                    <a
+                      class="hero-banner-carousel__btn ferxsport-homepage-btn"
+                      href="{{ block.settings.button_1_link | default: '#' }}"
+                      {% if block.settings.button_1_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                    >
+                      <span>{{ block.settings.button_1_label }}</span>
+                      {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+                    </a>
+                  {% endif %}
+
+                  {% if block.settings.button_2_label != blank %}
+                    <a
+                      class="hero-banner-carousel__btn ferxsport-homepage-btn"
+                      href="{{ block.settings.button_2_link | default: '#' }}"
+                      {% if block.settings.button_2_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                    >
+                      <span>{{ block.settings.button_2_label }}</span>
+                      {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="hero-banner-carousel__slide is-active" data-hbc-slide data-slide-index="0" aria-hidden="false">
+          <div class="hero-banner-carousel__media" style="--hbc-media-bg: #000;">
+            <div class="hero-banner-carousel__placeholder">
+              {{ 'hero-apparel-1' | placeholder_svg_tag }}
+            </div>
+          </div>
+          <div class="hero-banner-carousel__overlay" style="opacity: 0.5;"></div>
+          <div class="hero-banner-carousel__content">
+            <p class="hero-banner-carousel__heading-line" style="color: #ff7223;">Summer Ride</p>
+            <p class="hero-banner-carousel__heading-line" style="color: #fff;">Savings Continue</p>
+            <p class="hero-banner-carousel__body" style="color: #fff;">
+              The holiday may be over, but your next ride is still within reach. Save up to $590 on select Valtinsu electric dirt bikes for a limited time.
+            </p>
+            <div class="hero-banner-carousel__actions">
+              <span class="hero-banner-carousel__btn ferxsport-homepage-btn">Shop EM5</span>
+              <span class="hero-banner-carousel__btn ferxsport-homepage-btn">Compare Models</span>
+            </div>
+          </div>
+        </li>
+      {% endif %}
+    </ul>
+
+    {% if section.blocks.size > 1 and section.settings.show_pagination %}
+      <ul class="hero-banner-carousel__pagination" data-hbc-pagination role="tablist" aria-label="Banner slides">
+        {% for block in section.blocks %}
+          <li>
+            <button
+              type="button"
+              class="hero-banner-carousel__dot{% if forloop.first %} is-active{% endif %}"
+              data-hbc-dot
+              data-slide-index="{{ forloop.index0 }}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-label="Slide {{ forloop.index }}"
+            ></button>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('HeroBannerCarousel-{{ section.id }}');
+    if (!section) return;
+
+    const slides = [...section.querySelectorAll('[data-hbc-slide]')];
+    const dots = [...section.querySelectorAll('[data-hbc-dot]')];
+    if (slides.length <= 1) return;
+
+    let activeIndex = slides.findIndex((slide) => slide.classList.contains('is-active'));
+    if (activeIndex < 0) activeIndex = 0;
+
+    let timer = null;
+    const autoplay = section.dataset.autoplay === 'true';
+    const autoplaySpeed = Math.max(3, Number(section.dataset.autoplaySpeed) || 5) * 1000;
+
+    const setActive = (index) => {
+      activeIndex = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        const isActive = i === activeIndex;
+        slide.classList.toggle('is-active', isActive);
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+
+        const video = slide.querySelector('video');
+        if (video) {
+          if (isActive) {
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        const isActive = i === activeIndex;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
+
+    const restartTimer = () => {
+      if (!autoplay) return;
+      clearInterval(timer);
+      timer = setInterval(() => setActive(activeIndex + 1), autoplaySpeed);
+    };
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = Number(dot.dataset.slideIndex);
+        if (Number.isNaN(index)) return;
+        setActive(index);
+        restartTimer();
+      });
+    });
+
+    section.addEventListener('mouseenter', () => clearInterval(timer));
+    section.addEventListener('mouseleave', restartTimer);
+
+    restartTimer();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero banner carousel",
+  "tag": "section",
+  "class": "hero-banner-carousel-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Auto-rotate interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top margin",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom margin",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media type",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Displayed at 16:9 without cropping or distortion.",
+          "visible_if": "{{ block.settings.media_type == 'image' }}"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Displayed at 16:9 without cropping or distortion.",
+          "visible_if": "{{ block.settings.media_type == 'video' }}"
+        },
+        {
+          "type": "color",
+          "id": "media_background",
+          "label": "Media background",
+          "default": "#000000",
+          "info": "Shown when media does not fill the 16:9 frame."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Show text overlay gradient",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 100,
+          "visible_if": "{{ block.settings.show_overlay }}"
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_1",
+          "label": "Heading line 1",
+          "default": "Summer Ride"
+        },
+        {
+          "type": "color",
+          "id": "heading_line_1_color",
+          "label": "Heading line 1 color",
+          "default": "#ff7223"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_2",
+          "label": "Heading line 2",
+          "default": "Savings Continue"
+        },
+        {
+          "type": "color",
+          "id": "heading_line_2_color",
+          "label": "Heading line 2 color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "textarea",
+          "id": "body_text",
+          "label": "Body text",
+          "default": "The holiday may be over, but your next ride is still within reach. Save up to $590 on select Valtinsu electric dirt bikes for a limited time."
+        },
+        {
+          "type": "color",
+          "id": "body_color",
+          "label": "Body text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Primary button"
+        },
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "label": "Label",
+          "default": "Shop EM5"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_1_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Secondary button"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "label": "Label",
+          "default": "Compare Models"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_2_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner carousel",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+.benefits-bar {
+  background: var(--benefits-bar-bg, #fff);
+  width: 100%;
+}
+
+.benefits-bar__inner {
+  margin-inline: auto;
+  max-width: calc(var(--benefits-bar-width, 1280) * var(--rem));
+  padding-block: calc(var(--benefits-bar-padding-block, 24) * var(--rem));
+  padding-inline: calc(var(--benefits-bar-padding-inline, 0) * var(--rem));
+  width: 100%;
+}
+
+.benefits-bar__grid {
+  display: grid;
+  gap: calc(var(--benefits-bar-gap, 12) * var(--rem));
+  grid-template-columns: repeat(var(--benefits-bar-columns, 4), minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.benefits-bar__card {
+  align-items: center;
+  background: var(--benefits-bar-card-bg, #f4f4f4);
+  border-radius: var(--Arvita-radius-md, calc(16 * var(--rem)));
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--rem));
+  justify-content: center;
+  min-height: calc(120 * var(--rem));
+  padding: calc(24 * var(--rem)) calc(16 * var(--rem));
+  text-align: center;
+}
+
+.benefits-bar__emphasis {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+@media (hover: hover) {
+  a.benefits-bar__emphasis:hover {
+    opacity: 0.72;
+  }
+}
+
+.benefits-bar__icon {
+  align-items: center;
+  color: var(--benefits-bar-icon-color, #ff7223);
+  display: flex;
+  flex-shrink: 0;
+  height: calc(28 * var(--rem));
+  justify-content: center;
+  width: calc(28 * var(--rem));
+}
+
+.benefits-bar__icon svg,
+.benefits-bar__icon img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.benefits-bar__icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.benefits-bar__text {
+  color: var(--benefits-bar-text-color, #1a1a1a);
+  font-family: var(--font-body--family);
+  font-size: calc(14 * var(--rem));
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .benefits-bar__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .benefits-bar__card {
+    min-height: calc(104 * var(--rem));
+    padding: calc(20 * var(--rem)) calc(12 * var(--rem));
+  }
+
+  .benefits-bar__text {
+    font-size: calc(22 * var(--rem));
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .benefits-bar__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,198 @@
+.hero-banner-carousel {
+  margin-inline: auto;
+  position: relative;
+  width: 100%;
+}
+
+.hero-banner-carousel__frame {
+  aspect-ratio: 16 / 9;
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.hero-banner-carousel__frame::before {
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.42) 0%, rgb(0 0 0 / 0.12) 38%, transparent 72%);
+  content: '';
+  inset: 0 0 auto;
+  height: calc(160 * var(--rem));
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.hero-banner-carousel__track {
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.hero-banner-carousel__slide {
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 0.55s ease;
+  width: 100%;
+  z-index: 0;
+}
+
+.hero-banner-carousel__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.hero-banner-carousel__media {
+  align-items: center;
+  background: var(--hbc-media-bg, #000);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-banner-carousel__media img,
+.hero-banner-carousel__media video {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.hero-banner-carousel__media video {
+  background: var(--hbc-media-bg, #000);
+}
+
+.hero-banner-carousel__placeholder {
+  height: 100%;
+  opacity: 0.35;
+  width: 100%;
+}
+
+.hero-banner-carousel__overlay {
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0.55) 0%,
+    rgb(0 0 0 / 0.28) 42%,
+    rgb(0 0 0 / 0) 72%
+  );
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.hero-banner-carousel__content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--rem));
+  inset-block: 0;
+  justify-content: center;
+  left: calc(80 * var(--rem));
+  max-width: calc(560 * var(--rem));
+  position: absolute;
+  z-index: 4;
+}
+
+.hero-banner-carousel__heading-line {
+  font-family: var(--font-heading--family);
+  font-size: calc(64 * var(--rem));
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.hero-banner-carousel__heading-line + .hero-banner-carousel__heading-line {
+  margin-block-start: calc(4 * var(--rem));
+}
+
+.hero-banner-carousel__body {
+  font-size: calc(16 * var(--rem));
+  line-height: 1.6;
+  margin: 0;
+  max-width: calc(480 * var(--rem));
+}
+
+.hero-banner-carousel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12 * var(--rem));
+  margin-block-start: calc(8 * var(--rem));
+}
+
+.hero-banner-carousel__pagination {
+  bottom: calc(24 * var(--rem));
+  display: flex;
+  gap: calc(8 * var(--rem));
+  justify-content: center;
+  left: 50%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+.hero-banner-carousel__dot {
+  background: rgb(255 255 255 / 0.45);
+  border: 0;
+  border-radius: var(--Arvita-radius-full, calc(999 * var(--rem)));
+  cursor: pointer;
+  height: calc(4 * var(--rem));
+  padding: 0;
+  transition: background-color 0.25s ease, width 0.25s ease;
+  width: calc(32 * var(--rem));
+}
+
+.hero-banner-carousel__dot.is-active {
+  background: #fff;
+  width: calc(56 * var(--rem));
+}
+
+@media screen and (max-width: 768px) {
+  .hero-banner-carousel__content {
+    gap: calc(16 * var(--rem));
+    inset: auto calc(24 * var(--rem)) calc(72 * var(--rem));
+    left: calc(24 * var(--rem));
+    max-width: none;
+  }
+
+  .hero-banner-carousel__heading-line {
+    font-size: calc(48 * var(--rem));
+  }
+
+  .hero-banner-carousel__body {
+    font-size: calc(24 * var(--rem));
+    max-width: none;
+  }
+
+  .hero-banner-carousel__actions {
+    flex-direction: column;
+    margin-block-start: calc(4 * var(--rem));
+  }
+
+  .hero-banner-carousel__btn {
+    width: 100%;
+  }
+
+  .hero-banner-carousel__pagination {
+    bottom: calc(20 * var(--rem));
+  }
+
+  .hero-banner-carousel__dot {
+    height: calc(6 * var(--rem));
+    width: calc(40 * var(--rem));
+  }
+
+  .hero-banner-carousel__dot.is-active {
+    width: calc(64 * var(--rem));
+  }
+}

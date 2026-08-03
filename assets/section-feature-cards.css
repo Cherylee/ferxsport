@@ -1,0 +1,94 @@
+.feature-cards {
+  background: var(--feature-cards-bg, #fff);
+  width: 100%;
+}
+
+.feature-cards__inner {
+  margin-inline: auto;
+  max-width: calc(var(--feature-cards-width, 1280) * var(--rem));
+  padding-block: calc(var(--feature-cards-padding-block, 24) * var(--rem));
+  padding-inline: calc(var(--feature-cards-padding-inline, 0) * var(--rem));
+  width: 100%;
+}
+
+.feature-cards__grid {
+  display: grid;
+  gap: calc(var(--feature-cards-gap, 16) * var(--rem));
+  grid-template-columns: repeat(var(--feature-cards-columns, 2), minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feature-cards__card {
+  background: var(--feature-cards-card-bg, #f4f4f4);
+  border-radius: var(--Arvita-radius-md, calc(20 * var(--rem)));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.feature-cards__media {
+  aspect-ratio: 16 / 9;
+  background: rgb(0 0 0 / 0.06);
+  overflow: hidden;
+  width: 100%;
+}
+
+.feature-cards__media img,
+.feature-cards__media .feature-cards__placeholder {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.feature-cards__placeholder {
+  opacity: 0.35;
+}
+
+.feature-cards__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(12 * var(--rem));
+  padding: calc(24 * var(--rem));
+}
+
+.feature-cards__title {
+  color: var(--feature-cards-title-color, #1a1a1a);
+  font-family: var(--font-heading--family);
+  font-size: calc(24 * var(--rem));
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.feature-cards__subtitle {
+  color: var(--feature-cards-subtitle-color, #8c8c8c);
+  font-family: var(--font-body--family);
+  font-size: calc(14 * var(--rem));
+  line-height: 1.55;
+  margin: 0;
+}
+
+.feature-cards__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: calc(8 * var(--rem));
+}
+
+@media screen and (max-width: 768px) {
+  .feature-cards__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-cards__title {
+    font-size: calc(32 * var(--rem));
+  }
+
+  .feature-cards__subtitle {
+    font-size: calc(24 * var(--rem));
+  }
+}

@@ -356,7 +356,7 @@
     {% endif %}
     {% if section.settings.actions_display_style == 'text' %}
       --header-actions-font-size: {{ section.settings.actions_font_size | default: '1rem' }};
-      --header-actions-font-family: var(--font-{{ section.settings.actions_font | default: 'heading' }}--family);
+      --header-actions-font-family: var(--header-font-family);
       --header-actions-font-weight: var(--font-{{ section.settings.actions_font | default: 'heading' }}--weight);
       --header-actions-text-case: {{ section.settings.actions_text_case | default: 'none' }};
     {% endif %}
@@ -450,7 +450,7 @@
           style="{{ style | strip }}"
         {%- endif -%}
       >
-        <div class="header__columns spacing-style">
+        <div class="header__columns spacing-style{% if row == 'top' and transparent %} ferxsport-header-columns{% endif %}">
           {{ content }}
         </div>
       </div>
@@ -1167,7 +1167,81 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* ferxsport frosted nav bar — always on .header__columns */
+  #header-component.header[transparent] {
+    contain: none;
+  }
+
+  #header-component.header[transparent='not-sticky'] {
+    --header-logo-display: none;
+    --header-logo-inverse-display: block;
+    --closed-underlay-height: 0px !important;
+  }
+
+  #header-component.header[transparent='not-sticky'] .header__underlay-closed,
+  #header-component.header[transparent='not-sticky'] .header__underlay-open {
+    background: transparent !important;
+    box-shadow: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+  }
+
+  #header-component.header[transparent='not-sticky'] .header__row--top {
+    --color-foreground: var(--color-transparent-text, #fff);
+    --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
+    --color-border: var(--color-transparent-text, #fff);
+    --color-border-rgb: var(--color-transparent-text-rgb, 255 255 255);
+    border-bottom: none;
+  }
+
+  #header-component.header[transparent='not-sticky'] .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+    backdrop-filter: blur(8px) saturate(1.12);
+    -webkit-backdrop-filter: blur(8px) saturate(1.12);
+    background-color: rgba(28, 20, 20, 0.48);
+    box-shadow: none;
+    isolation: isolate;
+    position: relative;
+    transform: translateZ(0);
+  }
+
+  #header-component.header[transparent='not-sticky'] .header__row--top .header__columns.spacing-style.ferxsport-header-columns > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  #header-component.header[transparent='not-sticky'][data-sticky-state='active'] {
+    --header-logo-display: none !important;
+    --header-logo-inverse-display: block !important;
+    --closed-underlay-height: 0px !important;
+    --color-foreground: var(--color-transparent-text, #fff);
+    --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
+    --color-border: var(--color-transparent-text, #fff);
+    --color-border-rgb: var(--color-transparent-text-rgb, 255 255 255);
+
+    background: transparent;
+    box-shadow: none;
+    contain: none;
+  }
+
+  #header-component.header[transparent='not-sticky'][data-sticky-state='active'] .header__row--top {
+    --color-foreground: var(--color-transparent-text, #fff);
+    --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
+    border-bottom: none;
+  }
+
+  #header-component.header[transparent='not-sticky'][data-sticky-state='active'] .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+    backdrop-filter: blur(8px) saturate(1.12);
+    -webkit-backdrop-filter: blur(8px) saturate(1.12);
+    background-color: rgba(28, 20, 20, 0.48);
+  }
+
+  body:has(.header[transparent]) .header-section:has(> #header-component[data-sticky-state='active']) {
+    z-index: 100;
+  }
 {% endstylesheet %}
+
+{{ 'ferxsport-header.css' | asset_url | stylesheet_tag }}
 
 {% unless request.design_mode %}
   <script type="module">

@@ -1,0 +1,202 @@
+/* ferxsport — transparent header overlaying hero banner */
+
+body:has(.header[transparent]) {
+  --ferxsport-header-width: calc(1280 * var(--rem));
+  --ferxsport-header-inline-padding: calc(24 * var(--rem));
+  --ferxsport-header-top-padding: calc(50 * var(--rem));
+  --ferxsport-header-sticky-bg: rgba(28, 20, 20, 0.48);
+  --ferxsport-header-z: 100;
+}
+
+body:has(.header[transparent]) .header-section {
+  overflow: visible;
+  position: relative;
+  z-index: var(--ferxsport-header-z);
+}
+
+body:has(.header[transparent]) #header-component.header[transparent] {
+  z-index: var(--ferxsport-header-z);
+}
+
+/* Top offset outside frosted bar */
+body:has(.header[transparent]) .header[transparent] {
+  background: transparent;
+  overflow: visible;
+  padding-top: var(--ferxsport-header-top-padding);
+}
+
+/* Nav bar inset — frosted glass only on .header__columns.spacing-style */
+body:has(.header[transparent]) .header__row--top {
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+  position: relative;
+}
+
+body:has(.header[transparent]) .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+  --padding-block-start: calc(8 * var(--rem));
+  --padding-block-end: calc(8 * var(--rem));
+
+  align-items: center;
+  backdrop-filter: blur(8px) saturate(1.12);
+  -webkit-backdrop-filter: blur(8px) saturate(1.12);
+  background-color: var(--ferxsport-header-sticky-bg);
+  border-radius: calc(12 * var(--rem));
+  box-shadow: none;
+  flex: 0 0 auto;
+  isolation: isolate;
+  margin-inline: auto;
+  max-width: var(--ferxsport-header-width);
+  min-width: var(--ferxsport-header-width);
+  padding-inline: var(--ferxsport-header-inline-padding);
+  position: relative;
+  transform: translateZ(0);
+  width: var(--ferxsport-header-width);
+}
+
+body:has(.header[transparent]) .header-logo__image {
+  max-height: calc(28 * var(--rem));
+  width: auto;
+}
+
+body:has(.header[transparent]) .menu-list__link {
+  color: var(--color-transparent-text, #fff);
+  font-family: var(--header-font-family);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+body:has(.header[transparent]) header-menu .menu-list {
+  --menu-horizontal-gap: calc(10 * var(--rem));
+}
+
+body:has(.header[transparent]) .menu-list__list {
+  gap: calc(4 * var(--rem));
+}
+
+body:has(.header[transparent]) .menu-list__link-title {
+  background-color: transparent;
+  border-radius: var(--Arvita-radius-full, calc(999 * var(--rem)));
+  display: inline-block;
+  line-height: 1.2;
+  padding-block: calc(6 * var(--rem));
+  padding-inline: calc(16 * var(--rem));
+  transition: background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  /* Only the hovered item shows pill; others lose hover styling */
+  body:has(.header[transparent]) .menu-list:has(.menu-list__list-item:hover) .menu-list__list-item:is(:hover, :focus-within) .menu-list__link-title,
+  body:has(.header[transparent]) .menu-list:has(.menu-list__list-item:focus-within) .menu-list__list-item:is(:hover, :focus-within) .menu-list__link-title {
+    background-color: rgb(255 255 255 / 0.14);
+    color: var(--color-transparent-text, #fff);
+  }
+
+  body:has(.header[transparent]) .menu-list:not(:has(.menu-list__list-item:hover)):not(:has(.menu-list__list-item:focus-within)) .menu-list__link--active .menu-list__link-title,
+  body:has(.header[transparent]) .menu-list:not(:has(.menu-list__list-item:hover)):not(:has(.menu-list__list-item:focus-within)) .menu-list__link[aria-expanded='true'] .menu-list__link-title {
+    background-color: rgb(255 255 255 / 0.14);
+    color: var(--color-transparent-text, #fff);
+  }
+
+  body:has(.header[transparent]) .menu-list__list-item:is(:hover, :focus-within) .menu-list__link {
+    color: var(--color-transparent-text, #fff);
+    opacity: 1;
+  }
+}
+
+body:has(.header[transparent]) .header-actions__action,
+body:has(.header[transparent]) .header-actions__action svg {
+  color: var(--color-transparent-text, #fff);
+}
+
+body:has(.header[transparent]) .header-actions__action svg {
+  stroke: currentColor;
+}
+
+body:has(.header[transparent]) .cart-bubble__background {
+  background: #000;
+}
+
+body:has(.header[transparent]) .cart-bubble__text {
+  color: #fff;
+}
+
+/* Disable nav hover color inversion — keep transparent header styling on hover */
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link:not([aria-haspopup]):hover),
+  :has(.menu-list__link:is(:hover, [aria-expanded='true'])),
+  :has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'])),
+  :has(.mega-menu__list:hover)
+) {
+  --header-logo-display: none;
+  --header-logo-inverse-display: block;
+  --color-foreground: var(--color-transparent-text, #fff);
+  --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
+  --color-border: var(--color-transparent-text, #fff);
+  --color-border-rgb: var(--color-transparent-text-rgb, 255 255 255);
+  --color-background: transparent;
+  --closed-underlay-height: 0px;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link:is(:hover, [aria-expanded='true'])),
+  :has(.mega-menu__list:hover)
+) .header__row,
+body:has(.header[transparent]) [data-transparent-background='top']:is(:hover, :focus-within) .header__row--top,
+body:has(.header[transparent]) [data-transparent-background='both']:is(:hover, :focus-within) .header__row--top {
+  --color-foreground: var(--color-transparent-text, #fff);
+  --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
+  --color-border: var(--color-transparent-text, #fff);
+  --color-border-rgb: var(--color-transparent-text-rgb, 255 255 255);
+  --color-primary-button-background: var(--color-transparent-text, #fff);
+  --color-primary-button-text: var(--color-transparent-text-contrast, #000);
+}
+
+/* Disable nav link dimming when another item is hovered */
+body:has(.header[transparent]) .menu-list:where(:has(.menu-list__list-item:hover)) .menu-list__link,
+body:has(.header[transparent]) .menu-list:where(:has(.menu-list__list-item:focus-within)) .menu-list__link,
+body:has(.header[transparent]) .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link {
+  color: var(--color-transparent-text, #fff);
+  opacity: 1;
+}
+
+/* Disable column dimming when hovering nav or actions */
+@media (hover: hover) {
+  body:has(.header[transparent]) .header__column:has(header-menu:hover) header-menu:not(:hover),
+  body:has(.header[transparent]) .header__column:has(.header-actions__action:hover) .header-actions__action:not(:hover),
+  body:has(.header[transparent]) .header__column:has(.header__icon--menu:hover) .header__icon--menu:not(:hover) {
+    opacity: 1;
+  }
+}
+
+body:has(.header[transparent]) .header-logo__text {
+  color: var(--color-transparent-text, #fff);
+  font-family: var(--header-font-family);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body:has(.header[transparent])
+  #header-component.header[transparent='not-sticky'][data-sticky-state='active'] {
+  contain: none;
+}
+
+body:has(.header[transparent])
+  .header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
+  z-index: var(--ferxsport-header-z);
+}
+
+@media screen and (max-width: 768px) {
+  body:has(.header[transparent]) {
+    --ferxsport-header-inline-padding: calc(16 * var(--rem));
+    --ferxsport-header-top-padding: calc(24 * var(--rem));
+  }
+
+  body:has(.header[transparent]) .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+}

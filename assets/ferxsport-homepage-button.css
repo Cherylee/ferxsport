@@ -1,0 +1,41 @@
+.ferxsport-homepage-btn {
+  align-items: center;
+  background: var(--ferxsport-homepage-btn-bg, #ff7223);
+  border: 0;
+  border-radius: calc(var(--ferxsport-homepage-btn-radius, 100) * var(--rem));
+  color: var(--ferxsport-homepage-btn-color, #fff);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-body--family);
+  font-size: calc(var(--ferxsport-homepage-btn-font-size, 14) * var(--rem));
+  font-weight: 600;
+  gap: calc(8 * var(--rem));
+  justify-content: center;
+  line-height: 1;
+  min-height: calc(var(--ferxsport-homepage-btn-height, 44) * var(--rem));
+  padding-block: calc(12 * var(--rem));
+  padding-inline: calc(var(--ferxsport-homepage-btn-padding-inline, 28) * var(--rem));
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
+}
+
+.ferxsport-homepage-btn svg {
+  flex-shrink: 0;
+  height: calc(var(--ferxsport-homepage-btn-font-size, 14) * var(--rem));
+  width: calc(var(--ferxsport-homepage-btn-font-size, 14) * var(--rem));
+}
+
+@media (hover: hover) {
+  .ferxsport-homepage-btn-hover-opacity .ferxsport-homepage-btn:hover {
+    opacity: var(--ferxsport-homepage-btn-hover-opacity, 0.88);
+  }
+
+  .ferxsport-homepage-btn-hover-lift .ferxsport-homepage-btn:hover {
+    transform: translateY(calc(-1 * var(--rem)));
+  }
+
+  .ferxsport-homepage-btn-hover-darken .ferxsport-homepage-btn:hover {
+    filter: brightness(0.9);
+  }
+}

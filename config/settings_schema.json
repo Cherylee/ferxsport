@@ -94,25 +94,25 @@
       {
         "type": "font_picker",
         "id": "type_body_font",
-        "default": "work_sans_n4",
+        "default": "inter_n4",
         "label": "t:options.body"
       },
       {
         "type": "font_picker",
         "id": "type_subheading_font",
-        "default": "work_sans_n5",
+        "default": "inter_n5",
         "label": "t:options.subheading"
       },
       {
         "type": "font_picker",
         "id": "type_heading_font",
-        "default": "anonymous_pro_n4",
+        "default": "inter_n7",
         "label": "t:options.heading"
       },
       {
         "type": "font_picker",
         "id": "type_accent_font",
-        "default": "anonymous_pro_n4",
+        "default": "inter_n7",
         "label": "t:options.accent"
       },
       {
@@ -2114,6 +2114,101 @@
           }
         ],
         "default": "equal-width-buttons"
+      }
+    ]
+  },
+  {
+    "name": "Homepage buttons",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shared CTA button style for homepage sections (hero banner, feature cards, dirt clips carousel, etc.)."
+      },
+      {
+        "type": "color",
+        "id": "ferxsport_homepage_btn_background",
+        "label": "Background color",
+        "default": "#ff7223"
+      },
+      {
+        "type": "color",
+        "id": "ferxsport_homepage_btn_text_color",
+        "label": "Text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "ferxsport_homepage_btn_padding_inline",
+        "label": "Horizontal padding (design px)",
+        "min": 12,
+        "max": 48,
+        "step": 2,
+        "default": 28,
+        "info": "Left and right padding inside the button. Scales with --rem."
+      },
+      {
+        "type": "range",
+        "id": "ferxsport_homepage_btn_radius",
+        "label": "Border radius (design px)",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 100,
+        "info": "100 creates a pill shape on standard button heights."
+      },
+      {
+        "type": "range",
+        "id": "ferxsport_homepage_btn_height",
+        "label": "Button height (design px)",
+        "min": 32,
+        "max": 72,
+        "step": 2,
+        "default": 44,
+        "info": "Scales with --rem."
+      },
+      {
+        "type": "range",
+        "id": "ferxsport_homepage_btn_font_size",
+        "label": "Font size (design px)",
+        "min": 12,
+        "max": 24,
+        "step": 1,
+        "default": 14,
+        "info": "Scales with --rem."
+      },
+      {
+        "type": "select",
+        "id": "ferxsport_homepage_btn_hover_effect",
+        "label": "Hover effect",
+        "options": [
+          {
+            "value": "opacity",
+            "label": "Opacity"
+          },
+          {
+            "value": "lift",
+            "label": "Lift up"
+          },
+          {
+            "value": "darken",
+            "label": "Darken"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ],
+        "default": "opacity"
+      },
+      {
+        "type": "range",
+        "id": "ferxsport_homepage_btn_hover_opacity",
+        "label": "Hover opacity (%)",
+        "min": 50,
+        "max": 100,
+        "step": 1,
+        "default": 88,
+        "visible_if": "{{ settings.ferxsport_homepage_btn_hover_effect == 'opacity' }}"
       }
     ]
   }

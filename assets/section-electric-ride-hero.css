@@ -12,7 +12,7 @@
   overflow: hidden;
   position: relative;
   transition: background-color 0.55s ease;
-  width: min(100%, calc(var(--erh-section-width, 1100) * var(--rem)));
+  width: min(100%, calc(var(--erh-section-width, 1280) * var(--rem)));
 }
 
 .electric-ride-hero--clickable {

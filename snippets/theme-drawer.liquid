@@ -33,9 +33,14 @@
     if (!window.matchMedia('(min-width: 990px)').matches) return;
 
     var dialogs = [];
+    var shouldSqueeze = false;
     for (var i = 0; i < drawerIds.length; i++) {
       var drawer = document.getElementById(drawerIds[i]);
       if (!drawer) continue;
+
+      if (!drawer.hasAttribute('overlay')) {
+        shouldSqueeze = true;
+      }
 
       drawer.setAttribute('open', '');
 
@@ -62,7 +67,7 @@
     // Only squeeze if at least one drawer was actually restored — saved
     // drawer IDs may not exist on every page (e.g. cart-drawer on /cart).
     var pageWrapper = document.querySelector('.page-wrapper');
-    if (pageWrapper && dialogs.length > 0) {
+    if (pageWrapper && dialogs.length > 0 && shouldSqueeze) {
       pageWrapper.style.transition = 'none';
       pageWrapper.classList.add('page-wrapper--drawer-open');
     }
@@ -85,24 +90,27 @@
   const pageWrapper = document.querySelector('.page-wrapper');
   const squeezeQuery = window.matchMedia('(min-width: 990px)');
 
+  /** @returns {boolean} Whether a non-overlay drawer is open (squeeze mode). */
+  function hasSqueezeDrawerOpen() {
+    return Boolean(document.querySelector('theme-drawer[open]:not([overlay])'));
+  }
+
   // ── Squeeze coordination ──
-  // Listens to all drawers. Only squeezes on wide viewports.
-  document.addEventListener('theme-drawer:open', () => {
-    if (squeezeQuery.matches) {
+  // Listens to all drawers. Only squeezes on wide viewports for non-overlay drawers.
+  document.addEventListener('theme-drawer:open', (event) => {
+    if (squeezeQuery.matches && !event.target?.hasAttribute?.('overlay')) {
       pageWrapper?.classList.add('page-wrapper--drawer-open');
     }
   });
 
   document.addEventListener('theme-drawer:close', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    if (!openDrawer) {
+    if (!hasSqueezeDrawerOpen()) {
       pageWrapper?.classList.remove('page-wrapper--drawer-open');
     }
   });
 
   squeezeQuery.addEventListener('change', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openDrawer) && squeezeQuery.matches);
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', hasSqueezeDrawerOpen() && squeezeQuery.matches);
   });
 
   // ── State persistence ──

@@ -28,6 +28,13 @@ body {
   /* Arvita 统一 hover 灰色 */
   --Arvita-hover-gray: #f3f3f3;
 
+  /* ferxsport 主题字体兜底（运行时由 theme-styles-variables 覆盖为 Shopify 字体设置） */
+  --font-heading--family: Inter, sans-serif;
+  --font-body--family: Inter, sans-serif;
+  --font-subheading--family: Inter, sans-serif;
+  --font-accent--family: Inter, sans-serif;
+  --header-font-family: Inter, sans-serif;
+
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
