@@ -1,0 +1,348 @@
+.rider-testimonials {
+  --rt-accent: var(--Arvita-accent-color, #ff7223);
+  --rt-text: #333333;
+  --rt-muted: #8a8a8a;
+  background: #fff;
+  margin-inline: auto;
+  overflow: hidden;
+  width: min(100%, calc(var(--rt-section-width, 1100) * var(--rem)));
+}
+
+.rider-testimonials__inner {
+  padding-block: calc(72 * var(--rem)) calc(80 * var(--rem));
+  padding-inline: 0;
+  width: 100%;
+}
+
+.rider-testimonials__header {
+  margin: 0 auto calc(36 * var(--rem));
+  max-width: calc(760 * var(--rem));
+  text-align: center;
+}
+
+.rider-testimonials__heading {
+  color: var(--rt-text);
+  font-family: var(--font-heading--family);
+  font-size: calc(36 * var(--rem));
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 calc(16 * var(--rem));
+}
+
+.rider-testimonials__subheading {
+  color: var(--rt-muted);
+  font-size: calc(16 * var(--rem));
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: calc(620 * var(--rem));
+}
+
+.rider-testimonials__stage {
+  margin-inline: auto;
+  max-width: calc(920 * var(--rem));
+  position: relative;
+  width: 100%;
+}
+
+.rider-testimonials__camera-area {
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+  margin-bottom: calc(-20 * var(--rem));
+  min-height: calc(340 * var(--rem));
+  position: relative;
+  width: 100%;
+  z-index: 20;
+}
+
+.rider-testimonials__click {
+  color: var(--rt-accent);
+  display: flex;
+  flex-direction: column;
+  bottom: calc(280 * var(--rem));
+  margin-inline-end: calc(8 * var(--rem));
+  pointer-events: none;
+  position: absolute;
+  z-index: 28;
+  left: calc(155 * var(--rem));
+}
+
+.rider-testimonials__click-label {
+  display: block;
+  font-family: 'Segoe Print', 'Comic Sans MS', 'Bradley Hand', cursive;
+  font-size: calc(22 * var(--rem));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transform: rotate(-8deg);
+  white-space: nowrap;
+  position: relative;
+  right: calc(82 * var(--rem));
+}
+
+.rider-testimonials__arrow {
+  color: var(--rt-accent);
+  display: block;
+  height: calc(118 * var(--rem));
+  margin-inline-start: calc(12 * var(--rem));
+  margin-top: calc(2 * var(--rem));
+  overflow: visible;
+  width: calc(128 * var(--rem));
+}
+
+.rider-testimonials__arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+}
+
+.rider-testimonials__arrow-line,
+.rider-testimonials__arrow-head {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.rider-testimonials.is-inview .rider-testimonials__arrow-line {
+  animation: rt-draw-arrow 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.rider-testimonials.is-inview .rider-testimonials__arrow-head {
+  animation: rt-draw-arrow 0.35s ease-out 1.45s forwards;
+}
+
+@keyframes rt-draw-arrow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.rider-testimonials__camera-link,
+.rider-testimonials__camera {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+  position: relative;
+  z-index: 22;
+  width: calc(500 * var(--rem));
+}
+
+.rider-testimonials__camera-img,
+.rider-testimonials__camera svg {
+  display: block;
+  filter: drop-shadow(0 calc(10 * var(--rem)) calc(28 * var(--rem)) rgb(0 0 0 / 10%));
+  height: auto;
+  width: calc(500 * var(--rem));
+}
+
+.rider-testimonials__photos {
+  height: calc(480 * var(--rem));
+  list-style: none;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  bottom: calc(80 * var(--rem));
+}
+
+.rider-testimonials__photo {
+  background: #fff;
+  border-radius: calc(4 * var(--rem));
+  box-shadow:
+    0 calc(6 * var(--rem)) calc(22 * var(--rem)) rgb(0 0 0 / 12%),
+    0 calc(2 * var(--rem)) calc(6 * var(--rem)) rgb(0 0 0 / 8%);
+  display: block;
+  padding: calc(10 * var(--rem)) calc(10 * var(--rem)) calc(14 * var(--rem));
+  position: absolute;
+  text-decoration: none;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    z-index 0s linear 0.28s;
+  width: calc(260 * var(--rem));
+  z-index: var(--rt-z, 1);
+}
+
+.rider-testimonials__photo:hover,
+.rider-testimonials__photo:focus-visible {
+  box-shadow:
+    0 calc(12 * var(--rem)) calc(32 * var(--rem)) rgb(0 0 0 / 16%),
+    0 calc(2 * var(--rem)) calc(8 * var(--rem)) rgb(0 0 0 / 8%);
+  transform: var(--rt-rotate, 0deg) scale(1.06);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    z-index 0s;
+  z-index: 40;
+}
+
+.rider-testimonials__photo-media {
+  aspect-ratio: 1 / 1.05;
+  background: #f3f3f3;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.rider-testimonials__photo-img,
+.rider-testimonials__photo-placeholder {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.rider-testimonials__photo-placeholder {
+  color: #c5c5c5;
+}
+
+.rider-testimonials__photo-placeholder svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.rider-testimonials__photo-caption {
+  color: #333333;
+  display: -webkit-box;
+  font-family: 'Segoe Print', 'Comic Sans MS', 'Bradley Hand', cursive;
+  font-size: calc(13 * var(--rem));
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.25;
+  margin: calc(10 * var(--rem)) 0 0;
+  overflow: hidden;
+  text-align: center;
+  font-weight: 700;
+
+}
+
+.rider-testimonials__photo--1 {
+  --rt-rotate: rotate(-11deg);
+  --rt-z: 5;
+  left: calc(2%);
+  top: calc(8 * var(--rem));
+  transform: var(--rt-rotate);
+}
+
+.rider-testimonials__photo--2 {
+  --rt-rotate: rotate(9deg);
+  --rt-z: 7;
+  left: calc(10%);
+  top: calc(150 * var(--rem));
+  transform: var(--rt-rotate);
+}
+
+.rider-testimonials__photo--3 {
+  --rt-rotate: rotate(-3deg);
+  --rt-z: 3;
+  left: 50%;
+  top: calc(88 * var(--rem));
+  transform: translateX(-50%) var(--rt-rotate);
+}
+
+.rider-testimonials__photo--3:hover,
+.rider-testimonials__photo--3:focus-visible {
+  transform: translateX(-50%) var(--rt-rotate) scale(1.06);
+}
+
+.rider-testimonials__photo--4 {
+  --rt-rotate: rotate(-8deg);
+  --rt-z: 6;
+  right: calc(10%);
+  top: calc(168 * var(--rem));
+  transform: var(--rt-rotate);
+}
+
+.rider-testimonials__photo--5 {
+  --rt-rotate: rotate(10deg);
+  --rt-z: 5;
+  right: calc(1%);
+  top: calc(20 * var(--rem));
+  transform: var(--rt-rotate);
+}
+
+@media screen and (max-width: 768px) {
+  .rider-testimonials {
+    width: calc(100% - calc(48 * var(--rem)));
+  }
+
+  .rider-testimonials__inner {
+    padding-block: calc(56 * var(--rem)) calc(64 * var(--rem));
+  }
+
+  .rider-testimonials__heading {
+    font-size: calc(32 * var(--rem));
+  }
+
+  .rider-testimonials__subheading {
+    font-size: calc(22 * var(--rem));
+  }
+
+  .rider-testimonials__camera-area {
+    margin-bottom: calc(-8 * var(--rem));
+    min-height: calc(360 * var(--rem));
+  }
+
+  .rider-testimonials__click {
+    bottom: calc(241 * var(--rem));
+    margin-inline-end: calc(-4 * var(--rem));
+    position: relative;
+    left: calc(107 * var(--rem));
+  }
+
+  .rider-testimonials__click-label {
+    font-size: calc(28 * var(--rem));
+  }
+
+  .rider-testimonials__arrow {
+    height: calc(130 * var(--rem));
+    width: calc(140 * var(--rem));
+  }
+
+  .rider-testimonials__camera-img,
+  .rider-testimonials__camera svg {
+    width: calc(440 * var(--rem));
+  }
+
+  .rider-testimonials__photos {
+    height: calc(620 * var(--rem));
+    margin-top: calc(40 * var(--rem));
+  }
+
+  .rider-testimonials__photo {
+    padding: calc(12 * var(--rem)) calc(12 * var(--rem)) calc(16 * var(--rem));
+    width: calc(300 * var(--rem));
+  }
+
+  .rider-testimonials__photo-caption {
+    font-size: calc(20 * var(--rem));
+    min-height: calc(20 * var(--rem) * 1.25 * 2);
+  }
+
+  .rider-testimonials__photo--1 {
+    left: -2%;
+    top: calc(4 * var(--rem));
+  }
+
+  .rider-testimonials__photo--2 {
+    left: calc(4%);
+    top: calc(220 * var(--rem));
+  }
+
+  .rider-testimonials__photo--3 {
+    top: calc(150 * var(--rem));
+  }
+
+  .rider-testimonials__photo--4 {
+    right: calc(0%);
+    top: calc(250 * var(--rem));
+  }
+
+  .rider-testimonials__photo--5 {
+    right: -4%;
+    top: calc(24 * var(--rem));
+  }
+}

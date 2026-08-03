@@ -1,0 +1,331 @@
+{{ 'section-rider-testimonials.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign camera_link = section.settings.camera_link
+  assign placeholders = 'lifestyle-1,product-1,lifestyle-2,product-2,collection-1' | split: ','
+%}
+
+<section
+  id="RiderTestimonials-{{ section.id }}"
+  class="rider-testimonials"
+  style="--rt-section-width: {{ section.settings.content_min_width | default: 1100 }};"
+  data-rider-testimonials
+>
+  <div class="rider-testimonials__inner">
+    <div class="rider-testimonials__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="rider-testimonials__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="rider-testimonials__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <div class="rider-testimonials__stage">
+      <div class="rider-testimonials__camera-area">
+        <div class="rider-testimonials__click" aria-hidden="true">
+          <span class="rider-testimonials__click-label">{{ section.settings.click_label | default: 'CLICK HERE' }}</span>
+          <svg
+            class="rider-testimonials__arrow"
+            viewBox="0 0 130 120"
+            focusable="false"
+          >
+            <path
+              class="rider-testimonials__arrow-line"
+              pathLength="1"
+              d="M 28 8
+                 C 8 18, 2 42, 14 62
+                 C 24 78, 48 86, 68 76
+                 C 88 66, 96 42, 82 28
+                 C 70 18, 48 22, 42 38
+                 C 36 54, 52 72, 74 80
+                 C 90 86, 108 84, 116 76"
+            />
+            <path
+              class="rider-testimonials__arrow-head"
+              pathLength="1"
+              d="M 105 68 L 116 76 L 108 86"
+            />
+          </svg>
+        </div>
+
+        {% if camera_link != blank %}
+          <a
+            class="rider-testimonials__camera-link"
+            href="{{ camera_link }}"
+            {% if section.settings.camera_link_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+            aria-label="{{ section.settings.click_label | default: 'CLICK HERE' }}"
+          >
+            <span class="rider-testimonials__camera">
+              <img
+                class="rider-testimonials__camera-img"
+                src="{{ 'Camera.webp' | asset_url }}"
+                alt="{{ section.settings.click_label | default: 'Camera' }}"
+                width="400"
+                height="320"
+                loading="lazy"
+              >
+            </span>
+          </a>
+        {% else %}
+          <div class="rider-testimonials__camera">
+            <img
+              class="rider-testimonials__camera-img"
+              src="{{ 'Camera.webp' | asset_url }}"
+              alt="{{ section.settings.click_label | default: 'Camera' }}"
+              width="400"
+              height="320"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+
+      <ul class="rider-testimonials__photos" role="list">
+        {% for i in (1..5) %}
+          {% liquid
+            assign image_key = 'photo_' | append: i | append: '_image'
+            assign caption_key = 'photo_' | append: i | append: '_caption'
+            assign link_key = 'photo_' | append: i | append: '_link'
+            assign photo_image = section.settings[image_key]
+            assign photo_caption = section.settings[caption_key]
+            assign photo_link = section.settings[link_key]
+            assign placeholder_name = placeholders[forloop.index0]
+          %}
+
+          <li>
+            {% if photo_link != blank %}
+              <a
+                class="rider-testimonials__photo rider-testimonials__photo--{{ i }}"
+                href="{{ photo_link }}"
+              >
+            {% else %}
+              <div class="rider-testimonials__photo rider-testimonials__photo--{{ i }}">
+            {% endif %}
+
+              <span class="rider-testimonials__photo-media">
+                {% if photo_image != blank %}
+                  {{
+                    photo_image
+                    | image_url: width: 600
+                    | image_tag:
+                      class: 'rider-testimonials__photo-img',
+                      loading: 'lazy',
+                      widths: '240,360,480,600',
+                      sizes: '(min-width: 769px) 210px, 45vw',
+                      alt: photo_image.alt | default: photo_caption
+                  }}
+                {% else %}
+                  <span class="rider-testimonials__photo-placeholder">
+                    {{ placeholder_name | placeholder_svg_tag }}
+                  </span>
+                {% endif %}
+              </span>
+
+              {% if photo_caption != blank %}
+                <p class="rider-testimonials__photo-caption">{{ photo_caption }}</p>
+              {% endif %}
+
+            {% if photo_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('RiderTestimonials-{{ section.id }}');
+    if (!section) return;
+
+    const reveal = () => {
+      if (section.classList.contains('is-inview')) return;
+      // Force reflow so draw animation always starts from hidden state.
+      section.classList.remove('is-inview');
+      void section.offsetWidth;
+      section.classList.add('is-inview');
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              reveal();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+      );
+      observer.observe(section);
+    } else {
+      reveal();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Rider testimonials",
+  "tag": "section",
+  "class": "rider-testimonials-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What 58,000+ Valtinsu Riders Are Saying"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Master your bike, discover new trails, and stay ahead with the latest summer riding trends."
+    },
+    {
+      "type": "range",
+      "id": "content_min_width",
+      "label": "Content min width (design px)",
+      "min": 900,
+      "max": 1440,
+      "step": 10,
+      "default": 1100
+    },
+    {
+      "type": "header",
+      "content": "Camera"
+    },
+    {
+      "type": "text",
+      "id": "click_label",
+      "label": "Click here label",
+      "default": "CLICK HERE"
+    },
+    {
+      "type": "url",
+      "id": "camera_link",
+      "label": "Camera link"
+    },
+    {
+      "type": "checkbox",
+      "id": "camera_link_new_tab",
+      "label": "Open camera link in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Photo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "photo_1_caption",
+      "label": "Caption",
+      "default": "Weekend trail vibes"
+    },
+    {
+      "type": "url",
+      "id": "photo_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Photo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "photo_2_caption",
+      "label": "Caption",
+      "default": "Built for dirt days"
+    },
+    {
+      "type": "url",
+      "id": "photo_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Photo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "photo_3_caption",
+      "label": "Caption",
+      "default": "Lift off"
+    },
+    {
+      "type": "url",
+      "id": "photo_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Photo 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "photo_4_caption",
+      "label": "Caption",
+      "default": "Desert cruise"
+    },
+    {
+      "type": "url",
+      "id": "photo_4_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Photo 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "photo_5_caption",
+      "label": "Caption",
+      "default": "Ride together"
+    },
+    {
+      "type": "url",
+      "id": "photo_5_link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rider testimonials"
+    }
+  ]
+}
+{% endschema %}

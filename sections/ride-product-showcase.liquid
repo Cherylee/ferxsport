@@ -1,0 +1,384 @@
+{{ 'section-ride-product-showcase.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="RideShowcase-{{ section.id }}"
+  class="ride-showcase"
+  style="
+    --ride-section-width: {{ section.settings.content_min_width | default: 1100 }};
+    --ride-columns: {{ section.settings.columns | default: 3 }};
+    {% if section.settings.background_color != blank %}
+      --ride-section-bg: {{ section.settings.background_color }};
+    {% endif %}
+    --ride-nav-btn-bg: {{ section.settings.nav_btn_background | default: '#ffffff' }};
+    --ride-nav-icon-color: {{ section.settings.nav_icon_color | default: '#000000' }};
+  "
+>
+  <div class="ride-showcase__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="ride-showcase__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="ride-showcase__track-wrap">
+      <ul
+        class="ride-showcase__track"
+        data-ride-track
+        role="list"
+      >
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <li class="ride-showcase__item" data-ride-slide>
+              {% render 'ride-product-card',
+                block: block,
+                section_id: section.id,
+                placeholder_index: forloop.index,
+                icon_motor: section.settings.icon_motor,
+                icon_torque: section.settings.icon_torque,
+                icon_top_speed: section.settings.icon_top_speed,
+                icon_battery: section.settings.icon_battery,
+                spec_display_count: section.settings.spec_display_count,
+                spec_slot_1: section.settings.spec_slot_1,
+                spec_slot_2: section.settings.spec_slot_2
+              %}
+            </li>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..3) %}
+            <li class="ride-showcase__item" data-ride-slide>
+              {% render 'ride-product-card',
+                section_id: section.id,
+                placeholder: true,
+                placeholder_index: i,
+                icon_motor: section.settings.icon_motor,
+                icon_torque: section.settings.icon_torque,
+                icon_top_speed: section.settings.icon_top_speed,
+                icon_battery: section.settings.icon_battery,
+                spec_display_count: section.settings.spec_display_count,
+                spec_slot_1: section.settings.spec_slot_1,
+                spec_slot_2: section.settings.spec_slot_2
+              %}
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="ride-showcase__nav" data-ride-nav>
+      <button
+        type="button"
+        class="ride-showcase__nav-btn"
+        data-ride-prev
+        aria-label="Previous"
+        disabled
+      >
+        {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+      </button>
+      <button type="button" class="ride-showcase__nav-btn" data-ride-next aria-label="Next">
+        {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('RideShowcase-{{ section.id }}');
+    if (!section) return;
+
+    const track = section.querySelector('[data-ride-track]');
+    const nav = section.querySelector('[data-ride-nav]');
+    const prevBtn = section.querySelector('[data-ride-prev]');
+    const nextBtn = section.querySelector('[data-ride-next]');
+    const slides = [...section.querySelectorAll('[data-ride-slide]')];
+
+    const updateNav = () => {
+      if (!track || !nav || !prevBtn || !nextBtn) return;
+
+      if (slides.length <= 1) {
+        nav.hidden = true;
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      nav.hidden = false;
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      const atStart = track.scrollLeft <= 4;
+      const atEnd = maxScroll <= 4 || track.scrollLeft >= maxScroll - 4;
+
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
+    };
+
+    const scrollToSlide = (direction) => {
+      const slide = slides[0];
+      if (!track || !slide) return;
+      if (direction < 0 && prevBtn?.disabled) return;
+      if (direction > 0 && nextBtn?.disabled) return;
+
+      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
+      track.scrollBy({ left: direction * (slide.offsetWidth + gap), behavior: 'smooth' });
+    };
+
+    prevBtn?.addEventListener('click', () => scrollToSlide(-1));
+    nextBtn?.addEventListener('click', () => scrollToSlide(1));
+    track?.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
+    updateNav();
+
+    section.querySelectorAll('.ride-card__media--has-hover').forEach((media) => {
+      media.addEventListener('mouseenter', () => media.classList.add('is-hovered'));
+      media.addEventListener('mouseleave', () => media.classList.remove('is-hovered'));
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ride product showcase",
+  "tag": "section",
+  "class": "ride-product-showcase-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find The Ride That Fits Your Dirt"
+    },
+    {
+      "type": "range",
+      "id": "content_min_width",
+      "label": "Content min width (design px)",
+      "min": 900,
+      "max": 1440,
+      "step": 10,
+      "default": 1100,
+      "info": "Minimum content width based on 1440 design. Scales with --rem."
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Navigation buttons"
+    },
+    {
+      "type": "color",
+      "id": "nav_btn_background",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_icon_color",
+      "label": "Icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Spec icons"
+    },
+    {
+      "type": "select",
+      "id": "spec_display_count",
+      "label": "Specifications to show",
+      "options": [
+        { "value": "2", "label": "2 specs" },
+        { "value": "4", "label": "4 specs" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "spec_slot_1",
+      "label": "First spec",
+      "options": [
+        { "value": "motor", "label": "Motor" },
+        { "value": "torque", "label": "Torque" },
+        { "value": "top_speed", "label": "Top Speed" },
+        { "value": "battery", "label": "Battery" }
+      ],
+      "default": "motor",
+      "visible_if": "{{ section.settings.spec_display_count == '2' }}"
+    },
+    {
+      "type": "select",
+      "id": "spec_slot_2",
+      "label": "Second spec",
+      "options": [
+        { "value": "motor", "label": "Motor" },
+        { "value": "torque", "label": "Torque" },
+        { "value": "top_speed", "label": "Top Speed" },
+        { "value": "battery", "label": "Battery" }
+      ],
+      "default": "torque",
+      "visible_if": "{{ section.settings.spec_display_count == '2' }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shared by all product cards. Falls back to system icons if empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_motor",
+      "label": "Motor icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_torque",
+      "label": "Torque icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_top_speed",
+      "label": "Top Speed icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_battery",
+      "label": "Battery icon"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_hover",
+          "label": "Hover image",
+          "info": "Optional. Falls back to the product's second image."
+        },
+        {
+          "type": "header",
+          "content": "Badges & overlays"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_new_badge",
+          "label": "Show New badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "new_badge_text",
+          "label": "New badge text",
+          "default": "New",
+          "visible_if": "{{ block.settings.show_new_badge }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_best_selling",
+          "label": "Show Best-Selling overlay",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "best_selling_image",
+          "label": "Best-Selling image",
+          "info": "Replaces the Best-Selling text and arrow. Uses a system placeholder if empty.",
+          "visible_if": "{{ block.settings.show_best_selling }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_recommendation",
+          "label": "Show recommendation banner",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "recommendation_text",
+          "label": "Recommendation text",
+          "default": "TOP-SELLING PROFESSIONAL RECOMMENDATION",
+          "visible_if": "{{ block.settings.show_recommendation }}"
+        },
+        {
+          "type": "header",
+          "content": "Specifications"
+        },
+        {
+          "type": "text",
+          "id": "motor",
+          "label": "Motor",
+          "default": "60V 5600W"
+        },
+        {
+          "type": "text",
+          "id": "torque",
+          "label": "Torque",
+          "default": "177 lb-ft"
+        },
+        {
+          "type": "text",
+          "id": "top_speed",
+          "label": "Top Speed",
+          "default": "52 mph"
+        },
+        {
+          "type": "text",
+          "id": "battery",
+          "label": "Battery",
+          "default": "60V / 27Ah"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ride product showcase",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "show_new_badge": true,
+            "show_best_selling": true,
+            "show_recommendation": true,
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

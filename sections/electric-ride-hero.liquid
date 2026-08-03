@@ -1,0 +1,739 @@
+{{ 'section-electric-ride-hero.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign first_block = section.blocks.first
+  assign initial_bg = first_block.settings.background_color | default: '#3d9a8a'
+  assign explore_opacity = section.settings.explore_background_opacity | divided_by: 100.0
+  assign explore_background = section.settings.explore_background_color | default: '#000000' | color_modify: 'alpha', explore_opacity
+%}
+
+<section
+  id="ElectricRideHero-{{ section.id }}"
+  class="electric-ride-hero electric-ride-hero--clickable"
+  style="
+    --erh-section-width: {{ section.settings.content_min_width | default: 1100 }};
+    --erh-border-radius: {{ section.settings.border_radius | default: 24 }};
+    --erh-margin-top: {{ section.settings.margin_top | default: 40 }};
+    --erh-margin-bottom: {{ section.settings.margin_bottom | default: 40 }};
+    --erh-nav-btn-bg: {{ section.settings.nav_button_background | default: '#ffffff' }};
+    --erh-nav-btn-active-bg: {{ section.settings.nav_button_active_background | default: '#000000' }};
+    --erh-nav-icon-color: {{ section.settings.nav_button_icon_color | default: '#1a1a1a' }};
+    --erh-nav-icon-active-color: {{ section.settings.nav_button_active_icon_color | default: '#ffffff' }};
+    --erh-explore-background: {{ explore_background }};
+    background-color: {{ initial_bg }};
+  "
+  data-active-index="0"
+>
+  {% if section.settings.explore_label != blank %}
+    <span class="electric-ride-hero__explore" data-erh-explore aria-hidden="true">
+      {{ section.settings.explore_label }}
+    </span>
+  {% endif %}
+
+  <div class="electric-ride-hero__inner">
+    {% if section.settings.link_top_left != blank %}
+      <a
+        class="electric-ride-hero__corner-link electric-ride-hero__corner-link--left"
+        href="{{ section.settings.link_top_left }}"
+        {% if section.settings.link_top_left_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+        aria-label="{{ section.settings.link_top_left_label | default: 'Link' }}"
+      >
+        {{- 'icon-plus.svg' | inline_asset_content -}}
+      </a>
+    {% else %}
+      <span class="electric-ride-hero__corner-link electric-ride-hero__corner-link--left electric-ride-hero__corner-link--demo" aria-hidden="true">
+        {{- 'icon-plus.svg' | inline_asset_content -}}
+      </span>
+    {% endif %}
+
+    {% if section.settings.link_top_right != blank %}
+      <a
+        class="electric-ride-hero__corner-link electric-ride-hero__corner-link--right"
+        href="{{ section.settings.link_top_right }}"
+        {% if section.settings.link_top_right_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+        aria-label="{{ section.settings.link_top_right_label | default: 'Link' }}"
+      >
+        {{- 'icon-plus.svg' | inline_asset_content -}}
+      </a>
+    {% else %}
+      <span class="electric-ride-hero__corner-link electric-ride-hero__corner-link--right electric-ride-hero__corner-link--demo" aria-hidden="true">
+        {{- 'icon-plus.svg' | inline_asset_content -}}
+      </span>
+    {% endif %}
+
+    <header class="electric-ride-hero__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="electric-ride-hero__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </header>
+
+    <div class="electric-ride-hero__canvas">
+      <div class="electric-ride-hero__stage">
+        <img
+          class="electric-ride-hero__hero-image"
+          data-erh-hero-image
+          src=""
+          alt=""
+          loading="eager"
+          width="900"
+          height="500"
+          hidden
+        >
+        <div class="electric-ride-hero__hero-placeholder" data-erh-hero-default>
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'electric-ride-hero__hero-image electric-ride-hero__hero-image--default' }}
+        </div>
+      </div>
+
+      <div
+        class="electric-ride-hero__info-slider"
+        data-erh-info-slider
+        data-info-count="{{ section.blocks.size }}"
+        style="--card-bottom: {{ section.settings.info_card_position_bottom | default: 8 }}%; --card-left: {{ section.settings.info_card_position_left | default: 3 }}%;"
+      >
+        <div class="electric-ride-hero__info-track" data-erh-info-track>
+          {% for block in section.blocks %}
+            <article
+              class="electric-ride-hero__info-card"
+              data-erh-info-slide
+              aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            >
+              <div
+                class="electric-ride-hero__info-thumb electric-ride-hero__info-thumb--demo{% if block.settings.card_image != blank %} has-image{% endif %}"
+                role="img"
+                aria-label="{{ block.settings.card_title | escape }}"
+                {% if block.settings.card_image != blank %}
+                  style="background-image: url('{{ block.settings.card_image | image_url: width: 400 }}');"
+                {% endif %}
+              >
+                {% if block.settings.card_image == blank %}
+                  {{ 'product-apparel-1' | placeholder_svg_tag: 'electric-ride-hero__info-thumb-placeholder' }}
+                {% endif %}
+              </div>
+              <div class="electric-ride-hero__info-body">
+                <p class="electric-ride-hero__info-title">
+                  {{ block.settings.card_title | default: 'Forest Charge' }}
+                </p>
+                <p class="electric-ride-hero__info-text">
+                  {{ block.settings.card_text | default: 'Cut through shade, dust, and green trails with torque you can feel and color that breaks through.' }}
+                </p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% for block in section.blocks %}
+      <template data-erh-scene-data data-scene-index="{{ forloop.index0 }}">
+        {
+          "backgroundColor": {{ block.settings.background_color | default: '#3d9a8a' | json }},
+          "heroImage": {% if block.settings.hero_image != blank %}{{ block.settings.hero_image | image_url: width: 1600 | json }}{% else %}""{% endif %},
+          "heroAlt": {{ block.settings.hero_image.alt | default: block.settings.card_title | json }},
+          "sceneLink": {{ block.settings.scene_link | default: routes.root_url | json }},
+          "sceneLinkNewTab": {{ block.settings.scene_link_new_tab | json }}
+        }
+      </template>
+    {% endfor %}
+  </div>
+
+  <nav class="electric-ride-hero__nav" aria-label="{{ section.settings.learn_more_label | default: 'Scene navigation' }}">
+    <div class="electric-ride-hero__learn-wrap">
+      {% if section.settings.learn_more_label != blank %}
+        <div class="electric-ride-hero__learn-callout">
+          <span class="electric-ride-hero__learn-label">{{ section.settings.learn_more_label }}</span>
+          <svg
+            class="electric-ride-hero__learn-arrow electric-ride-hero__learn-arrow--desktop"
+            viewBox="0 0 112 52"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <marker
+                id="erh-learn-tip-{{ section.id }}-d"
+                markerWidth="7"
+                markerHeight="7"
+                refX="6"
+                refY="3.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0.5 0.5 L6 3.5 L0.5 6.5" fill="none" stroke="context-stroke" stroke-linecap="round" stroke-linejoin="round" />
+              </marker>
+            </defs>
+            <path
+              marker-end="url(#erh-learn-tip-{{ section.id }}-d)"
+              d="M 32 6 C 14 14, 58 38, 92 46"
+            />
+          </svg>
+          <svg
+            class="electric-ride-hero__learn-arrow electric-ride-hero__learn-arrow--mobile"
+            viewBox="0 0 112 52"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <marker
+                id="erh-learn-tip-{{ section.id }}-m"
+                markerWidth="7"
+                markerHeight="7"
+                refX="6"
+                refY="3.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0.5 0.5 L6 3.5 L0.5 6.5" fill="none" stroke="context-stroke" stroke-linecap="round" stroke-linejoin="round" />
+              </marker>
+            </defs>
+            <path
+              marker-end="url(#erh-learn-tip-{{ section.id }}-m)"
+              d="M 32 6 C 14 14, 58 38, 92 46"
+            />
+          </svg>
+        </div>
+      {% endif %}
+      {% if section.settings.link_learn_more != blank %}
+        <a
+          class="electric-ride-hero__nav-btn electric-ride-hero__nav-btn--learn"
+          href="{{ section.settings.link_learn_more }}"
+          {% if section.settings.link_learn_more_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+          aria-label="{{ section.settings.learn_more_label | default: 'Learn more' }}"
+        >
+          {{- 'icon-plus.svg' | inline_asset_content -}}
+        </a>
+      {% else %}
+        <span
+          class="electric-ride-hero__nav-btn electric-ride-hero__nav-btn--learn electric-ride-hero__nav-btn--demo"
+          aria-hidden="true"
+        >
+          {{- 'icon-plus.svg' | inline_asset_content -}}
+        </span>
+      {% endif %}
+    </div>
+
+      {% for block in section.blocks %}
+        <button
+          type="button"
+          class="electric-ride-hero__nav-btn{% if forloop.first %} is-active{% endif %}"
+          data-erh-scene-btn
+          data-scene-index="{{ forloop.index0 }}"
+          aria-label="{{ block.settings.nav_label | default: block.settings.card_title | default: 'Scene' }}"
+          {% if block.settings.nav_button_background != blank %}
+            style="--erh-nav-btn-bg: {{ block.settings.nav_button_background }};"
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.nav_icon_image != blank %}
+            <span class="electric-ride-hero__nav-btn-icon electric-ride-hero__nav-btn-icon--image">
+              {{
+                block.settings.nav_icon_image
+                | image_url: width: 48
+                | image_tag: loading: 'lazy', alt: block.settings.nav_label, class: 'electric-ride-hero__nav-btn-img'
+              }}
+            </span>
+          {% else %}
+            {% liquid
+              assign system_icon = block.settings.nav_system_icon
+              if system_icon == blank
+                case forloop.index
+                  when 2
+                    assign system_icon = 'plant'
+                  when 3
+                    assign system_icon = 'dryer'
+                  else
+                    assign system_icon = 'star'
+                endcase
+              endif
+            %}
+            {% render 'erh-nav-icon', icon: system_icon %}
+          {% endif %}
+        </button>
+      {% endfor %}
+  </nav>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('ElectricRideHero-{{ section.id }}');
+    if (!section) return;
+
+    const heroImage = section.querySelector('[data-erh-hero-image]');
+    const heroDefault = section.querySelector('[data-erh-hero-default]');
+    const infoSlider = section.querySelector('[data-erh-info-slider]');
+    const infoTrack = section.querySelector('[data-erh-info-track]');
+    const infoSlides = section.querySelectorAll('[data-erh-info-slide]');
+    const exploreFollower = section.querySelector('[data-erh-explore]');
+    const nav = section.querySelector('.electric-ride-hero__nav');
+    const sceneButtons = section.querySelectorAll('[data-erh-scene-btn]');
+    const sceneTemplates = section.querySelectorAll('[data-erh-scene-data]');
+
+    const scenes = Array.from(sceneTemplates).map((template) => {
+      try {
+        return JSON.parse(template.innerHTML.trim());
+      } catch {
+        return null;
+      }
+    }).filter(Boolean);
+
+    if (!scenes.length) return;
+
+    const moveInfoSlider = (index, animate = true) => {
+      const activeSlide = infoSlides[index];
+      if (!infoSlider || !infoTrack || !activeSlide) return;
+
+      if (!animate) {
+        infoTrack.style.transition = 'none';
+        infoSlider.style.transition = 'none';
+      }
+
+      infoTrack.style.transform = `translate3d(0, -${activeSlide.offsetTop}px, 0)`;
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        infoSlider.style.setProperty('--info-shift-x', 0);
+        infoSlider.style.setProperty('--info-shift-y', 0);
+      } else {
+        infoSlider.style.setProperty('--info-shift-x', index * 6);
+        infoSlider.style.setProperty('--info-shift-y', index * 24);
+      }
+      infoSlides.forEach((slide, slideIndex) => {
+        slide.setAttribute('aria-hidden', slideIndex === index ? 'false' : 'true');
+      });
+
+      if (!animate) {
+        infoTrack.offsetHeight;
+        infoTrack.style.transition = '';
+        infoSlider.style.transition = '';
+      }
+    };
+
+    if (exploreFollower && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const learnCallout = section.querySelector('.electric-ride-hero__learn-callout');
+      const learnWrap = section.querySelector('.electric-ride-hero__learn-wrap');
+
+      const isNearLearnNav = (event) => {
+        if (event.target.closest('.electric-ride-hero__nav')) return true;
+
+        const pad = 16;
+        return [nav, learnCallout, learnWrap].filter(Boolean).some((el) => {
+          const r = el.getBoundingClientRect();
+          return (
+            event.clientX >= r.left - pad &&
+            event.clientX <= r.right + pad &&
+            event.clientY >= r.top - pad &&
+            event.clientY <= r.bottom + pad
+          );
+        });
+      };
+
+      const moveExplore = (event) => {
+        if (isNearLearnNav(event)) {
+          exploreFollower.classList.remove('is-visible');
+          return;
+        }
+
+        const rect = section.getBoundingClientRect();
+        const x = Math.round(event.clientX - rect.left);
+        const y = Math.round(event.clientY - rect.top);
+        exploreFollower.style.setProperty('--explore-x', `${x}px`);
+        exploreFollower.style.setProperty('--explore-y', `${y}px`);
+        exploreFollower.classList.add('is-visible');
+      };
+
+      section.addEventListener('pointerenter', moveExplore);
+      section.addEventListener('pointermove', moveExplore);
+      section.addEventListener('pointerleave', () => exploreFollower.classList.remove('is-visible'));
+    }
+
+    section.addEventListener('click', (event) => {
+      if (event.target.closest('.electric-ride-hero__nav, a, button')) return;
+
+      const activeScene = scenes[Number(section.dataset.activeIndex)];
+      const sceneLink = activeScene?.sceneLink || {{ routes.root_url | json }};
+
+      if (activeScene?.sceneLinkNewTab) {
+        window.open(sceneLink, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.href = sceneLink;
+      }
+    });
+
+    const applyScene = (index, animate = true) => {
+      const scene = scenes[index];
+      if (!scene) return;
+
+      section.dataset.activeIndex = String(index);
+      section.style.backgroundColor = scene.backgroundColor;
+
+      sceneButtons.forEach((btn) => {
+        btn.classList.toggle('is-active', Number(btn.dataset.sceneIndex) === index);
+      });
+
+      moveInfoSlider(index, animate);
+
+      const switchClass = 'is-switching';
+
+      if (animate) {
+        heroImage.classList.add(switchClass);
+        if (heroDefault) heroDefault.classList.add(switchClass);
+      }
+
+      const updateContent = () => {
+        if (scene.heroImage) {
+          heroImage.src = scene.heroImage;
+          heroImage.alt = scene.heroAlt || '';
+          heroImage.hidden = false;
+          if (heroDefault) heroDefault.hidden = true;
+        } else {
+          heroImage.hidden = true;
+          if (heroDefault) heroDefault.hidden = false;
+        }
+
+      };
+
+      if (animate) {
+        window.setTimeout(() => {
+          updateContent();
+          heroImage.classList.remove(switchClass);
+          if (heroDefault) heroDefault.classList.remove(switchClass);
+        }, 260);
+      } else {
+        updateContent();
+      }
+    };
+
+    sceneButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const index = Number(btn.dataset.sceneIndex);
+        if (Number(section.dataset.activeIndex) === index) return;
+        applyScene(index, true);
+      });
+    });
+
+    applyScene(0, false);
+    window.addEventListener('resize', () => {
+      moveInfoSlider(Number(section.dataset.activeIndex), false);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Electric ride hero",
+  "tag": "section",
+  "class": "electric-ride-hero-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel the Rush of Electric Dirt Riding"
+    },
+    {
+      "type": "text",
+      "id": "explore_label",
+      "label": "Explore pill label",
+      "default": "Explore"
+    },
+    {
+      "type": "color",
+      "id": "explore_background_color",
+      "label": "Explore background color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "explore_background_opacity",
+      "label": "Explore background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 55,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "content_min_width",
+      "label": "Module width (desktop design px)",
+      "min": 900,
+      "max": 1440,
+      "step": 10,
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius (design px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top margin (design px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom margin (design px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Info card slider"
+    },
+    {
+      "type": "range",
+      "id": "info_card_position_bottom",
+      "label": "Position from bottom (%)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 8,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "info_card_position_left",
+      "label": "Position from left (%)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 3,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Plus links"
+    },
+    {
+      "type": "url",
+      "id": "link_top_left",
+      "label": "Top left plus link"
+    },
+    {
+      "type": "text",
+      "id": "link_top_left_label",
+      "label": "Top left link label",
+      "default": "Open link"
+    },
+    {
+      "type": "checkbox",
+      "id": "link_top_left_new_tab",
+      "label": "Open top left link in new tab",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "link_top_right",
+      "label": "Top right plus link"
+    },
+    {
+      "type": "text",
+      "id": "link_top_right_label",
+      "label": "Top right link label",
+      "default": "Open link"
+    },
+    {
+      "type": "checkbox",
+      "id": "link_top_right_new_tab",
+      "label": "Open top right link in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "learn_more_label",
+      "label": "Learn more label",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "link_learn_more",
+      "label": "Bottom-right plus button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "link_learn_more_new_tab",
+      "label": "Open bottom-right plus link in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Nav buttons"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_background",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_active_background",
+      "label": "Active button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_icon_color",
+      "label": "Icon color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_active_icon_color",
+      "label": "Active icon color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "scene",
+      "name": "Scene",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_label",
+          "label": "Nav button label",
+          "default": "Scene"
+        },
+        {
+          "type": "url",
+          "id": "scene_link",
+          "label": "Scene link",
+          "info": "Defaults to the home page when empty."
+        },
+        {
+          "type": "checkbox",
+          "id": "scene_link_new_tab",
+          "label": "Open scene link in new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Nav button"
+        },
+        {
+          "type": "image_picker",
+          "id": "nav_icon_image",
+          "label": "Icon image",
+          "info": "Optional. Upload to replace the system icon."
+        },
+        {
+          "type": "select",
+          "id": "nav_system_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "star", "label": "t:options.star" },
+            { "value": "leaf", "label": "t:options.leaf" },
+            { "value": "plant", "label": "t:options.plant" },
+            { "value": "fire", "label": "t:options.fire" },
+            { "value": "lightning_bolt", "label": "t:options.lightning_bolt" },
+            { "value": "snowflake", "label": "t:options.snowflake" },
+            { "value": "dryer", "label": "t:options.dryer" },
+            { "value": "map_pin", "label": "t:options.map_pin" },
+            { "value": "paw_print", "label": "t:options.paw_print" },
+            { "value": "truck", "label": "t:options.truck" },
+            { "value": "plane", "label": "t:options.plane" },
+            { "value": "heart", "label": "t:options.heart" },
+            { "value": "recycle", "label": "t:options.recycle" },
+            { "value": "serving_dish", "label": "t:options.serving_dish" },
+            { "value": "stopwatch", "label": "t:options.stopwatch" }
+          ],
+          "default": "star",
+          "visible_if": "{{ block.settings.nav_icon_image == blank }}"
+        },
+        {
+          "type": "color",
+          "id": "nav_button_background",
+          "label": "Button background override",
+          "info": "Optional. Overrides section default for this button only."
+        },
+        {
+          "type": "header",
+          "content": "Scene"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Section background color",
+          "default": "#3d9a8a"
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Hero image",
+          "info": "Transparent PNG recommended."
+        },
+        {
+          "type": "header",
+          "content": "Info card"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card title",
+          "default": "Forest Charge"
+        },
+        {
+          "type": "textarea",
+          "id": "card_text",
+          "label": "Card description",
+          "default": "Cut through shade, dust, and green trails with torque you can feel and color that breaks through."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Electric ride hero",
+      "blocks": [
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Forest",
+            "nav_system_icon": "star",
+            "background_color": "#3d9a8a",
+            "card_title": "Forest Charge",
+            "card_text": "Cut through shade, dust, and green trails with torque you can feel and color that breaks through."
+          }
+        },
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Trail",
+            "nav_system_icon": "plant",
+            "background_color": "#c45c26",
+            "card_title": "Desert Rush",
+            "card_text": "Open terrain, blazing sun, and instant acceleration across dusty ridgelines."
+          }
+        },
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Wind",
+            "nav_system_icon": "dryer",
+            "background_color": "#4a6fa5",
+            "card_title": "Coastal Glide",
+            "card_text": "Smooth torque and quiet power for wide coastal paths and breezy evening rides."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

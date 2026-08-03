@@ -1,0 +1,577 @@
+.electric-ride-hero {
+  --erh-accent: var(--Arvita-accent-color, #ff7223);
+  border-radius: calc(var(--erh-border-radius, 24) * var(--rem));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  margin-block-end: calc(var(--erh-margin-bottom, 40) * var(--rem));
+  margin-block-start: calc(var(--erh-margin-top, 40) * var(--rem));
+  margin-inline: auto;
+  min-height: calc(720 * var(--rem));
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.55s ease;
+  width: min(100%, calc(var(--erh-section-width, 1100) * var(--rem)));
+}
+
+.electric-ride-hero--clickable {
+  cursor: pointer;
+}
+
+.electric-ride-hero__inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: calc(720 * var(--rem));
+  padding: calc(32 * var(--rem)) calc(40 * var(--rem)) calc(48 * var(--rem));
+  position: relative;
+  width: 100%;
+}
+
+.electric-ride-hero__corner-link {
+  align-items: center;
+  color: #fff;
+  display: inline-flex;
+  height: calc(40 * var(--rem));
+  justify-content: center;
+  position: absolute;
+  text-decoration: none;
+  top: calc(32 * var(--rem));
+  transition: opacity 0.2s ease;
+  width: calc(40 * var(--rem));
+  z-index: 4;
+}
+
+.electric-ride-hero__corner-link:hover {
+  opacity: 0.75;
+}
+
+.electric-ride-hero__corner-link--left {
+  left: calc(40 * var(--rem));
+}
+
+.electric-ride-hero__corner-link--right {
+  right: calc(40 * var(--rem));
+}
+
+.electric-ride-hero__corner-link--demo {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.electric-ride-hero__corner-link svg {
+  height: calc(24 * var(--rem));
+  width: calc(24 * var(--rem));
+}
+
+.electric-ride-hero__header {
+  flex-shrink: 0;
+  margin: calc(32 * var(--rem)) auto calc(24 * var(--rem));
+  max-width: calc(900 * var(--rem));
+  position: relative;
+  text-align: center;
+  z-index: 3;
+}
+
+.electric-ride-hero__heading {
+  font-family: var(--font-heading--family);
+  font-size: calc(42 * var(--rem));
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.electric-ride-hero__explore {
+  align-items: center;
+  background: var(--erh-explore-background, rgb(0 0 0 / 55%));
+  border-radius: var(--Arvita-radius-full);
+  display: inline-flex;
+  font-size: calc(14 * var(--rem));
+  font-weight: 600;
+  justify-content: center;
+  left: 0;
+  letter-spacing: 0.04em;
+  min-height: calc(40 * var(--rem));
+  min-width: calc(104 * var(--rem));
+  opacity: 0;
+  padding: calc(8 * var(--rem)) calc(20 * var(--rem));
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate3d(var(--explore-x, 0px), var(--explore-y, 0px), 0) translate(-50%, -50%);
+  transition: opacity 0.18s ease;
+  white-space: nowrap;
+  z-index: 40;
+}
+
+.electric-ride-hero__explore.is-visible {
+  opacity: 1;
+}
+
+.electric-ride-hero__canvas {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  isolation: isolate;
+  justify-content: center;
+  min-height: calc(420 * var(--rem));
+  position: relative;
+  width: 100%;
+}
+
+.electric-ride-hero__stage {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: calc(900 * var(--rem));
+  pointer-events: none;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.electric-ride-hero__hero-image {
+  display: block;
+  height: auto;
+  margin-inline: auto;
+  max-height: calc(420 * var(--rem));
+  max-width: 100%;
+  object-fit: contain;
+  position: relative;
+  transition: opacity 0.35s ease;
+  width: auto;
+  z-index: 0;
+}
+
+.electric-ride-hero__hero-placeholder {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  position: relative;
+  transition: opacity 0.35s ease;
+  width: 100%;
+  z-index: 0;
+}
+
+.electric-ride-hero__hero-placeholder svg {
+  display: block;
+  height: auto;
+  margin-inline: auto;
+  max-height: calc(420 * var(--rem));
+  max-width: min(100%, calc(900 * var(--rem)));
+  width: auto;
+}
+
+.electric-ride-hero__hero-image--default {
+  filter: drop-shadow(0 calc(12 * var(--rem)) calc(24 * var(--rem)) rgb(0 0 0 / 20%));
+}
+
+.electric-ride-hero__hero-image.is-switching,
+.electric-ride-hero__hero-placeholder.is-switching {
+  opacity: 0;
+}
+
+.electric-ride-hero__info-slider {
+  --erh-info-card-height: calc(100 * var(--rem));
+  background: #fff;
+  border-radius: var(--Arvita-radius-md);
+  box-shadow: 0 calc(8 * var(--rem)) calc(32 * var(--rem)) rgb(0 0 0 / 12%);
+  color: #1a1a1a;
+  height: var(--erh-info-card-height);
+  inset-block-end: var(--card-bottom, 8%);
+  inset-inline-start: var(--card-left, 3%);
+  max-width: calc(360 * var(--rem));
+  overflow: hidden;
+  position: absolute;
+  transform: translate3d(
+    calc(var(--info-shift-x, 0) * var(--rem)),
+    calc(var(--info-shift-y, 0) * var(--rem)),
+    0
+  );
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  width: min(calc(100% - calc(80 * var(--rem))), calc(360 * var(--rem)));
+  z-index: 20;
+}
+
+.electric-ride-hero__info-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.electric-ride-hero__info-card {
+  display: flex;
+  flex: 0 0 var(--erh-info-card-height);
+  gap: calc(14 * var(--rem));
+  height: var(--erh-info-card-height);
+  padding: calc(14 * var(--rem));
+  width: 100%;
+}
+
+.electric-ride-hero__info-thumb {
+  border-radius: var(--Arvita-radius-sm);
+  flex-shrink: 0;
+  height: calc(72 * var(--rem));
+  object-fit: cover;
+  width: calc(72 * var(--rem));
+}
+
+.electric-ride-hero__info-thumb--demo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.electric-ride-hero__info-thumb--demo.has-image .electric-ride-hero__info-thumb-placeholder {
+  display: none;
+}
+
+.electric-ride-hero__info-thumb-placeholder {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.electric-ride-hero__info-body {
+  min-width: 0;
+}
+
+.electric-ride-hero__info-title {
+  font-size: calc(16 * var(--rem));
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 calc(6 * var(--rem));
+}
+
+.electric-ride-hero__info-text {
+  color: #555;
+  font-size: calc(12 * var(--rem));
+  line-height: 1.45;
+  margin: 0;
+}
+
+.electric-ride-hero__nav {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--rem));
+  inset-block-end: calc(20 * var(--rem));
+  inset-inline-end: calc(20 * var(--rem));
+  position: absolute;
+  z-index: 30;
+}
+
+.electric-ride-hero__nav,
+.electric-ride-hero__nav * {
+  cursor: pointer;
+}
+
+.electric-ride-hero__learn-wrap {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  position: relative;
+  width: calc(56 * var(--rem));
+}
+
+.electric-ride-hero__learn-callout {
+  bottom: calc(100% + 0 * var(--rem));
+  display: block;
+  height: calc(68 * var(--rem));
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  right: calc(50 * var(--rem));
+  width: calc(118 * var(--rem));
+}
+
+.electric-ride-hero__learn-label {
+  color: #fff;
+  display: block;
+  font-size: calc(15 * var(--rem));
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  position: absolute;
+  right: calc(8 * var(--rem));
+  top: 0;
+  transform: rotate(-8deg);
+  transform-origin: right center;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+@media screen and (min-width: 769px) {
+  .electric-ride-hero__learn-label {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-size: 15px;
+  }
+}
+
+.electric-ride-hero__learn-arrow {
+  color: #fff;
+  display: block;
+  pointer-events: none;
+  position: absolute;
+}
+
+.electric-ride-hero__learn-arrow--mobile {
+  display: none;
+}
+
+.electric-ride-hero__learn-arrow--desktop {
+  bottom: auto;
+  height: calc(44 * var(--rem));
+  right: calc(-18 * var(--rem));
+  top: calc(22 * var(--rem));
+  width: calc(96 * var(--rem));
+}
+
+.electric-ride-hero__learn-arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.electric-ride-hero__learn-arrow--desktop path {
+  stroke-width: 2;
+}
+
+.electric-ride-hero__learn-arrow--mobile path {
+  stroke-width: 2.5;
+}
+
+.electric-ride-hero__nav-btn {
+  align-items: center;
+  background: var(--erh-nav-btn-bg, #fff);
+  border: 0;
+  border-radius: var(--Arvita-radius-full);
+  box-shadow: 0 calc(4 * var(--rem)) calc(16 * var(--rem)) rgb(0 0 0 / 10%);
+  color: var(--erh-nav-icon-color, #1a1a1a);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  height: calc(56 * var(--rem));
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+  width: calc(56 * var(--rem));
+}
+
+.electric-ride-hero__nav-btn:hover:not(.is-active):not(.electric-ride-hero__nav-btn--demo) {
+  transform: scale(1.05);
+}
+
+.electric-ride-hero__nav-btn--learn {
+  color: var(--erh-accent);
+}
+
+.electric-ride-hero__nav-btn--demo {
+  cursor: default;
+}
+
+.electric-ride-hero__nav-btn.is-active {
+  background: var(--erh-nav-btn-active-bg, #000);
+  box-shadow: 0 calc(6 * var(--rem)) calc(20 * var(--rem)) rgb(0 0 0 / 18%);
+  color: var(--erh-nav-icon-active-color, #fff);
+}
+
+.electric-ride-hero__nav-btn > svg {
+  display: block;
+  height: calc(24 * var(--rem));
+  width: calc(24 * var(--rem));
+}
+
+.electric-ride-hero__nav-btn-icon {
+  align-items: center;
+  display: inline-flex;
+  height: calc(24 * var(--rem));
+  justify-content: center;
+  width: calc(24 * var(--rem));
+}
+
+.electric-ride-hero__nav-btn-icon svg {
+  display: block;
+  height: calc(24 * var(--rem));
+  width: calc(24 * var(--rem));
+}
+
+.electric-ride-hero__nav-btn-img {
+  display: block;
+  height: calc(24 * var(--rem));
+  object-fit: contain;
+  width: calc(24 * var(--rem));
+}
+
+.electric-ride-hero__nav-btn.is-active .electric-ride-hero__nav-btn-img {
+  filter: brightness(0) invert(1);
+}
+
+@media screen and (max-width: 768px) {
+  .electric-ride-hero {
+    margin-block-end: calc(var(--erh-margin-bottom, 40) * 0.7 * var(--rem));
+    margin-block-start: calc(var(--erh-margin-top, 40) * 0.7 * var(--rem));
+    min-height: calc(1220 * var(--rem));
+    width: calc(100% - calc(80 * var(--rem)));
+  }
+
+  .electric-ride-hero__inner {
+    min-height: calc(1220 * var(--rem));
+    padding: calc(85 * var(--rem)) calc(36 * var(--rem)) calc(36 * var(--rem));
+  }
+
+  .electric-ride-hero__corner-link {
+    display: none;
+  }
+
+  .electric-ride-hero__header {
+    margin: 0 auto;
+    max-width: calc(620 * var(--rem));
+  }
+
+  .electric-ride-hero__heading {
+    font-size: calc(52 * var(--rem));
+    line-height: 1.08;
+  }
+
+  .electric-ride-hero__explore {
+    display: none;
+  }
+
+  .electric-ride-hero__canvas {
+    display: block;
+    min-height: 0;
+    position: static;
+  }
+
+  .electric-ride-hero__stage {
+    inset-inline-start: calc(-36 * var(--rem));
+    max-width: none;
+    position: absolute;
+    top: calc(290 * var(--rem));
+    width: calc(100% + calc(72 * var(--rem)));
+  }
+
+  .electric-ride-hero__hero-image,
+  .electric-ride-hero__hero-placeholder svg {
+    max-height: calc(430 * var(--rem));
+    max-width: 100%;
+  }
+
+  .electric-ride-hero__info-slider {
+    --erh-info-card-height: calc(230 * var(--rem));
+    border-radius: var(--Arvita-radius-xl);
+    inset-block-end: calc(240 * var(--rem)) !important;
+    inset-inline-start: calc(36 * var(--rem)) !important;
+    max-width: none;
+    transform: none;
+    width: calc(100% - calc(72 * var(--rem)));
+  }
+
+  .electric-ride-hero__info-card {
+    gap: calc(26 * var(--rem));
+    padding: calc(16 * var(--rem));
+  }
+
+  .electric-ride-hero__info-thumb {
+    border-radius: var(--Arvita-radius-lg);
+    height: calc(198 * var(--rem));
+    width: calc(220 * var(--rem));
+  }
+
+  .electric-ride-hero__info-body {
+    align-self: center;
+  }
+
+  .electric-ride-hero__info-title {
+    font-size: calc(30 * var(--rem));
+    margin-bottom: calc(12 * var(--rem));
+  }
+
+  .electric-ride-hero__info-text {
+    font-size: calc(22 * var(--rem));
+    line-height: 1.35;
+  }
+
+  .electric-ride-hero__nav {
+    align-items: flex-end;
+    flex-direction: row;
+    gap: calc(18 * var(--rem));
+    inset-block-end: calc(56 * var(--rem));
+    inset-inline: calc(36 * var(--rem));
+  }
+
+  .electric-ride-hero__learn-wrap {
+    align-items: flex-end;
+    flex-direction: column;
+    margin-inline-start: auto;
+    order: 2;
+    overflow: visible;
+    width: calc(84 * var(--rem));
+  }
+
+  .electric-ride-hero__learn-callout {
+    bottom: calc(100% + 2 * var(--rem));
+    height: calc(92 * var(--rem));
+    margin-block-end: 0;
+    right: calc(64 * var(--rem));
+    width: calc(164 * var(--rem));
+  }
+
+  .electric-ride-hero__learn-label {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: calc(26 * var(--rem));
+    font-weight: 600;
+    right: calc(10 * var(--rem));
+    text-shadow: 0 calc(1 * var(--rem)) calc(3 * var(--rem)) rgb(0 0 0 / 28%);
+    top: calc(2 * var(--rem));
+    transform: rotate(-10deg);
+  }
+
+  .electric-ride-hero__learn-arrow--desktop {
+    display: none;
+  }
+
+  .electric-ride-hero__learn-arrow--mobile {
+    bottom: auto;
+    display: block;
+    height: calc(50 * var(--rem));
+    left: auto;
+    right: calc(-14 * var(--rem));
+    top: calc(40 * var(--rem));
+    width: calc(112 * var(--rem));
+  }
+
+  .electric-ride-hero__nav-btn {
+    height: calc(84 * var(--rem));
+    order: 1;
+    width: calc(84 * var(--rem));
+  }
+
+  .electric-ride-hero__learn-wrap .electric-ride-hero__nav-btn {
+    order: initial;
+  }
+
+  .electric-ride-hero__nav-btn > svg,
+  .electric-ride-hero__nav-btn-icon,
+  .electric-ride-hero__nav-btn-icon svg,
+  .electric-ride-hero__nav-btn-img {
+    height: calc(38 * var(--rem));
+    width: calc(38 * var(--rem));
+  }
+}

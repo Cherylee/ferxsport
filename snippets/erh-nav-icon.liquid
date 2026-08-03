@@ -1,0 +1,22 @@
+{%- doc -%}
+  System icon for electric-ride-hero nav buttons.
+
+  @param {string} icon - Theme icon name from snippets/icon.liquid
+{%- enddoc -%}
+
+{% liquid
+  assign icon_name = icon | default: 'star'
+%}
+
+<span class="electric-ride-hero__nav-btn-icon" aria-hidden="true">
+  <svg
+    class="icon-default"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    focusable="false"
+  >
+    {% render 'icon', icon: icon_name %}
+  </svg>
+</span>

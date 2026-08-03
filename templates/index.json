@@ -91,6 +91,183 @@
         "padding-block-end": 72
       }
     },
+    "electric_ride_hero_home": {
+      "type": "electric-ride-hero",
+      "blocks": {
+        "scene_forest": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Forest",
+            "scene_link": "shopify://blogs/news",
+            "scene_link_new_tab": false,
+            "nav_system_icon": "star",
+            "nav_button_background": "",
+            "background_color": "#3d9a8a",
+            "card_title": "Forest Charge",
+            "card_text": "Cut through shade, dust, and green trails with torque you can feel and color that breaks through."
+          }
+        },
+        "scene_desert": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Trail",
+            "scene_link": "shopify://pages/contact",
+            "scene_link_new_tab": false,
+            "nav_system_icon": "plant",
+            "nav_button_background": "",
+            "background_color": "#c45c26",
+            "card_title": "Desert Rush",
+            "card_text": "Open terrain, blazing sun, and instant acceleration across dusty ridgelines."
+          }
+        },
+        "scene_coast": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Wind",
+            "scene_link": "shopify://collections",
+            "scene_link_new_tab": false,
+            "nav_system_icon": "dryer",
+            "nav_button_background": "",
+            "background_color": "#4a6fa5",
+            "card_title": "Coastal Glide",
+            "card_text": "Smooth torque and quiet power for wide coastal paths and breezy evening rides."
+          }
+        }
+      },
+      "block_order": [
+        "scene_forest",
+        "scene_desert",
+        "scene_coast"
+      ],
+      "name": "Electric ride hero",
+      "settings": {
+        "heading": "Feel the Rush of Electric Dirt Riding",
+        "explore_label": "Explore",
+        "explore_background_color": "#000000",
+        "explore_background_opacity": 55,
+        "content_min_width": 1100,
+        "border_radius": 24,
+        "margin_top": 40,
+        "margin_bottom": 40,
+        "info_card_position_bottom": 8,
+        "info_card_position_left": 3,
+        "link_top_left": "",
+        "link_top_left_label": "Open link",
+        "link_top_left_new_tab": false,
+        "link_top_right": "",
+        "link_top_right_label": "Open link",
+        "link_top_right_new_tab": false,
+        "learn_more_label": "Learn More",
+        "link_learn_more": "",
+        "link_learn_more_new_tab": false,
+        "nav_button_background": "#ffffff",
+        "nav_button_active_background": "#000000",
+        "nav_button_icon_color": "#1a1a1a",
+        "nav_button_active_icon_color": "#ffffff"
+      }
+    },
+    "ride_showcase_home": {
+      "type": "ride-product-showcase",
+      "blocks": {
+        "product_card_FzbpEn": {
+          "type": "product_card",
+          "settings": {
+            "product": "the-collection-snowboard-oxygen",
+            "image_hover": "shopify://shop_images/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg",
+            "show_new_badge": false,
+            "new_badge_text": "New",
+            "show_best_selling": false,
+            "show_recommendation": false,
+            "recommendation_text": "TOP-SELLING PROFESSIONAL RECOMMENDATION",
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        },
+        "product_card_1": {
+          "type": "product_card",
+          "settings": {
+            "product": "the-3p-fulfilled-snowboard",
+            "image_hover": "shopify://shop_images/Main_9129b69a-0c7b-4f66-b6cf-c4222f18028a.jpg",
+            "show_new_badge": true,
+            "new_badge_text": "New",
+            "show_best_selling": true,
+            "show_recommendation": true,
+            "recommendation_text": "TOP-SELLING PROFESSIONAL RECOMMENDATION",
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        },
+        "product_card_2": {
+          "type": "product_card",
+          "settings": {
+            "product": "the-collection-snowboard-hydrogen",
+            "image_hover": "shopify://shop_images/Main_0a4e9096-021a-4c1e-8750-24b233166a12.jpg",
+            "show_new_badge": false,
+            "new_badge_text": "New",
+            "show_best_selling": false,
+            "show_recommendation": false,
+            "recommendation_text": "TOP-SELLING PROFESSIONAL RECOMMENDATION",
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        },
+        "product_card_3": {
+          "type": "product_card",
+          "settings": {
+            "product": "the-compare-at-price-snowboard",
+            "image_hover": "shopify://shop_images/Main_b13ad453-477c-4ed1-9b43-81f3345adfd6.jpg",
+            "show_new_badge": false,
+            "new_badge_text": "New",
+            "show_best_selling": false,
+            "show_recommendation": false,
+            "recommendation_text": "TOP-SELLING PROFESSIONAL RECOMMENDATION",
+            "motor": "60V 5600W",
+            "torque": "177 lb-ft",
+            "top_speed": "52 mph",
+            "battery": "60V / 27Ah"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_FzbpEn",
+        "product_card_1",
+        "product_card_2",
+        "product_card_3"
+      ],
+      "name": "Ride product showcase",
+      "settings": {
+        "heading": "Find The Ride That Fits Your Dirt",
+        "content_min_width": 1100,
+        "columns": 3,
+        "background_color": "#ffffff",
+        "nav_btn_background": "#ffffff",
+        "nav_icon_color": "#000000",
+        "spec_display_count": "4",
+        "spec_slot_1": "motor",
+        "spec_slot_2": "torque"
+      }
+    },
+    "rider_testimonials_home": {
+      "type": "rider-testimonials",
+      "name": "Rider testimonials",
+      "settings": {
+        "heading": "What 58,000+ Valtinsu Riders Are Saying",
+        "subheading": "Master your bike, discover new trails, and stay ahead with the latest summer riding trends.",
+        "content_min_width": 1100,
+        "click_label": "CLICK HERE",
+        "photo_1_caption": "Weekend trail vibes",
+        "photo_2_caption": "Built for dirt days",
+        "photo_3_caption": "Lift off",
+        "photo_4_caption": "Desert cruise",
+        "photo_5_caption": "Ride together"
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -280,6 +457,9 @@
   },
   "order": [
     "hero_jVaWmY",
+    "electric_ride_hero_home",
+    "ride_showcase_home",
+    "rider_testimonials_home",
     "product_list_fa6P9H"
   ]
 }

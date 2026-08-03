@@ -1,0 +1,311 @@
+{%- doc -%}
+  Product card for ride-product-showcase section.
+
+  @param {object} [block] - Block object
+  @param {string} section_id - Section ID
+  @param {boolean} [placeholder] - Render placeholder card
+  @param {number} [placeholder_index] - Index for system placeholder image
+  @param {object} [icon_motor] - Shared motor icon image
+  @param {object} [icon_torque] - Shared torque icon image
+  @param {object} [icon_top_speed] - Shared top speed icon image
+  @param {object} [icon_battery] - Shared battery icon image
+  @param {string} [spec_display_count] - Show 2 or 4 specs
+  @param {string} [spec_slot_1] - First spec key when showing 2
+  @param {string} [spec_slot_2] - Second spec key when showing 2
+{%- enddoc -%}
+
+{% liquid
+  assign is_placeholder = placeholder | default: false
+  assign placeholder_index = placeholder_index | default: 1
+  assign spec_display_count = spec_display_count | default: '4'
+  assign spec_slot_1 = spec_slot_1 | default: 'motor'
+  assign spec_slot_2 = spec_slot_2 | default: 'torque'
+
+  if spec_display_count == '2'
+    assign active_specs = spec_slot_1 | append: ',' | append: spec_slot_2 | split: ','
+  else
+    assign active_specs = 'motor,torque,top_speed,battery' | split: ','
+  endif
+
+  case placeholder_index
+    when 2
+      assign placeholder_svg = 'product-2'
+    when 3
+      assign placeholder_svg = 'product-3'
+    when 4
+      assign placeholder_svg = 'product-4'
+    when 5
+      assign placeholder_svg = 'product-5'
+    else
+      assign placeholder_svg = 'product-1'
+  endcase
+
+  if is_placeholder
+    assign product = blank
+    assign hover_image = blank
+    assign show_new_badge = false
+    assign show_best_selling = false
+    assign show_recommendation = false
+    assign motor = '60V 5600W'
+    assign torque = '177 lb-ft'
+    assign top_speed = '52 mph'
+    assign battery = '60V / 27Ah'
+  else
+    assign product = block.settings.product
+    assign hover_image = block.settings.image_hover
+    assign show_new_badge = block.settings.show_new_badge
+    assign show_best_selling = block.settings.show_best_selling
+    assign show_recommendation = block.settings.show_recommendation
+    assign motor = block.settings.motor
+    assign torque = block.settings.torque
+    assign top_speed = block.settings.top_speed
+    assign battery = block.settings.battery
+  endif
+
+  if product != blank
+    assign primary_image = product.featured_media.preview_image
+    if hover_image == blank and product.media.size > 1
+      assign hover_image = product.media[1].preview_image
+    endif
+    assign variant = product.selected_or_first_available_variant
+    assign can_add_to_cart = variant.available
+    assign product_url = product.url
+  else
+    assign can_add_to_cart = false
+    assign product_url = '#'
+  endif
+
+  assign has_real_hover = false
+  if hover_image != blank
+    assign has_real_hover = true
+  endif
+
+  assign use_svg_hover = false
+  unless has_real_hover
+    assign use_svg_hover = true
+  endunless
+
+  assign use_tinted_hover = false
+  if has_real_hover == false and primary_image != blank
+    assign use_svg_hover = false
+    assign use_tinted_hover = true
+  endif
+
+  assign has_hover_layer = false
+  if has_real_hover or use_svg_hover or use_tinted_hover
+    assign has_hover_layer = true
+  endif
+%}
+
+<article class="ride-card"{% unless is_placeholder %}{{ block.shopify_attributes }}{% endunless %}>
+  <div class="ride-card__media{% if has_hover_layer %} ride-card__media--has-hover{% endif %}">
+    <div class="ride-card__media-panel">
+      <div class="ride-card__media-viewport">
+        <a class="ride-card__media-link" href="{{ product_url }}" aria-label="{{ product.title | default: 'Product' }}">
+          {% if primary_image != blank %}
+            {{
+              primary_image
+              | image_url: width: 900
+              | image_tag:
+                class: 'ride-card__image ride-card__image--default',
+                loading: 'lazy',
+                widths: '400,600,900',
+                sizes: '(min-width: 769px) 33vw, 90vw',
+                alt: primary_image.alt | default: product.title
+            }}
+          {% else %}
+            <span class="ride-card__image ride-card__image--default ride-card__image--svg">
+              {{ placeholder_svg | placeholder_svg_tag }}
+            </span>
+          {% endif %}
+
+          {% if has_real_hover %}
+            {{
+              hover_image
+              | image_url: width: 900
+              | image_tag:
+                class: 'ride-card__image ride-card__image--hover',
+                loading: 'lazy',
+                widths: '400,600,900',
+                sizes: '(min-width: 769px) 33vw, 90vw',
+                alt: hover_image.alt | default: product.title
+            }}
+          {% elsif use_svg_hover %}
+            <span class="ride-card__image ride-card__image--hover ride-card__image--svg ride-card__image--svg-accent">
+              {{ placeholder_svg | placeholder_svg_tag }}
+            </span>
+          {% elsif use_tinted_hover %}
+            {{
+              primary_image
+              | image_url: width: 900
+              | image_tag:
+                class: 'ride-card__image ride-card__image--hover ride-card__image--accent-tint',
+                loading: 'lazy',
+                widths: '400,600,900',
+                sizes: '(min-width: 769px) 33vw, 90vw',
+                alt: primary_image.alt | default: product.title
+            }}
+          {% endif %}
+        </a>
+
+        {% if show_new_badge %}
+          <span class="ride-card__badge">{{ block.settings.new_badge_text | default: 'New' }}</span>
+        {% endif %}
+
+        {% if show_best_selling %}
+          <div class="ride-card__best-selling">
+            {% if block.settings.best_selling_image != blank %}
+              {{
+                block.settings.best_selling_image
+                | image_url: width: 240
+                | image_tag:
+                  class: 'ride-card__best-selling-img',
+                  loading: 'lazy',
+                  widths: '120,180,240',
+                  sizes: '(min-width: 769px) 80px, 120px',
+                  alt: block.settings.best_selling_image.alt | default: 'Best-Selling'
+              }}
+            {% else %}
+              <span class="ride-card__best-selling-placeholder" aria-hidden="true">
+                {{ 'image' | placeholder_svg_tag }}
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div
+        class="ride-card__recommendation{% unless show_recommendation %} ride-card__recommendation--empty{% endunless %}"
+        {% unless show_recommendation %}aria-hidden="true"{% endunless %}
+      >
+        {% if show_recommendation %}
+          <strong>#1</strong> | {{ block.settings.recommendation_text | default: 'TOP-SELLING PROFESSIONAL RECOMMENDATION' }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="ride-card__specs" data-spec-count="{{ spec_display_count }}">
+    {% for spec_key in active_specs %}
+      {% liquid
+        assign spec_label = ''
+        assign spec_value = blank
+        assign spec_icon = blank
+
+        case spec_key
+          when 'motor'
+            assign spec_label = 'Motor'
+            assign spec_value = motor
+            assign spec_icon = icon_motor
+          when 'torque'
+            assign spec_label = 'Torque'
+            assign spec_value = torque
+            assign spec_icon = icon_torque
+          when 'top_speed'
+            assign spec_label = 'Top Speed'
+            assign spec_value = top_speed
+            assign spec_icon = icon_top_speed
+          when 'battery'
+            assign spec_label = 'Battery'
+            assign spec_value = battery
+            assign spec_icon = icon_battery
+        endcase
+      %}
+
+      {% if spec_value != blank %}
+        <div class="ride-card__spec">
+          <span class="ride-card__spec-icon-wrap">
+            {% if spec_icon != blank %}
+              {{
+                spec_icon
+                | image_url: width: 80
+                | image_tag:
+                  class: 'ride-card__spec-icon ride-card__spec-icon--img',
+                  loading: 'lazy',
+                  widths: '40,60,80',
+                  sizes: '40px',
+                  alt: spec_icon.alt | default: spec_label
+              }}
+            {% else %}
+              {% case spec_key %}
+                {% when 'motor' %}
+                  <svg class="ride-card__spec-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                {% when 'torque' %}
+                  <svg class="ride-card__spec-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                {% when 'top_speed' %}
+                  <svg class="ride-card__spec-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 4a8 8 0 1 0 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                {% when 'battery' %}
+                  <svg class="ride-card__spec-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="4" y="7" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M18 10h2v4h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+              {% endcase %}
+            {% endif %}
+          </span>
+          <div class="ride-card__spec-content">
+            <span class="ride-card__spec-label">{{ spec_label }}</span>
+            <span class="ride-card__spec-value">{{ spec_value }}</span>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="ride-card__footer">
+    <div class="ride-card__info">
+      <a class="ride-card__title" href="{{ product_url }}">
+        {{ product.title | default: 'Product title' }}
+      </a>
+
+      <div class="ride-card__price">
+        {% if product != blank %}
+          <span class="ride-card__price-current">{{ variant.price | money }}</span>
+          {% if variant.compare_at_price > variant.price %}
+            <span class="ride-card__price-compare">{{ variant.compare_at_price | money }}</span>
+          {% elsif product.compare_at_price > product.price %}
+            <span class="ride-card__price-compare">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        {% else %}
+          <span class="ride-card__price-current">{{ 169900 | money }}</span>
+          <span class="ride-card__price-compare">{{ 189900 | money }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ride-card__cart">
+      {% if product != blank and product.variants_count == 1 and can_add_to_cart %}
+        {% assign form_id = 'RideCart-' | append: section_id | append: '-' | append: block.id %}
+        <product-form-component
+          data-section-id="{{ section_id }}"
+          data-product-id="{{ product.id }}"
+          on:submit="/handleSubmit"
+        >
+          {%- form 'product', product, id: form_id, class: 'ride-card__cart-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="ride-card__cart-btn" name="add" aria-label="{{ 'actions.add_to_cart' | t }}">
+              {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+            </button>
+          {%- endform -%}
+        </product-form-component>
+      {% elsif product != blank %}
+        <a href="{{ product_url }}" class="ride-card__cart-btn" aria-label="{{ 'actions.choose' | t }}">
+          {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+        </a>
+      {% else %}
+        <button type="button" class="ride-card__cart-btn" disabled aria-label="{{ 'actions.add_to_cart' | t }}">
+          {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</article>

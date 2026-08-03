@@ -13,6 +13,21 @@ body {
 }
 
 :root {
+  --Arvita-design-width-pc: 1440;
+  --Arvita-design-width-mob: 750; /* 若移动稿是 375，改成 375 */
+  --rem: calc(100vw / var(--Arvita-design-width-pc));
+
+  /* Arvita 全局圆角：新模块优先复用这些变量 */
+  --Arvita-radius-xs: calc(4 * var(--rem));
+  --Arvita-radius-sm: calc(8 * var(--rem));
+  --Arvita-radius-md: calc(12 * var(--rem));
+  --Arvita-radius-lg: calc(24 * var(--rem));
+  --Arvita-radius-xl: calc(40 * var(--rem));
+  --Arvita-radius-full: calc(999 * var(--rem));
+
+  /* Arvita 统一 hover 灰色 */
+  --Arvita-hover-gray: #f3f3f3;
+
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
@@ -23,6 +38,12 @@ body {
   --surface-transition-timing: var(--ease-out-quad);
   --submenu-animation-speed: 360ms;
   --submenu-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --rem: calc(100vw / var(--Arvita-design-width-mob));
+  }
 }
 
 html {
