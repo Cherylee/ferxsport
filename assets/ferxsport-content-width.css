@@ -1,0 +1,13 @@
+/**
+ * Non-full-bleed sections: design content width 1100, scales with --rem.
+ *
+ * Usage:
+ *   class="ferxsport-contained"
+ *   style="--ferxsport-contained-width: 1100;"
+ */
+.ferxsport-contained {
+  box-sizing: border-box;
+  margin-inline: auto;
+  max-width: min(100%, calc(var(--ferxsport-contained-width, 1100) * var(--rem)));
+  width: 100%;
+}

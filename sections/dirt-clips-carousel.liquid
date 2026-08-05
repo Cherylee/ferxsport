@@ -1,38 +1,16 @@
 {{ 'section-dirt-clips-carousel.css' | asset_url | stylesheet_tag }}
 
-{% liquid
-  assign slide_count = section.blocks.size
-  if slide_count == 0
-    assign slide_count = 4
-  endif
-
-  assign visible_peek = section.settings.columns | default: 4
-  if slide_count <= section.settings.columns
-    case slide_count
-      when 2
-        assign visible_peek = '1.15'
-      when 3
-        assign visible_peek = '2.15'
-      when 4
-        assign visible_peek = '3.15'
-      when 5
-        assign visible_peek = '4.15'
-      else
-        assign visible_peek = section.settings.columns
-    endcase
-  endif
-%}
-
 <section
   id="DirtClips-{{ section.id }}"
-  class="dirt-clips-carousel"
+  class="dirt-clips-carousel ferxsport-contained"
   data-dirt-clips
   data-autoplay="{{ section.settings.autoplay }}"
   data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 }}"
   style="
-    --dirt-clips-width: {{ section.settings.content_max_width | default: 1280 }};
+    --dirt-clips-width: {{ section.settings.content_max_width | default: 1100 }};
+    --ferxsport-contained-width: {{ section.settings.content_max_width | default: 1100 }};
     --dirt-clips-columns: {{ section.settings.columns | default: 4 }};
-    --dirt-clips-visible: {{ visible_peek }};
+    --dirt-clips-visible: {{ section.settings.columns | default: 4 }};
     --dirt-clips-padding-block: {{ section.settings.padding_block | default: 64 }};
     --dirt-clips-padding-inline: {{ section.settings.padding_inline | default: 0 }};
     {% if section.settings.background_color != blank %}
@@ -280,9 +258,9 @@
       if (!slides.length) return;
 
       const styles = getComputedStyle(section);
-      const visible = parseFloat(styles.getPropertyValue('--dirt-clips-visible')) || 3.15;
+      const visible = parseFloat(styles.getPropertyValue('--dirt-clips-visible')) || 4;
       const gap = getGap();
-      const slideWidth = Math.max(0, (viewport.clientWidth - gap) / visible);
+      const slideWidth = Math.max(0, (viewport.clientWidth - gap * Math.max(0, visible - 1)) / visible);
 
       slides.forEach((slide) => {
         slide.style.flexBasis = `${slideWidth}px`;
@@ -475,7 +453,7 @@
       "min": 900,
       "max": 1440,
       "step": 10,
-      "default": 1280,
+      "default": 1100,
       "info": "Based on 1440 design. Scales with --rem."
     },
     {

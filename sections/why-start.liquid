@@ -1,0 +1,417 @@
+{{ 'section-why-start.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="WhyStart-{{ section.id }}"
+  class="why-start ferxsport-contained"
+  data-why-start
+  style="
+    --ferxsport-contained-width: {{ section.settings.content_max_width | default: 1100 }};
+    --why-start-radius: {{ section.settings.border_radius | default: 24 }};
+    --why-start-min-height: {{ section.settings.min_height | default: 640 }};
+    --why-start-margin-top: {{ section.settings.margin_top | default: 40 }};
+    --why-start-margin-bottom: {{ section.settings.margin_bottom | default: 40 }};
+  "
+>
+  <div class="why-start__frame">
+    <div class="why-start__bg" aria-hidden="true">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div
+            class="why-start__bg-image{% if forloop.first %} is-active{% endif %}"
+            data-why-bg
+            data-why-index="{{ forloop.index0 }}"
+          >
+            {% if block.settings.background_image != blank %}
+              {% if forloop.first %}
+                {{
+                  block.settings.background_image
+                  | image_url: width: 2400
+                  | image_tag:
+                    loading: 'eager',
+                    widths: '800,1200,1600,2000,2400',
+                    sizes: '(min-width: 769px) 1100px, 100vw',
+                    alt: ''
+                }}
+              {% else %}
+                {{
+                  block.settings.background_image
+                  | image_url: width: 2400
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '800,1200,1600,2000,2400',
+                    sizes: '(min-width: 769px) 1100px, 100vw',
+                    alt: ''
+                }}
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="why-start__bg-image is-active" data-why-bg data-why-index="0"></div>
+      {% endif %}
+    </div>
+
+    <div class="why-start__overlay" aria-hidden="true"></div>
+
+    <div class="why-start__inner">
+      {% if section.settings.heading != blank %}
+        <p class="why-start__eyebrow">{{ section.settings.heading }}</p>
+      {% endif %}
+
+      <ul class="why-start__nav" role="tablist" aria-label="{{ section.settings.heading | default: 'Why start' }}">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <li {{ block.shopify_attributes }}>
+              <button
+                type="button"
+                class="why-start__nav-btn{% if forloop.first %} is-active{% endif %}"
+                data-why-nav
+                data-why-index="{{ forloop.index0 }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                <span class="why-start__nav-indicator" aria-hidden="true"></span>
+                <span>{{ block.settings.nav_label | default: 'Item' }}</span>
+              </button>
+            </li>
+          {% endfor %}
+        {% else %}
+          {% assign demo_labels = 'Legacy,Power,Variety,Stability' | split: ',' %}
+          {% for label in demo_labels %}
+            <li>
+              <button
+                type="button"
+                class="why-start__nav-btn{% if forloop.first %} is-active{% endif %}"
+                data-why-nav
+                data-why-index="{{ forloop.index0 }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                <span class="why-start__nav-indicator" aria-hidden="true"></span>
+                <span>{{ label }}</span>
+              </button>
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+
+      <div class="why-start__copy" data-why-copy-stack>
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div
+              class="why-start__copy-panel{% if forloop.first %} is-active{% endif %}"
+              data-why-copy
+              data-why-index="{{ forloop.index0 }}"
+            >
+              {% if block.settings.body_text != blank %}
+                <div class="why-start__text">{{ block.settings.body_text }}</div>
+              {% endif %}
+
+              {% if section.settings.button_label != blank %}
+                {% if section.settings.button_link != blank %}
+                  <a
+                    href="{{ section.settings.button_link }}"
+                    class="why-start__cta ferxsport-homepage-btn ferxsport-homepage-btn--secondary"
+                    {% if section.settings.button_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                    tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+                  >
+                    <span>{{ section.settings.button_label }}</span>
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {% else %}
+                  <span class="why-start__cta ferxsport-homepage-btn ferxsport-homepage-btn--secondary">
+                    <span>{{ section.settings.button_label }}</span>
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                {% endif %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="why-start__copy-panel is-active" data-why-copy data-why-index="0">
+            <div class="why-start__text">
+              <strong>Suspension support</strong> helps the ride feel more planted across gravel, grass tracks, forest shade, dirt turns, and open ground.
+            </div>
+            {% if section.settings.button_label != blank %}
+              <span class="why-start__cta ferxsport-homepage-btn ferxsport-homepage-btn--secondary">
+                <span>{{ section.settings.button_label }}</span>
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="why-start__panel">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div
+              class="why-start__panel-item{% if forloop.first %} is-active{% endif %}"
+              data-why-panel
+              data-why-index="{{ forloop.index0 }}"
+            >
+              {% if block.settings.panel_image != blank %}
+                {{
+                  block.settings.panel_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400,600,800,1000,1200',
+                    sizes: '(min-width: 769px) 520px, 90vw',
+                    alt: block.settings.nav_label | default: ''
+                }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'why-start__panel-placeholder' }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="why-start__panel-item is-active" data-why-panel data-why-index="0">
+            {{ 'image' | placeholder_svg_tag: 'why-start__panel-placeholder' }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('WhyStart-{{ section.id }}');
+    if (!section) return;
+
+    const navButtons = [...section.querySelectorAll('[data-why-nav]')];
+    const backgrounds = [...section.querySelectorAll('[data-why-bg]')];
+    const copyPanels = [...section.querySelectorAll('[data-why-copy]')];
+    const panelItems = [...section.querySelectorAll('[data-why-panel]')];
+
+    let activeIndex = 0;
+    let animating = false;
+    const ANIM_MS = 560;
+
+    const setNavActive = (index) => {
+      navButtons.forEach((node) => {
+        const isActive = Number(node.dataset.whyIndex) === index;
+        node.classList.toggle('is-active', isActive);
+        node.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
+
+    const setBackgroundActive = (index) => {
+      backgrounds.forEach((node) => {
+        node.classList.toggle('is-active', Number(node.dataset.whyIndex) === index);
+      });
+    };
+
+    const syncCopyFocus = (index) => {
+      copyPanels.forEach((panel) => {
+        const isActive = Number(panel.dataset.whyIndex) === index;
+        panel.querySelectorAll('a, button').forEach((el) => {
+          el.tabIndex = isActive ? 0 : -1;
+        });
+      });
+    };
+
+    const animateSwap = (nodes, nextIndex) => {
+      nodes.forEach((node) => {
+        const index = Number(node.dataset.whyIndex);
+        const wasActive = node.classList.contains('is-active');
+
+        node.classList.remove('is-leaving');
+
+        if (index === nextIndex) {
+          node.classList.add('is-active');
+          return;
+        }
+
+        if (wasActive) {
+          node.classList.remove('is-active');
+          node.classList.add('is-leaving');
+          window.setTimeout(() => {
+            if (Number(node.dataset.whyIndex) !== activeIndex) {
+              node.classList.remove('is-leaving');
+            }
+          }, ANIM_MS);
+          return;
+        }
+
+        node.classList.remove('is-active');
+      });
+    };
+
+    const goTo = (index) => {
+      if (animating || index === activeIndex || index < 0 || index >= navButtons.length) return;
+      animating = true;
+
+      setNavActive(index);
+      setBackgroundActive(index);
+      animateSwap(copyPanels, index);
+      animateSwap(panelItems, index);
+      syncCopyFocus(index);
+
+      activeIndex = index;
+      window.setTimeout(() => {
+        animating = false;
+      }, ANIM_MS);
+    };
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener('click', () => goTo(Number(btn.dataset.whyIndex)));
+    });
+
+    syncCopyFocus(0);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Why start Valtinsu",
+  "tag": "section",
+  "class": "why-start-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Top-left label",
+      "default": "Why Start With Valtinsu"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "About Us",
+      "info": "Shared across all nav items. Still animates on switch."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_new_tab",
+      "label": "Open button in new tab",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width (design px)",
+      "min": 900,
+      "max": 1440,
+      "step": 10,
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Min height (design px)",
+      "min": 480,
+      "max": 900,
+      "step": 10,
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius (design px)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top margin (design px)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom margin (design px)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "scene",
+      "name": "Nav scene",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_label",
+          "label": "Nav label",
+          "default": "Legacy"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background image"
+        },
+        {
+          "type": "image_picker",
+          "id": "panel_image",
+          "label": "Bottom-right panel image"
+        },
+        {
+          "type": "richtext",
+          "id": "body_text",
+          "label": "Bottom-left text",
+          "default": "<p><strong>Suspension support</strong> helps the ride feel more planted across gravel, grass tracks, forest shade, dirt turns, and open ground.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why start Valtinsu",
+      "blocks": [
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Legacy",
+            "body_text": "<p><strong>Built on ride heritage</strong> that keeps every start confident across dirt, grass, and weekend trails.</p>"
+          }
+        },
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Power",
+            "body_text": "<p><strong>Instant torque</strong> gives you cleaner launches and stronger response when the trail opens up.</p>"
+          }
+        },
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Variety",
+            "body_text": "<p><strong>Multiple ride setups</strong> help you match terrain, speed, and style without overcomplicating the start.</p>"
+          }
+        },
+        {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Stability",
+            "body_text": "<p><strong>Suspension support</strong> helps the ride feel more planted across gravel, grass tracks, forest shade, dirt turns, and open ground.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

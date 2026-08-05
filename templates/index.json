@@ -92,7 +92,7 @@
       ],
       "name": "Benefits bar",
       "settings": {
-        "content_max_width": 1280,
+        "content_max_width": 1100,
         "card_gap": 12,
         "padding_block": 24,
         "padding_inline": 0,
@@ -132,7 +132,7 @@
       ],
       "name": "Feature cards",
       "settings": {
-        "content_max_width": 1280,
+        "content_max_width": 1100,
         "card_gap": 16,
         "padding_block": 24,
         "padding_inline": 0,
@@ -193,7 +193,7 @@
       "name": "Dirt clips carousel",
       "settings": {
         "heading": "Dirt Clips From Thousands Of Creators",
-        "content_max_width": 1280,
+        "content_max_width": 1100,
         "columns": 4,
         "autoplay": true,
         "autoplay_speed": 5,
@@ -260,7 +260,7 @@
         "explore_label": "Explore",
         "explore_background_color": "#000000",
         "explore_background_opacity": 55,
-        "content_min_width": 1280,
+        "content_min_width": 1100,
         "border_radius": 24,
         "margin_top": 40,
         "margin_bottom": 40,
@@ -358,7 +358,7 @@
       "name": "Ride product showcase",
       "settings": {
         "heading": "Find The Ride That Fits Your Dirt",
-        "content_min_width": 1280,
+        "content_min_width": 1100,
         "columns": 3,
         "background_color": "#ffffff",
         "nav_btn_background": "#ffffff",
@@ -374,7 +374,7 @@
       "settings": {
         "heading": "What 58,000+ Valtinsu Riders Are Saying",
         "subheading": "Master your bike, discover new trails, and stay ahead with the latest summer riding trends.",
-        "content_min_width": 1280,
+        "content_min_width": 1100,
         "click_label": "CLICK HERE",
         "photo_1_caption": "Weekend trail vibes",
         "photo_2_caption": "Built for dirt days",
@@ -383,190 +383,109 @@
         "photo_5_caption": "Ride together"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "guide_cards_carousel_home": {
+      "type": "guide-cards-carousel",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "guide_1": {
+          "type": "guide_card",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "title": "How To Choose The Right Electric Dirt Bike For Your Terrain",
+            "subtitle": "JUL 05, 2026"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "guide_2": {
+          "type": "guide_card",
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "title": "5 Maintenance Tips Every Dirt Bike Owner Should Know",
+            "subtitle": "JUN 28, 2026"
+          }
+        },
+        "guide_3": {
+          "type": "guide_card",
+          "settings": {
+            "title": "Trail Riding vs Track Riding: Which Setup Is Right For You?",
+            "subtitle": "JUN 15, 2026"
+          }
+        },
+        "guide_4": {
+          "type": "guide_card",
+          "settings": {
+            "title": "Beginner's Guide To Electric Dirt Bike Battery Care",
+            "subtitle": "MAY 30, 2026"
+          }
         }
       },
-      "name": "t:names.product_list",
+      "block_order": [
+        "guide_1",
+        "guide_2",
+        "guide_3",
+        "guide_4"
+      ],
+      "name": "Guide cards carousel",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "heading": "Latest Dirt Bike Guides",
+        "button_label": "Explore All",
+        "button_link": "",
+        "button_new_tab": false,
+        "content_max_width": 1100,
+        "columns": 3,
+        "background_color": "#ffffff",
+        "heading_color": "#1a1a1a",
+        "title_color": "#1a1a1a",
+        "subtitle_color": "#8c8c8c",
+        "padding_block": 64,
+        "padding_inline": 0
+      }
+    },
+    "why_start_home": {
+      "type": "why-start",
+      "blocks": {
+        "scene_legacy": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Legacy",
+            "body_text": "<p><strong>Built on ride heritage</strong> that keeps every start confident across dirt, grass, and weekend trails.</p>"
+          }
+        },
+        "scene_power": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Power",
+            "body_text": "<p><strong>Instant torque</strong> gives you cleaner launches and stronger response when the trail opens up.</p>"
+          }
+        },
+        "scene_variety": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Variety",
+            "body_text": "<p><strong>Multiple ride setups</strong> help you match terrain, speed, and style without overcomplicating the start.</p>"
+          }
+        },
+        "scene_stability": {
+          "type": "scene",
+          "settings": {
+            "nav_label": "Stability",
+            "body_text": "<p><strong>Suspension support</strong> helps the ride feel more planted across gravel, grass tracks, forest shade, dirt turns, and open ground.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "scene_legacy",
+        "scene_power",
+        "scene_variety",
+        "scene_stability"
+      ],
+      "name": "Why start Valtinsu",
+      "settings": {
+        "heading": "Why Start With Valtinsu",
+        "button_label": "About Us",
+        "button_link": "",
+        "button_new_tab": false,
+        "content_max_width": 1100,
+        "min_height": 640,
+        "border_radius": 24,
+        "margin_top": 40,
+        "margin_bottom": 40
       }
     }
   },
@@ -578,6 +497,7 @@
     "electric_ride_hero_home",
     "ride_showcase_home",
     "rider_testimonials_home",
-    "product_list_fa6P9H"
+    "guide_cards_carousel_home",
+    "why_start_home"
   ]
 }

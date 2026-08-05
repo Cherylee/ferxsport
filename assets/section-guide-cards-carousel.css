@@ -1,0 +1,220 @@
+.guide-cards {
+  background: var(--guide-cards-bg, #fff);
+  overflow: hidden;
+}
+
+.guide-cards__inner {
+  padding-block: calc(var(--guide-cards-padding-block, 64) * var(--rem));
+  padding-inline: calc(var(--guide-cards-padding-inline, 0) * var(--rem));
+  width: 100%;
+}
+
+.guide-cards__header {
+  align-items: center;
+  display: flex;
+  gap: calc(24 * var(--rem));
+  justify-content: space-between;
+  margin-bottom: calc(32 * var(--rem));
+}
+
+.guide-cards__heading {
+  color: var(--guide-cards-heading-color, #1a1a1a);
+  flex: 1;
+  font-family: var(--font-heading--family);
+  font-size: calc(40 * var(--rem));
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  min-width: 0;
+}
+
+.guide-cards__carousel {
+  --guide-cards-gap: calc(16 * var(--rem));
+  container-name: guide-cards;
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+}
+
+.guide-cards__arrow {
+  align-items: center;
+  background: #1a1a1a;
+  border: 0;
+  border-radius: calc(8 * var(--rem));
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  height: calc(40 * var(--rem));
+  justify-content: center;
+  position: absolute;
+  top: calc(
+    (
+      (100cqw - (var(--guide-cards-columns, 3) - 1) * var(--guide-cards-gap))
+      / var(--guide-cards-columns, 3)
+    ) * 10 / 16 / 2
+  );
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease;
+  width: calc(40 * var(--rem));
+  z-index: 2;
+}
+
+.guide-cards__track {
+  --guide-cards-gap: calc(16 * var(--rem));
+  align-items: stretch;
+  display: flex;
+  gap: var(--guide-cards-gap);
+  list-style: none;
+  margin: 0;
+  overflow-x: auto;
+  padding: 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.guide-cards__track::-webkit-scrollbar {
+  display: none;
+}
+
+.guide-cards__slide {
+  display: flex;
+  flex: 0 0 calc((100% - (var(--guide-cards-columns, 3) - 1) * var(--guide-cards-gap)) / var(--guide-cards-columns, 3));
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.guide-cards__card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+}
+
+.guide-cards__media {
+  aspect-ratio: 16 / 10;
+  border-radius: calc(12 * var(--rem));
+  display: block;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+}
+
+.guide-cards__media img,
+.guide-cards__media .guide-cards__placeholder {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.guide-cards__placeholder {
+  background: rgb(0 0 0 / 0.06);
+  opacity: 0.35;
+}
+
+.guide-cards__title {
+  color: var(--guide-cards-title-color, #1a1a1a);
+  display: -webkit-box;
+  font-family: var(--font-heading--family);
+  font-size: calc(18 * var(--rem));
+  font-weight: 700;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  line-height: 1.35;
+  margin: calc(16 * var(--rem)) 0 calc(8 * var(--rem));
+  overflow: hidden;
+}
+
+.guide-cards__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .guide-cards__title-link:hover {
+    opacity: 0.75;
+  }
+}
+
+.guide-cards__subtitle {
+  color: var(--guide-cards-subtitle-color, #8c8c8c);
+  font-family: var(--font-body--family);
+  font-size: calc(12 * var(--rem));
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  margin: 0;
+  margin-top: auto;
+  text-transform: uppercase;
+}
+
+.guide-cards__arrow--prev {
+  left: calc(12 * var(--rem));
+}
+
+.guide-cards__arrow--next {
+  right: calc(12 * var(--rem));
+}
+
+@media (hover: hover) {
+  .guide-cards__arrow:hover:not(:disabled) {
+    background: #000;
+  }
+}
+
+.guide-cards__arrow:disabled {
+  background: #d9d9d9;
+  color: #fff;
+  cursor: default;
+}
+
+.guide-cards__arrow:disabled svg {
+  opacity: 1;
+}
+
+.guide-cards__arrow svg {
+  display: block;
+  flex-shrink: 0;
+  height: calc(16 * var(--rem));
+  width: calc(16 * var(--rem));
+}
+
+.guide-cards__arrow[hidden] {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .guide-cards__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .guide-cards__heading {
+    font-size: calc(32 * var(--rem));
+  }
+
+  .guide-cards__slide {
+    flex-basis: calc((100% - var(--guide-cards-gap)) / 1.15);
+  }
+
+  .guide-cards__title {
+    font-size: calc(22 * var(--rem));
+  }
+
+  .guide-cards__subtitle {
+    font-size: calc(18 * var(--rem));
+  }
+
+  .guide-cards__arrow {
+    height: calc(48 * var(--rem));
+    width: calc(48 * var(--rem));
+  }
+
+  .guide-cards__arrow svg {
+    height: calc(20 * var(--rem));
+    width: calc(20 * var(--rem));
+  }
+}

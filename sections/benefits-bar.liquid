@@ -17,7 +17,7 @@
     margin-block-end: calc({{ section.settings.margin_bottom }} * var(--rem));
   "
 >
-  <div class="benefits-bar__inner">
+  <div class="benefits-bar__inner ferxsport-contained" style="--ferxsport-contained-width: {{ section.settings.content_max_width | default: 1100 }};">
     <ul class="benefits-bar__grid" role="list">
       {% for block in section.blocks %}
         {% liquid
@@ -118,7 +118,7 @@
       "max": 1400,
       "step": 20,
       "unit": "px",
-      "default": 1280
+      "default": 1100
     },
     {
       "type": "range",

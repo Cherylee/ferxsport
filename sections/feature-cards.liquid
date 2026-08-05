@@ -17,7 +17,7 @@
     margin-block-end: calc({{ section.settings.margin_bottom }} * var(--rem));
   "
 >
-  <div class="feature-cards__inner">
+  <div class="feature-cards__inner ferxsport-contained" style="--ferxsport-contained-width: {{ section.settings.content_max_width | default: 1100 }};">
     <ul class="feature-cards__grid" role="list">
       {% for block in section.blocks %}
         <li {{ block.shopify_attributes }}>
@@ -45,26 +45,30 @@
                 <h3 class="feature-cards__title">{{ block.settings.title }}</h3>
               {% endif %}
 
-              {% if block.settings.subtitle != blank %}
-                <p class="feature-cards__subtitle">{{ block.settings.subtitle }}</p>
-              {% endif %}
+              {% if block.settings.subtitle != blank or block.settings.button_label != blank %}
+                <div class="feature-cards__footer">
+                  {% if block.settings.subtitle != blank %}
+                    <p class="feature-cards__subtitle">{{ block.settings.subtitle }}</p>
+                  {% endif %}
 
-              {% if block.settings.button_label != blank %}
-                <div class="feature-cards__actions">
-                  {% if block.settings.button_link != blank %}
-                    <a
-                      class="feature-cards__btn ferxsport-homepage-btn"
-                      href="{{ block.settings.button_link }}"
-                      {% if block.settings.button_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-                    >
-                      <span>{{ block.settings.button_label }}</span>
-                      {{- 'icon-chevron-right.svg' | inline_asset_content -}}
-                    </a>
-                  {% else %}
-                    <span class="feature-cards__btn ferxsport-homepage-btn">
-                      <span>{{ block.settings.button_label }}</span>
-                      {{- 'icon-chevron-right.svg' | inline_asset_content -}}
-                    </span>
+                  {% if block.settings.button_label != blank %}
+                    <div class="feature-cards__actions">
+                      {% if block.settings.button_link != blank %}
+                        <a
+                          class="feature-cards__btn ferxsport-homepage-btn"
+                          href="{{ block.settings.button_link }}"
+                          {% if block.settings.button_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                        >
+                          <span>{{ block.settings.button_label }}</span>
+                          {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+                        </a>
+                      {% else %}
+                        <span class="feature-cards__btn ferxsport-homepage-btn">
+                          <span>{{ block.settings.button_label }}</span>
+                          {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+                        </span>
+                      {% endif %}
+                    </div>
                   {% endif %}
                 </div>
               {% endif %}
@@ -95,7 +99,7 @@
       "max": 1400,
       "step": 20,
       "unit": "px",
-      "default": 1280
+      "default": 1100
     },
     {
       "type": "range",

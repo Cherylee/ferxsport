@@ -4,8 +4,6 @@
 }
 
 .benefits-bar__inner {
-  margin-inline: auto;
-  max-width: calc(var(--benefits-bar-width, 1280) * var(--rem));
   padding-block: calc(var(--benefits-bar-padding-block, 24) * var(--rem));
   padding-inline: calc(var(--benefits-bar-padding-inline, 0) * var(--rem));
   width: 100%;

@@ -6,9 +6,7 @@
   --ride-text-muted: #8c8c8c;
   --ride-spec-bg: #f3f3f3;
   background: var(--ride-section-bg);
-  margin-inline: auto;
   overflow: hidden;
-  width: min(100%, calc(var(--ride-section-width, 1280) * var(--rem)));
 }
 
 .ride-showcase__inner {
@@ -22,7 +20,7 @@
   margin: 0 0 calc(36 * var(--rem));
   color: var(--ride-text);
   font-family: var(--font-heading--family);
-  font-size: calc(48 * var(--rem));
+  font-size: calc(40 * var(--rem));
   font-weight: 700;
   line-height: 1.15;
   text-align: center;

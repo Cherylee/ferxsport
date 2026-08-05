@@ -1,9 +1,7 @@
 .dirt-clips-carousel {
   background: var(--dirt-clips-bg, #fff);
-  margin-inline: auto;
   min-width: 0;
   overflow: hidden;
-  width: min(100%, calc(var(--dirt-clips-width, 1280) * var(--rem)));
 }
 
 .dirt-clips-carousel__inner {
@@ -44,9 +42,9 @@
 }
 
 .dirt-clips-carousel__slide {
-  flex: 0 0 calc((100cqw - var(--dirt-clips-gap)) / var(--dirt-clips-visible, 3.15));
+  flex: 0 0 calc((100cqw - (var(--dirt-clips-visible, 4) - 1) * var(--dirt-clips-gap)) / var(--dirt-clips-visible, 4));
   min-width: 0;
-  width: calc((100cqw - var(--dirt-clips-gap)) / var(--dirt-clips-visible, 3.15));
+  width: calc((100cqw - (var(--dirt-clips-visible, 4) - 1) * var(--dirt-clips-gap)) / var(--dirt-clips-visible, 4));
 }
 
 .dirt-clips-carousel__slide[data-dirt-clips-clone] {

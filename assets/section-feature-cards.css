@@ -4,14 +4,13 @@
 }
 
 .feature-cards__inner {
-  margin-inline: auto;
-  max-width: calc(var(--feature-cards-width, 1280) * var(--rem));
   padding-block: calc(var(--feature-cards-padding-block, 24) * var(--rem));
   padding-inline: calc(var(--feature-cards-padding-inline, 0) * var(--rem));
   width: 100%;
 }
 
 .feature-cards__grid {
+  align-items: stretch;
   display: grid;
   gap: calc(var(--feature-cards-gap, 16) * var(--rem));
   grid-template-columns: repeat(var(--feature-cards-columns, 2), minmax(0, 1fr));
@@ -20,26 +19,35 @@
   padding: 0;
 }
 
+.feature-cards__grid > li {
+  display: flex;
+  min-height: 0;
+}
+
 .feature-cards__card {
   background: var(--feature-cards-card-bg, #f4f4f4);
   border-radius: var(--Arvita-radius-md, calc(20 * var(--rem)));
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: hidden;
+  width: 100%;
 }
 
 .feature-cards__media {
-  aspect-ratio: 16 / 9;
-  background: rgb(0 0 0 / 0.06);
-  overflow: hidden;
+  padding: calc(16 * var(--rem));
   width: 100%;
 }
 
 .feature-cards__media img,
 .feature-cards__media .feature-cards__placeholder {
+  aspect-ratio: 16 / 9;
+  background: rgb(0 0 0 / 0.06);
+  border-radius: calc(12 * var(--rem));
   display: block;
-  height: 100%;
+  height: auto;
   object-fit: cover;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -51,8 +59,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(12 * var(--rem));
-  padding: calc(24 * var(--rem));
+  gap: calc(16 * var(--rem));
+  padding: calc(8 * var(--rem)) calc(24 * var(--rem)) calc(24 * var(--rem));
 }
 
 .feature-cards__title {
@@ -64,19 +72,26 @@
   margin: 0;
 }
 
+.feature-cards__footer {
+  align-items: center;
+  display: flex;
+  gap: calc(16 * var(--rem));
+  justify-content: space-between;
+  margin-top: auto;
+}
+
 .feature-cards__subtitle {
   color: var(--feature-cards-subtitle-color, #8c8c8c);
+  flex: 1;
   font-family: var(--font-body--family);
   font-size: calc(14 * var(--rem));
   line-height: 1.55;
   margin: 0;
+  min-width: 0;
 }
 
 .feature-cards__actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-  padding-top: calc(8 * var(--rem));
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -88,7 +103,16 @@
     font-size: calc(32 * var(--rem));
   }
 
+  .feature-cards__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .feature-cards__subtitle {
     font-size: calc(24 * var(--rem));
+  }
+
+  .feature-cards__actions {
+    align-self: flex-end;
   }
 }

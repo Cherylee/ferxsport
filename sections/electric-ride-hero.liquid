@@ -9,9 +9,10 @@
 
 <section
   id="ElectricRideHero-{{ section.id }}"
-  class="electric-ride-hero electric-ride-hero--clickable"
+  class="electric-ride-hero electric-ride-hero--clickable ferxsport-contained"
   style="
-    --erh-section-width: {{ section.settings.content_min_width | default: 1280 }};
+    --erh-section-width: {{ section.settings.content_min_width | default: 1100 }};
+    --ferxsport-contained-width: {{ section.settings.content_min_width | default: 1100 }};
     --erh-border-radius: {{ section.settings.border_radius | default: 24 }};
     --erh-margin-top: {{ section.settings.margin_top | default: 40 }};
     --erh-margin-bottom: {{ section.settings.margin_bottom | default: 40 }};
@@ -458,7 +459,7 @@
       "min": 900,
       "max": 1440,
       "step": 10,
-      "default": 1280
+      "default": 1100
     },
     {
       "type": "range",

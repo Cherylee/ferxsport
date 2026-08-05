@@ -3,9 +3,7 @@
   --rt-text: #333333;
   --rt-muted: #8a8a8a;
   background: #fff;
-  margin-inline: auto;
   overflow: hidden;
-  width: min(100%, calc(var(--rt-section-width, 1280) * var(--rem)));
 }
 
 .rider-testimonials__inner {
@@ -23,7 +21,7 @@
 .rider-testimonials__heading {
   color: var(--rt-text);
   font-family: var(--font-heading--family);
-  font-size: calc(36 * var(--rem));
+  font-size: calc(40 * var(--rem));
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 calc(16 * var(--rem));

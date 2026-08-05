@@ -7,8 +7,11 @@
 
 <section
   id="RiderTestimonials-{{ section.id }}"
-  class="rider-testimonials"
-  style="--rt-section-width: {{ section.settings.content_min_width | default: 1280 }};"
+  class="rider-testimonials ferxsport-contained"
+  style="
+    --rt-section-width: {{ section.settings.content_min_width | default: 1100 }};
+    --ferxsport-contained-width: {{ section.settings.content_min_width | default: 1100 }};
+  "
   data-rider-testimonials
 >
   <div class="rider-testimonials__inner">
@@ -198,7 +201,7 @@
       "min": 900,
       "max": 1440,
       "step": 10,
-      "default": 1280
+      "default": 1100
     },
     {
       "type": "header",

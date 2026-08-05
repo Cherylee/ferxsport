@@ -26,6 +26,11 @@
   width: calc(var(--ferxsport-homepage-btn-font-size, 14) * var(--rem));
 }
 
+.ferxsport-homepage-btn--secondary {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
 @media (hover: hover) {
   .ferxsport-homepage-btn-hover-opacity .ferxsport-homepage-btn:hover {
     opacity: var(--ferxsport-homepage-btn-hover-opacity, 0.88);
