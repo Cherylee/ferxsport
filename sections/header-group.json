@@ -83,7 +83,7 @@
             "mega_about": {
               "type": "_mega-menu-about",
               "settings": {
-                "menu_item_handle": "about",
+                "menu_item_handle": "About",
                 "card_1_title": "Blog",
                 "card_1_text": "Trail guides, maintenance tips and rider stories from the dirt.",
                 "card_1_link": "",
