@@ -6,7 +6,7 @@
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
   @param {object} [section] - The section that can be used to provide settings
-  @param {array} [mega_blocks] - Nested mega menu config blocks from _header-menu
+  @param {string} [ferxsport_drawer_mega_bundle] - Pre-rendered mega menus from _header-menu
 
   @example
   {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
@@ -14,7 +14,6 @@
 
 {% liquid
   assign block_settings = block.settings
-  assign drawer_mega_blocks = mega_blocks | default: block.blocks
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
 
@@ -116,10 +115,9 @@
                 class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
               >
                 {% capture ferxsport_mega_html %}
-                  {% render 'ferxsport-mega-menu',
-                    parent_link: link,
-                    mega_blocks: drawer_mega_blocks,
-                    context: 'drawer'
+                  {% render 'ferxsport-drawer-mega-for-link',
+                    bundle: ferxsport_drawer_mega_bundle,
+                    link_handle: link.handle
                   %}
                 {% endcapture %}
                 {% assign ferxsport_mega_html = ferxsport_mega_html | strip %}
@@ -301,10 +299,9 @@
                   </ul>
                 {% else %}
                   {% capture ferxsport_mega_solo %}
-                    {% render 'ferxsport-mega-menu',
-                      parent_link: link,
-                      mega_blocks: drawer_mega_blocks,
-                      context: 'drawer'
+                    {% render 'ferxsport-drawer-mega-for-link',
+                      bundle: ferxsport_drawer_mega_bundle,
+                      link_handle: link.handle
                     %}
                   {% endcapture %}
                   {% assign ferxsport_mega_solo = ferxsport_mega_solo | strip %}
@@ -435,10 +432,9 @@
                           </button>
                         </div>
                         {% capture ferxsport_mega_html %}
-                          {% render 'ferxsport-mega-menu',
-                            parent_link: link,
-                            mega_blocks: drawer_mega_blocks,
-                            context: 'drawer'
+                          {% render 'ferxsport-drawer-mega-for-link',
+                            bundle: ferxsport_drawer_mega_bundle,
+                            link_handle: link.handle
                           %}
                         {% endcapture %}
                         {% assign ferxsport_mega_html = ferxsport_mega_html | strip %}
@@ -697,10 +693,9 @@
                   </details>
                 {%- else -%}
                   {% capture ferxsport_mega_solo %}
-                    {% render 'ferxsport-mega-menu',
-                      parent_link: link,
-                      mega_blocks: drawer_mega_blocks,
-                      context: 'drawer'
+                    {% render 'ferxsport-drawer-mega-for-link',
+                      bundle: ferxsport_drawer_mega_bundle,
+                      link_handle: link.handle
                     %}
                   {% endcapture %}
                   {% assign ferxsport_mega_solo = ferxsport_mega_solo | strip %}

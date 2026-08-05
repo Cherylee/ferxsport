@@ -1,5 +1,10 @@
 /* ferxsport — transparent header overlaying hero banner */
 
+:root {
+  --ferxsport-header-width: calc(1280 * var(--rem));
+  --ferxsport-header-inline-padding: calc(24 * var(--rem));
+}
+
 body:has(.header[transparent]) {
   --ferxsport-header-width: calc(1280 * var(--rem));
   --ferxsport-header-inline-padding: calc(24 * var(--rem));
@@ -143,13 +148,10 @@ body:has(.header[transparent]) .cart-bubble__text {
   color: #fff;
 }
 
-/* Disable nav hover color inversion — keep transparent header styling on hover */
-body:has(.header[transparent]) #header-component.header[transparent]:is(
-  :has(.menu-list__link:not([aria-haspopup]):hover),
-  :has(.menu-list__link:is(:hover, [aria-expanded='true'])),
-  :has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'])),
-  :has(.mega-menu__list:hover)
-) {
+/* Keep transparent look for non-dropdown link hover (no aria-haspopup) */
+body:has(.header[transparent]) #header-component.header[transparent]:has(
+  .menu-list__link:not([aria-haspopup]):hover
+):not(:has(.menu-list__link[aria-expanded='true'])):not(:has(.menu-list__submenu:hover)):not(:has(.ferxsport-mega:hover)) {
   --header-logo-display: none;
   --header-logo-inverse-display: block;
   --color-foreground: var(--color-transparent-text, #fff);
@@ -160,26 +162,156 @@ body:has(.header[transparent]) #header-component.header[transparent]:is(
   --closed-underlay-height: 0px;
 }
 
+/*
+  Mega / dropdown open: whole big nav → white bg + black text
+  (logo ↔ cart bar, including logo, links, icons)
+*/
 body:has(.header[transparent]) #header-component.header[transparent]:is(
-  :has(.menu-list__link:is(:hover, [aria-expanded='true'])),
-  :has(.mega-menu__list:hover)
-) .header__row,
-body:has(.header[transparent]) [data-transparent-background='top']:is(:hover, :focus-within) .header__row--top,
-body:has(.header[transparent]) [data-transparent-background='both']:is(:hover, :focus-within) .header__row--top {
-  --color-foreground: var(--color-transparent-text, #fff);
-  --color-foreground-rgb: var(--color-transparent-text-rgb, 255 255 255);
-  --color-border: var(--color-transparent-text, #fff);
-  --color-border-rgb: var(--color-transparent-text-rgb, 255 255 255);
-  --color-primary-button-background: var(--color-transparent-text, #fff);
-  --color-primary-button-text: var(--color-transparent-text-contrast, #000);
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover),
+  :has(.menu-list__list-item[slot='overflow'] .menu-list__link[aria-expanded='true'])
+),
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+),
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky'][data-sticky-state='active']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) {
+  --header-logo-display: unset !important;
+  --header-logo-inverse-display: none !important;
+  --color-foreground: #111111 !important;
+  --color-foreground-rgb: 17 17 17 !important;
+  --color-border: #111111 !important;
+  --color-border-rgb: 17 17 17 !important;
+  --color-background: #ffffff !important;
+  --color-background-rgb: 255 255 255 !important;
+  --closed-underlay-height: 0px !important;
+  --color-transparent-text: #111111;
+  --color-transparent-text-rgb: 17 17 17;
+  --color-transparent-text-contrast: #ffffff;
 }
 
-/* Disable nav link dimming when another item is hovered */
-body:has(.header[transparent]) .menu-list:where(:has(.menu-list__list-item:hover)) .menu-list__link,
-body:has(.header[transparent]) .menu-list:where(:has(.menu-list__list-item:focus-within)) .menu-list__link,
-body:has(.header[transparent]) .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link {
-  color: var(--color-transparent-text, #fff);
-  opacity: 1;
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top,
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top,
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky'][data-sticky-state='active']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top {
+  --color-foreground: #111111 !important;
+  --color-foreground-rgb: 17 17 17 !important;
+  --color-border: #111111 !important;
+  --color-border-rgb: 17 17 17 !important;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top .header__columns.spacing-style.ferxsport-header-columns,
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top .header__columns.spacing-style.ferxsport-header-columns,
+body:has(.header[transparent]) #header-component.header[transparent='not-sticky'][data-sticky-state='active']:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: #ffffff !important;
+  /* Flush with mega panel: keep top radii only */
+  border-radius: calc(12 * var(--rem)) calc(12 * var(--rem)) 0 0 !important;
+  box-shadow: none;
+  /* Avoid transform clipping fixed/absolute mega panel shadows */
+  transform: none !important;
+  isolation: auto !important;
+  transition:
+    background-color 0.2s ease,
+    border-radius 0.15s ease;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .menu-list__link,
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .menu-list__link-title,
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header-logo__text {
+  color: #111111 !important;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header-actions__action,
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .header-actions__action svg {
+  color: #111111 !important;
+  stroke: currentColor;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .cart-bubble__background {
+  background: #111111 !important;
+}
+
+body:has(.header[transparent]) #header-component.header[transparent]:is(
+  :has(.menu-list__link[aria-expanded='true']),
+  :has(.menu-list__submenu:hover),
+  :has(.ferxsport-mega:hover)
+) .cart-bubble__text {
+  color: #ffffff !important;
+}
+
+@media (hover: hover) {
+  body:has(.header[transparent]) #header-component.header[transparent]:is(
+    :has(.menu-list__link[aria-expanded='true']),
+    :has(.menu-list__submenu:hover),
+    :has(.ferxsport-mega:hover)
+  )
+    .menu-list__list-item:is(:hover, :focus-within)
+    .menu-list__link-title,
+  body:has(.header[transparent]) #header-component.header[transparent]:is(
+    :has(.menu-list__link[aria-expanded='true']),
+    :has(.menu-list__submenu:hover),
+    :has(.ferxsport-mega:hover)
+  )
+    .menu-list__link[aria-expanded='true']
+    .menu-list__link-title {
+    background-color: rgb(0 0 0 / 0.06) !important;
+    color: #111111 !important;
+  }
 }
 
 /* Disable column dimming when hovering nav or actions */

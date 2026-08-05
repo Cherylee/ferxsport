@@ -48,53 +48,69 @@
           assign spec1_value_key = 'product_' | append: i | append: '_spec_1_value'
           assign spec2_label_key = 'product_' | append: i | append: '_spec_2_label'
           assign spec2_value_key = 'product_' | append: i | append: '_spec_2_value'
+          assign card_url = '#'
+          if product != blank
+            assign card_url = product.url
+          endif
         %}
-        {% if product != blank %}
-          <a href="{{ product.url }}" class="ferxsport-mega__product-card">
-            <div class="ferxsport-mega__product-media">
-              {% if product.featured_image != blank %}
-                {{
-                  product.featured_image
-                  | image_url: width: 600
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '200,300,400,600',
-                    sizes: '(min-width: 769px) 180px, 40vw',
-                    alt: product.title
-                }}
-              {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'ferxsport-mega__placeholder' }}
-              {% endif %}
-            </div>
+        <a href="{{ card_url }}" class="ferxsport-mega__product-card"{% if product == blank %} aria-disabled="true"{% endif %}>
+          <div class="ferxsport-mega__product-media">
+            {% if product != blank and product.featured_image != blank %}
+              {{
+                product.featured_image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '200,300,400,600',
+                  sizes: '(min-width: 769px) 200px, 40vw',
+                  alt: product.title
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'ferxsport-mega__placeholder' }}
+            {% endif %}
+          </div>
 
-            <div class="ferxsport-mega__product-specs">
-              {% if s[spec1_value_key] != blank %}
-                <div class="ferxsport-mega__spec">
-                  <span class="ferxsport-mega__spec-icon" aria-hidden="true">
-                    <svg viewBox="0 0 20 20" fill="none"><path d="M3 12h4l2-5 2 8 2-4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span>{{ s[spec1_value_key] }}</span>
-                </div>
-              {% endif %}
-              {% if s[spec2_value_key] != blank %}
-                <div class="ferxsport-mega__spec">
-                  <span class="ferxsport-mega__spec-icon" aria-hidden="true">
-                    <svg viewBox="0 0 20 20" fill="none"><rect x="3.5" y="6.5" width="13" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M16.5 9.5h1.2a.8.8 0 0 1 .8.8v1.4a.8.8 0 0 1-.8.8H16.5" stroke="currentColor" stroke-width="1.5"/></svg>
-                  </span>
-                  <span>{{ s[spec2_value_key] }}</span>
-                </div>
-              {% endif %}
-            </div>
+          <div class="ferxsport-mega__product-specs">
+            {% if s[spec1_value_key] != blank %}
+              <span class="ferxsport-mega__spec">
+                <span class="ferxsport-mega__spec-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="none"><path d="M3 12h4l2-5 2 8 2-4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="ferxsport-mega__spec-text">
+                  {% if s[spec1_label_key] != blank %}{{ s[spec1_label_key] }} {% endif %}{{ s[spec1_value_key] }}
+                </span>
+              </span>
+            {% endif %}
+            {% if s[spec2_value_key] != blank %}
+              <span class="ferxsport-mega__spec">
+                <span class="ferxsport-mega__spec-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="none"><rect x="3.5" y="6.5" width="13" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M16.5 9.5h1.2a.8.8 0 0 1 .8.8v1.4a.8.8 0 0 1-.8.8H16.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                </span>
+                <span class="ferxsport-mega__spec-text">
+                  {% if s[spec2_label_key] != blank %}{{ s[spec2_label_key] }} {% endif %}{{ s[spec2_value_key] }}
+                </span>
+              </span>
+            {% endif %}
+          </div>
 
-            <h3 class="ferxsport-mega__product-title">{{ product.title }}</h3>
-            <div class="ferxsport-mega__product-price">
+          <h3 class="ferxsport-mega__product-title">
+            {% if product != blank %}
+              {{ product.title }}
+            {% else %}
+              Product {{ i }}
+            {% endif %}
+          </h3>
+          <div class="ferxsport-mega__product-price">
+            {% if product != blank %}
               <span class="ferxsport-mega__price">{{ product.price | money }}</span>
               {% if product.compare_at_price > product.price %}
                 <span class="ferxsport-mega__compare-price">{{ product.compare_at_price | money }}</span>
               {% endif %}
-            </div>
-          </a>
-        {% endif %}
+            {% else %}
+              <span class="ferxsport-mega__price">$0.00</span>
+            {% endif %}
+          </div>
+        </a>
       {% endfor %}
     </div>
 

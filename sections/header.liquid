@@ -1205,8 +1205,9 @@
     transform: translateZ(0);
   }
 
+  /* Keep logo/actions above frosted bar chrome, but do NOT make columns
+     a containing block — mega menus must size to the full .header__columns. */
   #header-component.header[transparent='not-sticky'] .header__row--top .header__columns.spacing-style.ferxsport-header-columns > * {
-    position: relative;
     z-index: 1;
   }
 

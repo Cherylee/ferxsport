@@ -11,9 +11,13 @@
     assign utilities_columns = utilities_columns | plus: 1
   endif
 
-  assign payment_types = shop.enabled_payment_types
-  if section.settings.payment_icons_mode == 'custom' or payment_types.size == 0
-    assign payment_types = section.settings.custom_payment_types | default: 'american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa' | split: ','
+  assign default_payment_types = 'american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa'
+  assign custom_payment_types = section.settings.custom_payment_types | default: default_payment_types | split: ','
+  assign store_payment_types = shop.enabled_payment_types
+
+  assign payment_types = custom_payment_types
+  if section.settings.payment_icons_mode != 'custom' and store_payment_types.size > 0
+    assign payment_types = store_payment_types
   endif
 %}
 
@@ -26,25 +30,13 @@
 >
   <div
     class="utilities utilities--blocks-{{ utilities_columns }}{% if show_payment_icons %} utilities--has-payments{% endif %} spacing-style"
-    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px;{% if section.settings.divider_color != blank %} --divider-color: {{ section.settings.divider_color }};{% endif %} --gap: {{ section.settings.gap }}px; --payment-icon-gap: {{ section.settings.payment_icon_gap }}px;"
+    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px;{% if section.settings.divider_color != blank %} --divider-color: {{ section.settings.divider_color }};{% endif %} --gap: {{ section.settings.gap }}px; --payment-icon-gap: {{ section.settings.payment_icon_gap | default: 6 }}px;"
     data-testid="footer-utilities"
   >
     {% content_for 'blocks' %}
 
     {% if show_payment_icons %}
-      <div class="footer-utilities__payment-icons payment-icons">
-        <span class="visually-hidden">{{ 'blocks.payment_methods' | t }}</span>
-        <ul class="payment-icons__list" role="list">
-          {%- for type in payment_types -%}
-            {%- assign payment_type = type | strip -%}
-            {%- if payment_type != blank -%}
-              <li class="payment-icons__item">
-                {{ payment_type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      </div>
+      {% render 'footer-payment-icons', payment_types: payment_types %}
     {% endif %}
   </div>
 </div>
@@ -169,7 +161,7 @@
   "name": "t:names.policies_and_links",
   "tag": "div",
   "class": "footer-utilities",
-  "max_blocks": 3,
+  "max_blocks": 2,
   "enabled_on": {
     "groups": ["footer"]
   },
@@ -247,7 +239,7 @@
         }
       ],
       "default": "auto",
-      "visible_if": "{{ section.settings.show_payment_icons }}"
+      "visible_if": "{{ section.settings.show_payment_icons == true }}"
     },
     {
       "type": "text",
@@ -255,7 +247,7 @@
       "label": "Custom payment types",
       "info": "Comma-separated Shopify payment type handles, e.g. visa, master, paypal, apple_pay, shopify_pay",
       "default": "american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa",
-      "visible_if": "{{ section.settings.show_payment_icons }}"
+      "visible_if": "{{ section.settings.show_payment_icons == true }}"
     },
     {
       "type": "range",
@@ -266,7 +258,7 @@
       "step": 1,
       "unit": "px",
       "default": 6,
-      "visible_if": "{{ section.settings.show_payment_icons }}"
+      "visible_if": "{{ section.settings.show_payment_icons == true }}"
     },
     {
       "type": "header",

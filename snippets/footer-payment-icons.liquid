@@ -1,0 +1,22 @@
+{%- doc -%}
+  Renders footer payment icon list.
+
+  @param {array} payment_types - Payment type handles
+  @param {number} [gap] - Icon gap in px
+{%- enddoc -%}
+
+{%- if payment_types != blank -%}
+  <div class="footer-utilities__payment-icons payment-icons">
+    <span class="visually-hidden">{{ 'blocks.payment_methods' | t }}</span>
+    <ul class="payment-icons__list" role="list">
+      {%- for type in payment_types -%}
+        {%- assign payment_type = type | strip -%}
+        {%- if payment_type != blank -%}
+          <li class="payment-icons__item">
+            {{ payment_type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

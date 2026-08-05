@@ -1,0 +1,20 @@
+{%- doc -%}
+  Extracts pre-rendered drawer mega menu HTML for one link from a bundle
+  built in blocks/_header-menu.liquid (content_for only works in block files).
+
+  @param {string} bundle - Delimited mega HTML bundle
+  @param {string} link_handle - Nav link handle to extract
+{%- enddoc -%}
+
+{% liquid
+  assign start_marker = '[[[FERXSPORT_HANDLE:' | append: link_handle | append: ']]]'
+  assign end_marker = '[[[/FERXSPORT_HANDLE]]]'
+  assign bundle_parts = bundle | split: start_marker
+  if bundle_parts.size > 1
+    assign mega_html = bundle_parts[1] | split: end_marker | first | strip
+  else
+    assign mega_html = ''
+  endif
+%}
+
+{{ mega_html }}

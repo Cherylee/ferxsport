@@ -7,6 +7,7 @@
 {%- enddoc -%}
 
 {{ 'ferxsport-mega-menu.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ferxsport-mega-menu.js' | asset_url }}" defer></script>
 
 {% liquid
   assign block_settings = block.settings
@@ -15,12 +16,33 @@
 <div class="ferxsport-mega-config" hidden aria-hidden="true">
   {%- content_for 'blocks' -%}
 </div>
-{% liquid
-  assign ferxsport_mega_blocks = block.blocks
-%}
 
 {% case variant %}
   {% when 'mobile' %}
+    {% capture ferxsport_drawer_mega_bundle %}
+      {% for link in block_settings.menu.links %}
+[[[FERXSPORT_HANDLE:{{ link.handle }}]]]
+        {% content_for 'block',
+          type: '_mega-menu-product',
+          id: 'mega_product',
+          parent_link: link,
+          mega_menu_context: 'drawer'
+        %}
+        {% content_for 'block',
+          type: '_mega-menu-about',
+          id: 'mega_about',
+          parent_link: link,
+          mega_menu_context: 'drawer'
+        %}
+        {% content_for 'block',
+          type: '_mega-menu-support',
+          id: 'mega_support',
+          parent_link: link,
+          mega_menu_context: 'drawer'
+        %}
+[[[/FERXSPORT_HANDLE]]]
+      {% endfor %}
+    {% endcapture %}
     <div
       class="header__drawer"
       ref="headerDrawerContainer"
@@ -32,7 +54,7 @@
         data_header_drawer_type: 'mobile-drawer',
         block: block,
         section: section,
-        mega_blocks: ferxsport_mega_blocks
+        ferxsport_drawer_mega_bundle: ferxsport_drawer_mega_bundle
       %}
     </div>
 
@@ -111,10 +133,23 @@
           on:pointerleave="/deactivate"
         >
           {% capture ferxsport_mega_html %}
-            {% render 'ferxsport-mega-menu',
+            {% content_for 'block',
+              type: '_mega-menu-product',
+              id: 'mega_product',
               parent_link: link,
-              mega_blocks: ferxsport_mega_blocks,
-              context: 'desktop'
+              mega_menu_context: 'desktop'
+            %}
+            {% content_for 'block',
+              type: '_mega-menu-about',
+              id: 'mega_about',
+              parent_link: link,
+              mega_menu_context: 'desktop'
+            %}
+            {% content_for 'block',
+              type: '_mega-menu-support',
+              id: 'mega_support',
+              parent_link: link,
+              mega_menu_context: 'desktop'
             %}
           {% endcapture %}
           {% assign ferxsport_mega_html = ferxsport_mega_html | strip %}

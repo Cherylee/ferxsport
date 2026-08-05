@@ -1,8 +1,32 @@
 {%- doc -%}
-  Config block for About mega menu layout.
+  About mega menu — renders when closest.link matches menu_item_handle.
 {%- enddoc -%}
 
-{%- comment -%} Config block — layout rendered by ferxsport-mega-menu {%- endcomment -%}
+{% if parent_link != blank %}
+  {% liquid
+    assign configured = block.settings.menu_item_handle | strip
+    assign is_match = false
+    if configured != blank
+      assign link_handle = parent_link.handle | handleize
+      assign configured_handle = configured | handleize
+      assign link_title = parent_link.title | strip | downcase
+      assign configured_title = configured | downcase
+      if configured_handle == link_handle or configured_title == link_title or configured == parent_link.title or configured == parent_link.handle
+        assign is_match = true
+      endif
+    endif
+    assign mega_context = mega_menu_context | default: 'desktop'
+  %}
+  {% if is_match %}
+    {% render 'mega-menu-about',
+      parent_link: parent_link,
+      mega_block: block,
+      context: mega_context
+    %}
+  {% endif %}
+{% else %}
+  <div class="ferxsport-mega-config-entry" hidden aria-hidden="true" {{ block.shopify_attributes }}></div>
+{% endif %}
 
 {% schema %}
 {
