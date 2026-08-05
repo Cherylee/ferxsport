@@ -201,6 +201,8 @@
         "divider_color": "{{ settings.color_palette.color2 }}",
         "background_color": "{{ settings.color_palette.background }}",
         "show_payment_icons": true,
+        "payment_icons_mode": "auto",
+        "custom_payment_types": "american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa",
         "payment_icon_gap": 6,
         "padding-block-start": 20,
         "padding-block-end": 48

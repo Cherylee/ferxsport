@@ -10,6 +10,11 @@
   if show_payment_icons
     assign utilities_columns = utilities_columns | plus: 1
   endif
+
+  assign payment_types = shop.enabled_payment_types
+  if section.settings.payment_icons_mode == 'custom' or payment_types.size == 0
+    assign payment_types = section.settings.custom_payment_types | default: 'american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa' | split: ','
+  endif
 %}
 
 <div
@@ -30,10 +35,13 @@
       <div class="footer-utilities__payment-icons payment-icons">
         <span class="visually-hidden">{{ 'blocks.payment_methods' | t }}</span>
         <ul class="payment-icons__list" role="list">
-          {%- for type in shop.enabled_payment_types -%}
-            <li class="payment-icons__item">
-              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-            </li>
+          {%- for type in payment_types -%}
+            {%- assign payment_type = type | strip -%}
+            {%- if payment_type != blank -%}
+              <li class="payment-icons__item">
+                {{ payment_type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+              </li>
+            {%- endif -%}
           {%- endfor -%}
         </ul>
       </div>
@@ -142,7 +150,9 @@
 
   .utilities--has-payments .footer-utilities__payment-icons .payment-icons__item svg {
     display: block;
+    flex-shrink: 0;
     height: calc(24 * var(--rem));
+    min-height: calc(24 * var(--rem));
     width: auto;
   }
 
@@ -221,6 +231,31 @@
       "id": "show_payment_icons",
       "label": "Show payment icons",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "payment_icons_mode",
+      "label": "Payment icons source",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Store enabled (fallback to custom list)"
+        },
+        {
+          "value": "custom",
+          "label": "Custom list only"
+        }
+      ],
+      "default": "auto",
+      "visible_if": "{{ section.settings.show_payment_icons }}"
+    },
+    {
+      "type": "text",
+      "id": "custom_payment_types",
+      "label": "Custom payment types",
+      "info": "Comma-separated Shopify payment type handles, e.g. visa, master, paypal, apple_pay, shopify_pay",
+      "default": "american_express,apple_pay,diners_club,discover,google_pay,master,paypal,shopify_pay,unionpay,visa",
+      "visible_if": "{{ section.settings.show_payment_icons }}"
     },
     {
       "type": "range",

@@ -12,6 +12,12 @@
   assign block_settings = block.settings
   assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
 %}
+<div class="ferxsport-mega-config" hidden aria-hidden="true">
+  {%- content_for 'blocks' -%}
+</div>
+{% liquid
+  assign ferxsport_mega_blocks = block.blocks
+%}
 
 {% case variant %}
   {% when 'mobile' %}
@@ -25,7 +31,8 @@
         linklist: block_settings.menu,
         data_header_drawer_type: 'mobile-drawer',
         block: block,
-        section: section
+        section: section,
+        mega_blocks: ferxsport_mega_blocks
       %}
     </div>
 
@@ -106,7 +113,7 @@
           {% capture ferxsport_mega_html %}
             {% render 'ferxsport-mega-menu',
               parent_link: link,
-              menu_block: block,
+              mega_blocks: ferxsport_mega_blocks,
               context: 'desktop'
             %}
           {% endcapture %}

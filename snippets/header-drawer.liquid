@@ -6,6 +6,7 @@
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
   @param {object} [section] - The section that can be used to provide settings
+  @param {array} [mega_blocks] - Nested mega menu config blocks from _header-menu
 
   @example
   {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
@@ -13,6 +14,7 @@
 
 {% liquid
   assign block_settings = block.settings
+  assign drawer_mega_blocks = mega_blocks | default: block.blocks
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
 
@@ -116,7 +118,7 @@
                 {% capture ferxsport_mega_html %}
                   {% render 'ferxsport-mega-menu',
                     parent_link: link,
-                    menu_block: block,
+                    mega_blocks: drawer_mega_blocks,
                     context: 'drawer'
                   %}
                 {% endcapture %}
@@ -301,7 +303,7 @@
                   {% capture ferxsport_mega_solo %}
                     {% render 'ferxsport-mega-menu',
                       parent_link: link,
-                      menu_block: block,
+                      mega_blocks: drawer_mega_blocks,
                       context: 'drawer'
                     %}
                   {% endcapture %}
@@ -435,7 +437,7 @@
                         {% capture ferxsport_mega_html %}
                           {% render 'ferxsport-mega-menu',
                             parent_link: link,
-                            menu_block: block,
+                            mega_blocks: drawer_mega_blocks,
                             context: 'drawer'
                           %}
                         {% endcapture %}
@@ -697,7 +699,7 @@
                   {% capture ferxsport_mega_solo %}
                     {% render 'ferxsport-mega-menu',
                       parent_link: link,
-                      menu_block: block,
+                      mega_blocks: drawer_mega_blocks,
                       context: 'drawer'
                     %}
                   {% endcapture %}
