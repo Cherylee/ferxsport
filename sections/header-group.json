@@ -29,6 +29,8 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
+            "background_color": "{{ settings.color_palette.background }}",
+            "text_color": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "regular",
             "type_font_primary_link": "body",
@@ -38,6 +40,8 @@
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
+            "background_color_navigation_bar": "{{ settings.color_palette.background }}",
+            "text_color_navigation_bar": "",
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
@@ -46,27 +50,35 @@
             "mega_product": {
               "type": "_mega-menu-product",
               "settings": {
-                "menu_item_handle": "electric-dirt-bike",
+                "menu_item_handle": "Electric Dirt Bike",
                 "primary_cta_label": "All Electric Dirt Bikes",
+                "primary_cta_link": "",
+                "product_1": "",
                 "product_1_spec_1_label": "Speed",
                 "product_1_spec_1_value": "40 MPH",
                 "product_1_spec_2_label": "Battery",
                 "product_1_spec_2_value": "48V 23.4Ah",
+                "product_2": "",
                 "product_2_spec_1_label": "Speed",
                 "product_2_spec_1_value": "40 MPH",
                 "product_2_spec_2_label": "Battery",
                 "product_2_spec_2_value": "48V 23.4Ah",
+                "product_3": "",
                 "product_3_spec_1_label": "Speed",
                 "product_3_spec_1_value": "40 MPH",
                 "product_3_spec_2_label": "Battery",
                 "product_3_spec_2_value": "48V 23.4Ah",
+                "featured_link": "",
                 "featured_badge": "Best Seller",
                 "featured_title": "EM-5 Pro",
                 "featured_subtitle": "Electric Dirt Bike for Teenagers",
                 "featured_banner": "#1 TOP-SELLING PROFESSIONAL RECOMMENDATION",
                 "cta_1_label": "Compare Models",
-                "cta_2_label": "Explore All"
-              }
+                "cta_1_link": "",
+                "cta_2_label": "Explore All",
+                "cta_2_link": ""
+              },
+              "blocks": {}
             },
             "mega_about": {
               "type": "_mega-menu-about",
@@ -74,11 +86,15 @@
                 "menu_item_handle": "about",
                 "card_1_title": "Blog",
                 "card_1_text": "Trail guides, maintenance tips and rider stories from the dirt.",
+                "card_1_link": "",
                 "card_2_title": "About Us",
                 "card_2_text": "Why we build electric dirt bikes — and who rides behind the badge.",
+                "card_2_link": "",
                 "card_3_title": "Affiliate",
-                "card_3_text": "Share your ride, grow your following and earn on every referral."
-              }
+                "card_3_text": "Share your ride, grow your following and earn on every referral.",
+                "card_3_link": ""
+              },
+              "blocks": {}
             },
             "mega_support": {
               "type": "_mega-menu-support",
@@ -87,21 +103,30 @@
                 "featured_title": "Riding Into A Question?",
                 "featured_text": "Real humans, real fast. Setup, service or spares - we've got your back.",
                 "featured_button_label": "Contact Support",
+                "featured_button_link": "",
                 "link_1_title": "FAQs",
                 "link_1_text": "Quick answers to common questions",
+                "link_1_url": "",
                 "link_2_title": "User Manuals",
                 "link_2_text": "Download guides for every model",
+                "link_2_url": "",
                 "link_3_title": "Contact Us",
                 "link_3_text": "Talk with our support team",
+                "link_3_url": "",
                 "link_4_title": "After-Sales Center",
                 "link_4_text": "Parts, service and repair help",
+                "link_4_url": "",
                 "link_5_title": "Shipping Policy",
                 "link_5_text": "Delivery times and shipping info",
+                "link_5_url": "",
                 "link_6_title": "Return Policy",
                 "link_6_text": "Hassle-free returns made simple",
+                "link_6_url": "",
                 "link_7_title": "Warranty Policy",
-                "link_7_text": "Coverage details for your ride"
-              }
+                "link_7_text": "Coverage details for your ride",
+                "link_7_url": ""
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -115,6 +140,7 @@
         "logo_position": "left",
         "menu_position": "center",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -130,16 +156,29 @@
         "enable_sticky_header": "scroll-up",
         "divider_width": 0,
         "divider_size": "page-width",
+        "divider_color": "",
         "border_width": 0,
+        "bottom_border_color": "",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
         "background_color_top": "rgba(0,0,0,0)",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "custom",
+        "bubble_background_color": "#000000",
+        "bubble_text_color": "#ffffff",
         "enable_transparent_header_home": true,
         "home_inverse_logo": true,
         "text_color_transparent_home": "#ffffff",
         "enable_transparent_header_product": false,
+        "product_inverse_logo": false,
+        "text_color_transparent_product": "",
         "enable_transparent_header_collection": false,
-        "bubble_style": "custom",
-        "bubble_background_color": "#000000",
-        "bubble_text_color": "#ffffff"
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
       }
     }
   },
