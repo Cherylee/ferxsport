@@ -6,6 +6,8 @@
   @param {string} [transparent] - Show a transparent menu
 {%- enddoc -%}
 
+{{ 'ferxsport-mega-menu.css' | asset_url | stylesheet_tag }}
+
 {% liquid
   assign block_settings = block.settings
   assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
@@ -101,11 +103,23 @@
           on:pointerenter="/activate"
           on:pointerleave="/deactivate"
         >
+          {% capture ferxsport_mega_html %}
+            {% render 'ferxsport-mega-menu',
+              parent_link: link,
+              menu_block: block,
+              context: 'desktop'
+            %}
+          {% endcapture %}
+          {% assign ferxsport_mega_html = ferxsport_mega_html | strip %}
+          {% assign has_ferxsport_mega = false %}
+          {% if ferxsport_mega_html != blank %}
+            {% assign has_ferxsport_mega = true %}
+          {% endif %}
           <a
             href="{{ link.url }}"
             data-skip-node-update="true"
-            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
-            {%- if link.links != blank -%}
+            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}{% if has_ferxsport_mega or link.links != blank %} menu-list__link--has-submenu{% endif %}"
+            {%- if link.links != blank or has_ferxsport_mega -%}
               aria-controls="submenu-{{ forloop.index }}"
               aria-haspopup="true"
               aria-expanded="false"
@@ -115,9 +129,18 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">
+              {{- link.title -}}
+              {%- if link.links != blank or has_ferxsport_mega -%}
+                <span class="menu-list__link-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 12 8" fill="none">
+                    <path d="M1.5 1.75L6 6.25L10.5 1.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </span>
           </a>
-          {%- if link.links != blank -%}
+          {%- if link.links != blank or has_ferxsport_mega -%}
             <div class="menu-list__submenu{{ background_color_classes }}" ref="submenu[]">
               <div
                 id="submenu-{{ forloop.index }}"
@@ -130,17 +153,21 @@
                     class="mega-menu__grid"
                     data-menu-grid-id="{{ list_id }}"
                   >
-                    {% render 'mega-menu-list',
-                      parent_link: link,
-                      id: list_id,
-                      section: section,
-                      grid_columns_count: 6,
-                      grid_columns_count_tablet: 4,
-                      grid_columns_count_collection_images: 8,
-                      menu_content_type: menu_content_type,
-                      content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
-                    %}
+                    {% if has_ferxsport_mega %}
+                      {{ ferxsport_mega_html }}
+                    {% else %}
+                      {% render 'mega-menu-list',
+                        parent_link: link,
+                        id: list_id,
+                        section: section,
+                        grid_columns_count: 6,
+                        grid_columns_count_tablet: 4,
+                        grid_columns_count_collection_images: 8,
+                        menu_content_type: menu_content_type,
+                        content_aspect_ratio: ratio,
+                        image_border_radius: image_border_radius
+                      %}
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -712,6 +739,17 @@
 {
   "name": "t:names.menu",
   "tag": null,
+  "blocks": [
+    {
+      "type": "_mega-menu-product"
+    },
+    {
+      "type": "_mega-menu-about"
+    },
+    {
+      "type": "_mega-menu-support"
+    }
+  ],
   "settings": [
     {
       "type": "link_list",
@@ -954,6 +992,10 @@
       "id": "drawer_dividers",
       "label": "t:settings.dividers",
       "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "Add Mega: Product / About / Support blocks below. Set each block’s menu item handle to match a top-level nav item."
     }
   ]
 }

@@ -11,6 +11,31 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
+    "ferxsport_footer": {
+      "type": "ferxsport-footer",
+      "settings": {
+        "content_max_width": 1280,
+        "menu_1_heading": "Shop",
+        "menu_2_heading": "Company",
+        "menu_3_heading": "Support",
+        "newsletter_heading": "Stay In The Ride Loop",
+        "newsletter_text": "Get Ride Guides, Summer Drops, And Exclusive Offers.",
+        "email_placeholder": "Email",
+        "submit_label": "Submit",
+        "show_consent": true,
+        "consent_text_before": "By Signing Up, You Agree To Our",
+        "privacy_label": "Privacy Policy",
+        "success_message": "Thanks for subscribing!",
+        "facebook_url": "https://www.facebook.com/",
+        "instagram_url": "https://www.instagram.com/",
+        "youtube_url": "https://www.youtube.com/",
+        "tiktok_url": "https://www.tiktok.com/",
+        "twitter_url": "https://x.com/",
+        "pinterest_url": "https://www.pinterest.com/",
+        "padding_top": 64,
+        "padding_bottom": 56
+      }
+    },
     "footer_m9NzUG": {
       "type": "footer",
       "blocks": {
@@ -162,23 +187,11 @@
             "case": "none"
           },
           "blocks": {}
-        },
-        "social_links_Ew63Kq": {
-          "type": "social-links",
-          "settings": {
-            "facebook_url": "https://www.facebook.com/",
-            "instagram_url": "https://www.instagram.com/",
-            "youtube_url": "https://www.youtube.com/",
-            "tiktok_url": "https://www.tiktok.com/",
-            "twitter_url": "https://x.com/"
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "footer_copyright_jweRK8",
-        "footer_policy_list_VCdnpa",
-        "social_links_Ew63Kq"
+        "footer_policy_list_VCdnpa"
       ],
       "name": "t:names.utilities",
       "settings": {
@@ -187,12 +200,15 @@
         "divider_thickness": 1,
         "divider_color": "{{ settings.color_palette.color2 }}",
         "background_color": "{{ settings.color_palette.background }}",
+        "show_payment_icons": true,
+        "payment_icon_gap": 6,
         "padding-block-start": 20,
         "padding-block-end": 48
       }
     }
   },
   "order": [
+    "ferxsport_footer",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"
   ]

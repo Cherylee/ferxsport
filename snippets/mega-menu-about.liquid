@@ -1,0 +1,62 @@
+{%- doc -%}
+  About mega menu — 3 image cards.
+  @param {object} parent_link
+  @param {object} mega_block
+  @param {string} context
+{%- enddoc -%}
+
+{% liquid
+  assign s = mega_block.settings
+  assign context_class = ''
+  if context == 'drawer'
+    assign context_class = ' ferxsport-mega--drawer'
+  endif
+%}
+
+<div class="ferxsport-mega ferxsport-mega--about{{ context_class }}" {{ mega_block.shopify_attributes }}>
+  <div class="ferxsport-mega__about-grid">
+    {% for i in (1..3) %}
+      {% liquid
+        assign image_key = 'card_' | append: i | append: '_image'
+        assign title_key = 'card_' | append: i | append: '_title'
+        assign text_key = 'card_' | append: i | append: '_text'
+        assign link_key = 'card_' | append: i | append: '_link'
+      %}
+      {% if s[title_key] != blank or s[image_key] != blank %}
+        {% if s[link_key] != blank %}
+          <a href="{{ s[link_key] }}" class="ferxsport-mega__about-card">
+        {% else %}
+          <div class="ferxsport-mega__about-card">
+        {% endif %}
+          {% if s[image_key] != blank %}
+            {{
+              s[image_key]
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                class: 'ferxsport-mega__about-img',
+                widths: '400,600,900',
+                sizes: '(min-width: 769px) 33vw, 90vw',
+                alt: s[title_key]
+            }}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'ferxsport-mega__about-img ferxsport-mega__placeholder' }}
+          {% endif %}
+          <span class="ferxsport-mega__about-overlay" aria-hidden="true"></span>
+          <div class="ferxsport-mega__about-copy">
+            {% if s[title_key] != blank %}
+              <h3 class="ferxsport-mega__about-title">{{ s[title_key] }}</h3>
+            {% endif %}
+            {% if s[text_key] != blank %}
+              <p class="ferxsport-mega__about-text">{{ s[text_key] }}</p>
+            {% endif %}
+          </div>
+        {% if s[link_key] != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

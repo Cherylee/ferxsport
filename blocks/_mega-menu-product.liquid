@@ -1,0 +1,190 @@
+{%- doc -%}
+  Config block for Product mega menu layout. Rendered via parent header menu matching.
+{%- enddoc -%}
+
+{% schema %}
+{
+  "name": "Mega: Product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_item_handle",
+      "label": "Menu item handle or title",
+      "info": "Match a top-level nav item, e.g. electric-dirt-bike or Electric Dirt Bike",
+      "default": "electric-dirt-bike"
+    },
+    {
+      "type": "header",
+      "content": "Left links"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_label",
+      "label": "Primary CTA label",
+      "default": "All Electric Dirt Bikes"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary CTA link",
+      "info": "Falls back to the menu item URL if empty"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product 1"
+    },
+    {
+      "type": "text",
+      "id": "product_1_spec_1_label",
+      "label": "Product 1 spec 1 label",
+      "default": "Speed"
+    },
+    {
+      "type": "text",
+      "id": "product_1_spec_1_value",
+      "label": "Product 1 spec 1 value",
+      "default": "40 MPH"
+    },
+    {
+      "type": "text",
+      "id": "product_1_spec_2_label",
+      "label": "Product 1 spec 2 label",
+      "default": "Battery"
+    },
+    {
+      "type": "text",
+      "id": "product_1_spec_2_value",
+      "label": "Product 1 spec 2 value",
+      "default": "48V 23.4Ah"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "text",
+      "id": "product_2_spec_1_label",
+      "label": "Product 2 spec 1 label",
+      "default": "Speed"
+    },
+    {
+      "type": "text",
+      "id": "product_2_spec_1_value",
+      "label": "Product 2 spec 1 value",
+      "default": "40 MPH"
+    },
+    {
+      "type": "text",
+      "id": "product_2_spec_2_label",
+      "label": "Product 2 spec 2 label",
+      "default": "Battery"
+    },
+    {
+      "type": "text",
+      "id": "product_2_spec_2_value",
+      "label": "Product 2 spec 2 value",
+      "default": "48V 23.4Ah"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product 3"
+    },
+    {
+      "type": "text",
+      "id": "product_3_spec_1_label",
+      "label": "Product 3 spec 1 label",
+      "default": "Speed"
+    },
+    {
+      "type": "text",
+      "id": "product_3_spec_1_value",
+      "label": "Product 3 spec 1 value",
+      "default": "40 MPH"
+    },
+    {
+      "type": "text",
+      "id": "product_3_spec_2_label",
+      "label": "Product 3 spec 2 label",
+      "default": "Battery"
+    },
+    {
+      "type": "text",
+      "id": "product_3_spec_2_value",
+      "label": "Product 3 spec 2 value",
+      "default": "48V 23.4Ah"
+    },
+    {
+      "type": "header",
+      "content": "Featured panel"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured image"
+    },
+    {
+      "type": "url",
+      "id": "featured_link",
+      "label": "Featured link"
+    },
+    {
+      "type": "text",
+      "id": "featured_badge",
+      "label": "Badge",
+      "default": "Best Seller"
+    },
+    {
+      "type": "text",
+      "id": "featured_title",
+      "label": "Title",
+      "default": "EM-5 Pro"
+    },
+    {
+      "type": "text",
+      "id": "featured_subtitle",
+      "label": "Subtitle",
+      "default": "Electric Dirt Bike for Teenagers"
+    },
+    {
+      "type": "text",
+      "id": "featured_banner",
+      "label": "Bottom banner",
+      "default": "#1 TOP-SELLING PROFESSIONAL RECOMMENDATION"
+    },
+    {
+      "type": "header",
+      "content": "Bottom buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta_1_label",
+      "label": "Button 1 label",
+      "default": "Compare Models"
+    },
+    {
+      "type": "url",
+      "id": "cta_1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "cta_2_label",
+      "label": "Button 2 label",
+      "default": "Explore All"
+    },
+    {
+      "type": "url",
+      "id": "cta_2_link",
+      "label": "Button 2 link"
+    }
+  ]
+}
+{% endschema %}

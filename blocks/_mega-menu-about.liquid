@@ -1,0 +1,96 @@
+{%- doc -%}
+  Config block for About mega menu layout.
+{%- enddoc -%}
+
+{% schema %}
+{
+  "name": "Mega: About",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_item_handle",
+      "label": "Menu item handle or title",
+      "default": "about"
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Title",
+      "default": "Blog"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_text",
+      "label": "Description",
+      "default": "Trail guides, maintenance tips and rider stories from the dirt."
+    },
+    {
+      "type": "url",
+      "id": "card_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Title",
+      "default": "About Us"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_text",
+      "label": "Description",
+      "default": "Why we build electric dirt bikes — and who rides behind the badge."
+    },
+    {
+      "type": "url",
+      "id": "card_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Title",
+      "default": "Affiliate"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_text",
+      "label": "Description",
+      "default": "Share your ride, grow your following and earn on every referral."
+    },
+    {
+      "type": "url",
+      "id": "card_3_link",
+      "label": "Link"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+{%- doc -%}
+  Support mega menu — featured left + icon links right.
+  @param {object} parent_link
+  @param {object} mega_block
+  @param {string} context
+{%- enddoc -%}
+
+{% liquid
+  assign s = mega_block.settings
+  assign context_class = ''
+  if context == 'drawer'
+    assign context_class = ' ferxsport-mega--drawer'
+  endif
+%}
+
+<div class="ferxsport-mega ferxsport-mega--support{{ context_class }}" {{ mega_block.shopify_attributes }}>
+  <div class="ferxsport-mega__support-layout">
+    <div class="ferxsport-mega__support-featured">
+      {% if s.featured_image != blank %}
+        {{
+          s.featured_image
+          | image_url: width: 1000
+          | image_tag:
+            loading: 'lazy',
+            class: 'ferxsport-mega__support-featured-img',
+            widths: '400,700,1000',
+            sizes: '(min-width: 769px) 360px, 90vw',
+            alt: s.featured_title
+        }}
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'ferxsport-mega__support-featured-img ferxsport-mega__placeholder' }}
+      {% endif %}
+      <span class="ferxsport-mega__support-featured-overlay" aria-hidden="true"></span>
+      <div class="ferxsport-mega__support-featured-copy">
+        {% if s.featured_title != blank %}
+          <h3 class="ferxsport-mega__support-featured-title">{{ s.featured_title }}</h3>
+        {% endif %}
+        {% if s.featured_text != blank %}
+          <p class="ferxsport-mega__support-featured-text">{{ s.featured_text }}</p>
+        {% endif %}
+        {% if s.featured_button_label != blank %}
+          <a
+            href="{{ s.featured_button_link | default: parent_link.url }}"
+            class="ferxsport-mega__support-cta"
+          >
+            <span>{{ s.featured_button_label }}</span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <ul class="ferxsport-mega__support-grid" role="list">
+      {% for i in (1..7) %}
+        {% liquid
+          assign icon_key = 'link_' | append: i | append: '_icon'
+          assign title_key = 'link_' | append: i | append: '_title'
+          assign text_key = 'link_' | append: i | append: '_text'
+          assign url_key = 'link_' | append: i | append: '_url'
+        %}
+        {% if s[title_key] != blank %}
+          <li>
+            <a href="{{ s[url_key] | default: '#' }}" class="ferxsport-mega__support-item">
+              <span class="ferxsport-mega__support-icon">
+                {% if s[icon_key] != blank %}
+                  {{
+                    s[icon_key]
+                    | image_url: width: 80
+                    | image_tag: loading: 'lazy', widths: '40,80', sizes: '40px', alt: ''
+                  }}
+                {% else %}
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M10 8.5v5M10 6.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                {% endif %}
+              </span>
+              <span class="ferxsport-mega__support-copy">
+                <span class="ferxsport-mega__support-title">{{ s[title_key] }}</span>
+                {% if s[text_key] != blank %}
+                  <span class="ferxsport-mega__support-text">{{ s[text_key] }}</span>
+                {% endif %}
+              </span>
+              <span class="ferxsport-mega__support-arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>

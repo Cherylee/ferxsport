@@ -4,6 +4,12 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  assign show_payment_icons = section.settings.show_payment_icons
+  assign utilities_columns = section.blocks.size
+  if show_payment_icons
+    assign utilities_columns = utilities_columns | plus: 1
+  endif
 %}
 
 <div
@@ -14,11 +20,24 @@
   {{ section.shopify_attributes }}
 >
   <div
-    class="utilities utilities--blocks-{{ section.blocks.size }} spacing-style"
-    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px;{% if section.settings.divider_color != blank %} --divider-color: {{ section.settings.divider_color }};{% endif %} --gap: {{ section.settings.gap }}px;"
+    class="utilities utilities--blocks-{{ utilities_columns }}{% if show_payment_icons %} utilities--has-payments{% endif %} spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px;{% if section.settings.divider_color != blank %} --divider-color: {{ section.settings.divider_color }};{% endif %} --gap: {{ section.settings.gap }}px; --payment-icon-gap: {{ section.settings.payment_icon_gap }}px;"
     data-testid="footer-utilities"
   >
     {% content_for 'blocks' %}
+
+    {% if show_payment_icons %}
+      <div class="footer-utilities__payment-icons payment-icons">
+        <span class="visually-hidden">{{ 'blocks.payment_methods' | t }}</span>
+        <ul class="payment-icons__list" role="list">
+          {%- for type in shop.enabled_payment_types -%}
+            <li class="payment-icons__item">
+              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {% endif %}
   </div>
 </div>
 
@@ -94,6 +113,44 @@
       justify-self: end;
       text-align: right;
     }
+
+    .utilities .payment-icons__list {
+      gap: var(--payment-icon-gap, calc(6 * var(--rem)));
+      justify-content: flex-end;
+    }
+  }
+
+  .utilities--has-payments .footer-utilities__payment-icons {
+    width: auto;
+  }
+
+  .utilities--has-payments .footer-utilities__payment-icons .payment-icons__list {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--payment-icon-gap, calc(6 * var(--rem)));
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .utilities--has-payments .footer-utilities__payment-icons .payment-icons__item {
+    display: flex;
+    align-items: center;
+  }
+
+  .utilities--has-payments .footer-utilities__payment-icons .payment-icons__item svg {
+    display: block;
+    height: calc(24 * var(--rem));
+    width: auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .utilities--has-payments.utilities--blocks-3 > .footer-utilities__payment-icons {
+      justify-self: end;
+      text-align: right;
+    }
   }
 {% endstylesheet %}
 
@@ -157,6 +214,27 @@
     },
     {
       "type": "header",
+      "content": "Payment icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "payment_icon_gap",
+      "label": "Payment icon gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 6,
+      "visible_if": "{{ section.settings.show_payment_icons }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
@@ -186,27 +264,25 @@
     },
     {
       "type": "footer-policy-list"
-    },
-    {
-      "type": "social-links"
     }
   ],
   "presets": [
     {
       "name": "t:names.policies_and_links",
       "category": "t:categories.footer",
+      "settings": {
+        "show_payment_icons": true,
+        "payment_icon_gap": 6
+      },
       "blocks": {
         "copyright": {
           "type": "footer-copyright"
         },
         "policy_list": {
           "type": "footer-policy-list"
-        },
-        "social_icons": {
-          "type": "social-links"
         }
       },
-      "block_order": ["copyright", "policy_list", "social_icons"]
+      "block_order": ["copyright", "policy_list"]
     }
   ]
 }

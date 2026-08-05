@@ -1,0 +1,49 @@
+{%- doc -%}
+  Matches a configured mega menu block by parent link handle and renders the layout.
+
+  @param {object} parent_link - Top-level menu link
+  @param {object} menu_block - The _header-menu block (with nested mega blocks)
+  @param {string} [context] - 'desktop' or 'drawer'
+  @param {boolean} [render_fallback] - Whether caller should fall back when unmatched (returns blank)
+{%- enddoc -%}
+
+{% liquid
+  assign context = context | default: 'desktop'
+  assign matched_block = nil
+  assign matched_type = ''
+
+  if menu_block != blank and parent_link != blank
+    for child_block in menu_block.blocks
+      assign child_handle = child_block.settings.menu_item_handle | strip | handleize
+      assign link_handle = parent_link.handle | strip
+      if child_handle == link_handle or child_block.settings.menu_item_handle == parent_link.title or child_block.settings.menu_item_handle == parent_link.handle
+        assign matched_block = child_block
+        assign matched_type = child_block.type
+        break
+      endif
+    endfor
+  endif
+%}
+
+{% if matched_block != blank %}
+  {% case matched_type %}
+    {% when '_mega-menu-product' %}
+      {% render 'mega-menu-product',
+        parent_link: parent_link,
+        mega_block: matched_block,
+        context: context
+      %}
+    {% when '_mega-menu-about' %}
+      {% render 'mega-menu-about',
+        parent_link: parent_link,
+        mega_block: matched_block,
+        context: context
+      %}
+    {% when '_mega-menu-support' %}
+      {% render 'mega-menu-support',
+        parent_link: parent_link,
+        mega_block: matched_block,
+        context: context
+      %}
+  {% endcase %}
+{% endif %}

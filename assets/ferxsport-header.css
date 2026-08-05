@@ -76,13 +76,34 @@ body:has(.header[transparent]) .menu-list__list {
 }
 
 body:has(.header[transparent]) .menu-list__link-title {
+  align-items: center;
   background-color: transparent;
   border-radius: var(--Arvita-radius-full, calc(999 * var(--rem)));
-  display: inline-block;
+  display: inline-flex;
+  gap: calc(6 * var(--rem));
   line-height: 1.2;
   padding-block: calc(6 * var(--rem));
   padding-inline: calc(16 * var(--rem));
   transition: background-color 0.2s ease;
+}
+
+/* Submenu chevron — points up when open */
+.menu-list__link-chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  height: calc(8 * var(--rem));
+  transition: transform 0.2s ease;
+  width: calc(12 * var(--rem));
+}
+
+.menu-list__link-chevron svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.menu-list__link[aria-expanded='true'] .menu-list__link-chevron {
+  transform: rotate(180deg);
 }
 
 @media (hover: hover) {

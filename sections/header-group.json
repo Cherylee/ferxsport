@@ -42,7 +42,73 @@
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
           },
-          "blocks": {}
+          "blocks": {
+            "mega_product": {
+              "type": "_mega-menu-product",
+              "settings": {
+                "menu_item_handle": "electric-dirt-bike",
+                "primary_cta_label": "All Electric Dirt Bikes",
+                "product_1_spec_1_label": "Speed",
+                "product_1_spec_1_value": "40 MPH",
+                "product_1_spec_2_label": "Battery",
+                "product_1_spec_2_value": "48V 23.4Ah",
+                "product_2_spec_1_label": "Speed",
+                "product_2_spec_1_value": "40 MPH",
+                "product_2_spec_2_label": "Battery",
+                "product_2_spec_2_value": "48V 23.4Ah",
+                "product_3_spec_1_label": "Speed",
+                "product_3_spec_1_value": "40 MPH",
+                "product_3_spec_2_label": "Battery",
+                "product_3_spec_2_value": "48V 23.4Ah",
+                "featured_badge": "Best Seller",
+                "featured_title": "EM-5 Pro",
+                "featured_subtitle": "Electric Dirt Bike for Teenagers",
+                "featured_banner": "#1 TOP-SELLING PROFESSIONAL RECOMMENDATION",
+                "cta_1_label": "Compare Models",
+                "cta_2_label": "Explore All"
+              }
+            },
+            "mega_about": {
+              "type": "_mega-menu-about",
+              "settings": {
+                "menu_item_handle": "about",
+                "card_1_title": "Blog",
+                "card_1_text": "Trail guides, maintenance tips and rider stories from the dirt.",
+                "card_2_title": "About Us",
+                "card_2_text": "Why we build electric dirt bikes — and who rides behind the badge.",
+                "card_3_title": "Affiliate",
+                "card_3_text": "Share your ride, grow your following and earn on every referral."
+              }
+            },
+            "mega_support": {
+              "type": "_mega-menu-support",
+              "settings": {
+                "menu_item_handle": "support",
+                "featured_title": "Riding Into A Question?",
+                "featured_text": "Real humans, real fast. Setup, service or spares - we've got your back.",
+                "featured_button_label": "Contact Support",
+                "link_1_title": "FAQs",
+                "link_1_text": "Quick answers to common questions",
+                "link_2_title": "User Manuals",
+                "link_2_text": "Download guides for every model",
+                "link_3_title": "Contact Us",
+                "link_3_text": "Talk with our support team",
+                "link_4_title": "After-Sales Center",
+                "link_4_text": "Parts, service and repair help",
+                "link_5_title": "Shipping Policy",
+                "link_5_text": "Delivery times and shipping info",
+                "link_6_title": "Return Policy",
+                "link_6_text": "Hassle-free returns made simple",
+                "link_7_title": "Warranty Policy",
+                "link_7_text": "Coverage details for your ride"
+              }
+            }
+          },
+          "block_order": [
+            "mega_product",
+            "mega_about",
+            "mega_support"
+          ]
         }
       },
       "settings": {

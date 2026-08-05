@@ -1,0 +1,380 @@
+{{ 'section-ferxsport-footer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign privacy_url = s.privacy_policy_url
+  if privacy_url == blank and shop.privacy_policy != blank
+    assign privacy_url = shop.privacy_policy.url
+  endif
+
+  assign form_id = 'FerxsportFooterNewsletter-' | append: section.id
+-%}
+
+<section
+  id="FerxsportFooter-{{ section.id }}"
+  class="ferxsport-footer"
+  style="
+    --ferxsport-footer-pad-top: {{ s.padding_top | default: 64 }};
+    --ferxsport-footer-pad-bottom: {{ s.padding_bottom | default: 56 }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div
+    class="ferxsport-footer__inner ferxsport-contained"
+    style="--ferxsport-contained-width: {{ s.content_max_width | default: 1280 }};"
+  >
+    <div class="ferxsport-footer__grid">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign heading_key = 'menu_' | append: i | append: '_heading'
+          assign menu_key = 'menu_' | append: i
+          assign menu = s[menu_key]
+          assign heading = s[heading_key]
+          if heading == blank and menu != blank
+            assign heading = menu.title
+          endif
+        -%}
+        {%- if heading != blank or menu != blank -%}
+          <nav class="ferxsport-footer__col" aria-label="{{ heading | default: menu.title | escape }}">
+            {%- if heading != blank -%}
+              <h2 class="ferxsport-footer__heading">{{ heading | escape }}</h2>
+            {%- endif -%}
+            {%- if menu != blank and menu.links.size > 0 -%}
+              <ul class="ferxsport-footer__links" role="list">
+                {%- for link in menu.links -%}
+                  <li>
+                    <a
+                      href="{{ link.url }}"
+                      class="ferxsport-footer__link{% if link.current %} is-active{% endif %}"
+                      {% if link.current %}
+                        aria-current="page"
+                      {% endif %}
+                    >
+                      {{- link.title | escape -}}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="ferxsport-footer__newsletter">
+        {%- if s.newsletter_heading != blank -%}
+          <h2 class="ferxsport-footer__newsletter-title">{{ s.newsletter_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if s.newsletter_text != blank -%}
+          <p class="ferxsport-footer__newsletter-text">{{ s.newsletter_text | escape }}</p>
+        {%- endif -%}
+
+        {%- form 'customer', id: form_id, class: 'ferxsport-footer__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+
+          <div class="ferxsport-footer__input-group">
+            <label class="visually-hidden" for="FerxsportFooterEmail-{{ section.id }}">
+              {{ s.email_placeholder | default: 'Email' | escape }}
+            </label>
+            <input
+              id="FerxsportFooterEmail-{{ section.id }}"
+              class="ferxsport-footer__input"
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              placeholder="{{ s.email_placeholder | default: 'Email' | escape }}"
+              required
+              {% if form.errors %}
+                aria-invalid="true"
+                aria-describedby="FerxsportFooterError-{{ section.id }}"
+              {% elsif form.posted_successfully? %}
+                aria-describedby="FerxsportFooterSuccess-{{ section.id }}"
+              {% endif %}
+            >
+            <button type="submit" class="ferxsport-footer__submit">
+              {{ s.submit_label | default: 'Submit' | escape }}
+            </button>
+          </div>
+
+          {%- if s.show_consent -%}
+            <label class="ferxsport-footer__consent">
+              <input
+                class="ferxsport-footer__checkbox"
+                type="checkbox"
+                name="ferxsport_footer_consent"
+                value="1"
+                required
+              >
+              <span class="ferxsport-footer__consent-text">
+                {%- if privacy_url != blank -%}
+                  {{ s.consent_text_before | default: 'By Signing Up, You Agree To Our' | escape }}
+                  <a href="{{ privacy_url }}">{{ s.privacy_label | default: 'Privacy Policy' | escape }}</a>
+                {%- else -%}
+                  {{ s.consent_text_before | default: 'By Signing Up, You Agree To Our' | escape }}
+                  {{ s.privacy_label | default: 'Privacy Policy' | escape }}
+                {%- endif -%}
+              </span>
+            </label>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <p id="FerxsportFooterError-{{ section.id }}" class="ferxsport-footer__message ferxsport-footer__message--error" tabindex="-1">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </p>
+          {%- endif -%}
+
+          {%- if form.posted_successfully? -%}
+            <p id="FerxsportFooterSuccess-{{ section.id }}" class="ferxsport-footer__message ferxsport-footer__message--success" tabindex="-1">
+              {{ s.success_message | default: 'Thanks for subscribing!' | escape }}
+            </p>
+          {%- endif -%}
+        {%- endform -%}
+
+        {%- liquid
+          assign social_keys = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,pinterest_url' | split: ','
+          assign has_social = false
+          for key in social_keys
+            if s[key] != blank
+              assign has_social = true
+              break
+            endif
+          endfor
+        -%}
+
+        {%- if has_social -%}
+          <ul class="ferxsport-footer__social" role="list">
+            {%- for key in social_keys -%}
+              {%- if s[key] != blank -%}
+                {%- liquid
+                  case key
+                    when 'facebook_url'
+                      assign platform = 'facebook'
+                    when 'instagram_url'
+                      assign platform = 'instagram'
+                    when 'youtube_url'
+                      assign platform = 'youtube'
+                    when 'tiktok_url'
+                      assign platform = 'tiktok'
+                    when 'twitter_url'
+                      assign platform = 'twitter'
+                    when 'pinterest_url'
+                      assign platform = 'pinterest'
+                  endcase
+                -%}
+                <li>
+                  <a
+                    class="ferxsport-footer__social-link"
+                    href="{{ s[key] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="{{ platform | capitalize }}"
+                  >
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                      {%- render 'icon', icon: platform -%}
+                    </svg>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Footer navigation",
+  "tag": "section",
+  "class": "ferxsport-footer-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 900,
+      "max": 1400,
+      "step": 10,
+      "default": 1280
+    },
+    {
+      "type": "header",
+      "content": "Menu columns"
+    },
+    {
+      "type": "text",
+      "id": "menu_1_heading",
+      "label": "Column 1 heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Column 1 menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_heading",
+      "label": "Column 2 heading",
+      "default": "Company"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Column 2 menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_3_heading",
+      "label": "Column 3 heading",
+      "default": "Support"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "Column 3 menu"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Heading",
+      "default": "Stay In The Ride Loop"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Description",
+      "default": "Get Ride Guides, Summer Drops, And Exclusive Offers."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Submit"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_consent",
+      "label": "Show privacy consent",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "consent_text_before",
+      "label": "Consent text",
+      "default": "By Signing Up, You Agree To Our"
+    },
+    {
+      "type": "text",
+      "id": "privacy_label",
+      "label": "Privacy policy label",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "url",
+      "id": "privacy_policy_url",
+      "label": "Privacy policy link",
+      "info": "Falls back to the store privacy policy if empty"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
+    },
+    {
+      "type": "header",
+      "content": "Social links"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "X / Twitter"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_url",
+      "label": "Pinterest"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer navigation",
+      "category": "t:categories.footer",
+      "settings": {
+        "menu_1_heading": "Shop",
+        "menu_2_heading": "Company",
+        "menu_3_heading": "Support",
+        "newsletter_heading": "Stay In The Ride Loop",
+        "newsletter_text": "Get Ride Guides, Summer Drops, And Exclusive Offers.",
+        "facebook_url": "https://www.facebook.com/",
+        "instagram_url": "https://www.instagram.com/",
+        "youtube_url": "https://www.youtube.com/",
+        "tiktok_url": "https://www.tiktok.com/",
+        "twitter_url": "https://x.com/",
+        "pinterest_url": "https://www.pinterest.com/"
+      }
+    }
+  ]
+}
+{% endschema %}
