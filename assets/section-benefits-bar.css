@@ -80,6 +80,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .benefits-bar__inner {
+    padding: calc(24 * var(--rem));
+  }
+
   .benefits-bar__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -89,6 +93,11 @@
     padding: calc(20 * var(--rem)) calc(12 * var(--rem));
   }
 
+  .benefits-bar__icon {
+    height: calc(36 * var(--rem));
+    width: calc(36 * var(--rem));
+  }
+
   .benefits-bar__text {
     font-size: calc(22 * var(--rem));
   }
@@ -96,6 +105,6 @@
 
 @media screen and (max-width: 480px) {
   .benefits-bar__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

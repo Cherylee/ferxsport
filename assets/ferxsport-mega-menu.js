@@ -11,9 +11,11 @@
     if (!cols) return;
 
     const rect = cols.getBoundingClientRect();
-    ROOT.style.setProperty('--ferxsport-mega-left', `${Math.round(rect.left)}px`);
-    ROOT.style.setProperty('--ferxsport-mega-width', `${Math.round(rect.width)}px`);
-    ROOT.style.setProperty('--ferxsport-mega-top', `${Math.round(rect.bottom)}px`);
+    // Keep sub-pixel precision. Rounding rect.bottom down can leave a visible
+    // hairline between the bar and panel on large/high-DPI screens.
+    ROOT.style.setProperty('--ferxsport-mega-left', `${rect.left}px`);
+    ROOT.style.setProperty('--ferxsport-mega-width', `${rect.width}px`);
+    ROOT.style.setProperty('--ferxsport-mega-top', `${rect.bottom}px`);
   };
 
   let ticking = false;

@@ -321,26 +321,27 @@
   }
 
   .rider-testimonials__photo--1 {
-    left: -2%;
-    top: calc(4 * var(--rem));
+    left: 5%;
+    top: calc(184 * var(--rem));
   }
 
   .rider-testimonials__photo--2 {
     left: calc(4%);
-    top: calc(220 * var(--rem));
+    top: calc(380 * var(--rem));
   }
 
   .rider-testimonials__photo--3 {
-    top: calc(150 * var(--rem));
+    top: calc(0 * var(--rem));
+    left: calc(34%);
   }
 
   .rider-testimonials__photo--4 {
-    right: calc(0%);
-    top: calc(250 * var(--rem));
+    right: calc(6%);
+    top: calc(300 * var(--rem));
   }
 
   .rider-testimonials__photo--5 {
-    right: -4%;
+    right: 4%;
     top: calc(24 * var(--rem));
   }
 }

@@ -240,12 +240,28 @@
 }
 
 @media screen and (max-width: 768px) {
+  .dirt-clips-carousel__inner {
+    padding-inline: calc(24 * var(--rem));
+  }
+
   .dirt-clips-carousel__heading {
     font-size: calc(32 * var(--rem));
   }
 
+  .dirt-clips-carousel__video-title {
+    font-size: calc(20 * var(--rem));
+  }
+
+  .dirt-clips-carousel__author {
+    font-size: calc(18 * var(--rem));
+  }
+
+  .dirt-clips-carousel__date {
+    font-size: calc(18 * var(--rem));
+  }
+
   .dirt-clips-carousel__slide {
-    flex-basis: calc((100cqw - var(--dirt-clips-gap)) / 1.15);
-    width: calc((100cqw - var(--dirt-clips-gap)) / 1.15);
+    flex-basis: calc(100cqw / 1.8);
+    width: calc(100cqw / 1.8);
   }
 }

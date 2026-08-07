@@ -61,8 +61,18 @@
 .hero-banner-carousel__media video {
   display: block;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
+}
+
+.hero-banner-carousel__picture {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-banner-carousel__mobile-image {
+  display: none !important;
 }
 
 .hero-banner-carousel__media video {
@@ -158,29 +168,53 @@
 }
 
 @media screen and (max-width: 768px) {
+  .hero-banner-carousel__frame {
+    aspect-ratio: auto;
+    height: 100dvh;
+    min-height: 100svh;
+    
+  }
+
+  .hero-banner-carousel__desktop-video:has(+ .hero-banner-carousel__mobile-image) {
+    display: none;
+  }
+
+  .hero-banner-carousel__mobile-image {
+    display: block !important;
+  }
+  .hero-banner-carousel__slide{
+    position: relative;
+  }
   .hero-banner-carousel__content {
-    gap: calc(16 * var(--rem));
-    inset: auto calc(24 * var(--rem)) calc(72 * var(--rem));
+    bottom: auto;
+    gap: calc(20 * var(--rem));
+    justify-content: flex-start;
     left: calc(24 * var(--rem));
     max-width: none;
+    padding: 0 calc(24 * var(--rem));
+    align-items: center;
+    height: fit-content;
+    top: calc(266 * var(--rem));
   }
 
   .hero-banner-carousel__heading-line {
-    font-size: calc(48 * var(--rem));
+    font-size: calc(68 * var(--rem));
   }
 
   .hero-banner-carousel__body {
-    font-size: calc(24 * var(--rem));
+    font-size: calc(26 * var(--rem));
     max-width: none;
+    text-align: center;
   }
 
   .hero-banner-carousel__actions {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin-block-start: calc(4 * var(--rem));
   }
 
   .hero-banner-carousel__btn {
-    width: 100%;
+    width: auto;
   }
 
   .hero-banner-carousel__pagination {
@@ -193,6 +227,6 @@
   }
 
   .hero-banner-carousel__dot.is-active {
-    width: calc(64 * var(--rem));
+    width: calc(4 * var(--rem));
   }
 }

@@ -231,11 +231,18 @@
 
       if (slideCount < 2) return;
 
-      const loopClone = originals[0].cloneNode(true);
-      loopClone.setAttribute('data-dirt-clips-clone', 'true');
-      loopClone.setAttribute('aria-hidden', 'true');
-      loopClone.removeAttribute('id');
-      track.appendChild(loopClone);
+      // Append enough clones so the last real slide can be followed by the
+      // beginning of the set again, creating a seamless infinite carousel.
+      const visibleMobile = 1.8;
+      const clonesNeeded = Math.ceil(visibleMobile) + 1;
+      for (let i = 0; i < clonesNeeded; i++) {
+        const original = originals[i % slideCount];
+        const loopClone = original.cloneNode(true);
+        loopClone.setAttribute('data-dirt-clips-clone', 'true');
+        loopClone.setAttribute('aria-hidden', 'true');
+        loopClone.removeAttribute('id');
+        track.appendChild(loopClone);
+      }
     };
 
     const getGap = () => {
@@ -251,6 +258,8 @@
       return slide.offsetWidth + getGap();
     };
 
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
     const syncSlideWidths = () => {
       if (!viewport || !track) return;
 
@@ -258,9 +267,15 @@
       if (!slides.length) return;
 
       const styles = getComputedStyle(section);
-      const visible = parseFloat(styles.getPropertyValue('--dirt-clips-visible')) || 4;
       const gap = getGap();
-      const slideWidth = Math.max(0, (viewport.clientWidth - gap * Math.max(0, visible - 1)) / visible);
+      let slideWidth;
+
+      if (isMobile()) {
+        slideWidth = viewport.clientWidth / 1.8;
+      } else {
+        const visible = parseFloat(styles.getPropertyValue('--dirt-clips-visible')) || 4;
+        slideWidth = Math.max(0, (viewport.clientWidth - gap * Math.max(0, visible - 1)) / visible);
+      }
 
       slides.forEach((slide) => {
         slide.style.flexBasis = `${slideWidth}px`;
@@ -276,7 +291,7 @@
 
     const resetLoop = () => {
       loopPending = false;
-      activeIndex = 0;
+      activeIndex = activeIndex - slideCount;
       applyTransform(false);
     };
 
@@ -297,18 +312,14 @@
     const advance = () => {
       if (slideCount < 2) return;
 
-      if (activeIndex >= slideCount) {
-        resetLoop();
-      }
-
       activeIndex += 1;
       applyTransform(true);
 
+      // Once we scroll past the last original slide, we are viewing clones
+      // that match the first slides. Quietly jump back to the same offset
+      // without animation so the loop feels infinite.
       if (activeIndex >= slideCount) {
         loopPending = true;
-        window.setTimeout(() => {
-          if (loopPending) resetLoop();
-        }, 650);
       }
     };
 

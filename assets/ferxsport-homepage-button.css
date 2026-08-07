@@ -31,6 +31,19 @@
   color: #1a1a1a;
 }
 
+@media screen and (max-width: 768px) {
+  .ferxsport-homepage-btn {
+    font-size: calc(20 * var(--rem));
+    padding-block: calc(18 * var(--rem));
+    padding-inline: calc(32 * var(--rem));
+  }
+
+  .ferxsport-homepage-btn svg {
+    height: calc(20 * var(--rem));
+    width: calc(20 * var(--rem));
+  }
+}
+
 @media (hover: hover) {
   .ferxsport-homepage-btn-hover-opacity .ferxsport-homepage-btn:hover {
     opacity: var(--ferxsport-homepage-btn-hover-opacity, 0.88);

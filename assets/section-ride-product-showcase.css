@@ -478,8 +478,31 @@
     width: calc(24 * var(--rem));
   }
 
+  .ride-card__badge {
+    font-size: calc(18 * var(--rem));
+    padding: calc(8 * var(--rem)) calc(16 * var(--rem));
+  }
+
   .ride-card__specs {
     padding: calc(16 * var(--rem));
+  }
+
+  .ride-card__spec-icon-wrap {
+    height: calc(60 * var(--rem));
+    width: calc(60 * var(--rem));
+  }
+
+  .ride-card__spec-icon {
+    height: calc(32 * var(--rem));
+    width: calc(32 * var(--rem));
+  }
+
+  .ride-card__spec-label {
+    font-size: calc(16 * var(--rem));
+  }
+
+  .ride-card__spec-value {
+    font-size: calc(16 * var(--rem));
   }
 
   .ride-card__footer {
@@ -487,15 +510,27 @@
   }
 
   .ride-card__title {
-    font-size: calc(22 * var(--rem));
-    min-height: calc(22 * var(--rem) * 1.35 * 2);
+    font-size: calc(24 * var(--rem));
+    min-height: calc(24 * var(--rem) * 1.35 * 2);
+    font-weight: 500;
   }
 
   .ride-card__price-current {
     font-size: calc(24 * var(--rem));
+    font-weight: 600;
   }
 
   .ride-card__price-compare {
     font-size: calc(16 * var(--rem));
+  }
+
+  .ride-card__cart-btn {
+    height: calc(60 * var(--rem));
+    width: calc(60 * var(--rem));
+  }
+
+  .ride-card__cart-btn svg {
+    height: calc(24 * var(--rem));
+    width: calc(24 * var(--rem));
   }
 }

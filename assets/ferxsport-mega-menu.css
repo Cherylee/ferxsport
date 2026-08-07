@@ -77,27 +77,38 @@
   }
 
   /*
-    Use position:fixed (coords from ferxsport-mega-menu.js) so the panel +
-    shadow escape header overflow/transform/contain clipping.
+    Fixed mega panel chrome. Visibility is driven ONLY by aria-expanded on
+    that item's link — never by leftover [data-active] (which used to leave
+    all three panels stacked open). Theme clip-path transitions are disabled
+    so the panel does not wipe in from bottom-to-top.
   */
-  /* Outermost white frame — shadow lives here (not on overflow:hidden inner grid) */
   .menu-list__submenu:has(.ferxsport-mega) {
     background: #fff;
     border-radius: 0 0 calc(20 * var(--rem)) calc(20 * var(--rem));
     box-shadow:
       0 calc(12 * var(--rem)) calc(32 * var(--rem)) rgb(0 0 0 / 0.14),
       0 calc(4 * var(--rem)) calc(12 * var(--rem)) rgb(0 0 0 / 0.08);
-    clip-path: none !important;
+    clip-path: inset(0 -200px -200px -200px) !important;
+    display: none !important;
     left: var(--ferxsport-mega-left, 0) !important;
     margin-left: 0 !important;
     overflow: visible !important;
     padding-inline: 0 !important;
+    pointer-events: none;
     position: fixed !important;
     right: auto !important;
     top: var(--ferxsport-mega-top, 0) !important;
     transform: none !important;
+    transition: none !important;
     width: var(--ferxsport-mega-width, var(--ferxsport-header-width, calc(1280 * var(--rem)))) !important;
     z-index: 120 !important;
+  }
+
+  .menu-list__list-item:has(> .menu-list__link[aria-expanded='true']) > .menu-list__submenu:has(.ferxsport-mega) {
+    content-visibility: visible;
+    display: block !important;
+    pointer-events: auto;
+    visibility: visible !important;
   }
 
   .menu-list__submenu:has(.ferxsport-mega) .menu-list__submenu-inner {
@@ -105,10 +116,12 @@
     display: block;
     justify-content: unset;
     max-height: none;
+    opacity: 1 !important;
     overflow: visible !important;
     padding-block: 0;
     padding-inline: 0;
     transform: none !important;
+    transition: none !important;
     width: 100%;
   }
 
@@ -148,7 +161,9 @@
     .header__columns.spacing-style.ferxsport-header-columns {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    /* transform creates a clipping containing block — disable while open */
+    /* transform/backdrop-filter create a fixed containing block — clear while open */
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
     transform: none !important;
     isolation: auto !important;
   }
@@ -179,7 +194,7 @@
   align-items: center;
   background: #111;
   border-radius: calc(999 * var(--rem));
-  color: #fff;
+  color: #fff!important;
   display: inline-flex;
   font-size: calc(14 * var(--rem));
   font-weight: 600;
@@ -190,6 +205,10 @@
   padding: calc(12 * var(--rem)) calc(18 * var(--rem));
   transition: opacity 0.2s ease;
   width: 100%;
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__primary-cta {
+  display: none;
 }
 
 @media (hover: hover) {
@@ -298,12 +317,23 @@
   white-space: nowrap;
 }
 
+.ferxsport-mega--drawer .ferxsport-mega__spec {
+  font-size: calc(18 * var(--rem));
+  gap: calc(6 * var(--rem));
+  padding: calc(8 * var(--rem)) calc(12 * var(--rem));
+}
+
 .ferxsport-mega__spec-icon {
   color: var(--fm-text);
   display: inline-flex;
   flex-shrink: 0;
   height: calc(12 * var(--rem));
   width: calc(12 * var(--rem));
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__spec-icon {
+  height: calc(30 * var(--rem));
+  width: calc(30 * var(--rem));
 }
 
 .ferxsport-mega__spec-icon svg {
@@ -324,6 +354,10 @@
   margin: 0 0 calc(8 * var(--rem));
 }
 
+.ferxsport-mega--drawer .ferxsport-mega__product-title {
+  font-size: calc(28 * var(--rem));
+}
+
 .ferxsport-mega__product-price {
   align-items: baseline;
   display: flex;
@@ -336,6 +370,11 @@
   color: var(--fm-accent);
   font-size: calc(16 * var(--rem));
   font-weight: 700;
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__price,
+.ferxsport-mega--drawer .ferxsport-mega__compare-price {
+  font-size: calc(28 * var(--rem));
 }
 
 .ferxsport-mega__compare-price {
@@ -352,6 +391,10 @@
   min-height: 100%;
   overflow: hidden;
   position: relative;
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__featured {
+  min-height: calc(320 * var(--rem));
 }
 
 .ferxsport-mega__featured-img {
@@ -390,6 +433,13 @@
   z-index: 2;
 }
 
+.ferxsport-mega--drawer .ferxsport-mega__badge {
+  font-size: calc(20 * var(--rem));
+  left: calc(20 * var(--rem));
+  padding: calc(10 * var(--rem)) calc(16 * var(--rem));
+  top: calc(20 * var(--rem));
+}
+
 .ferxsport-mega__featured-copy {
   bottom: calc(56 * var(--rem));
   left: calc(18 * var(--rem));
@@ -406,11 +456,19 @@
   margin: 0 0 calc(6 * var(--rem));
 }
 
+.ferxsport-mega--drawer .ferxsport-mega__featured-title {
+  font-size: calc(32 * var(--rem));
+}
+
 .ferxsport-mega__featured-subtitle {
   font-size: calc(13 * var(--rem));
   line-height: 1.35;
   margin: 0;
   opacity: 0.95;
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__featured-subtitle {
+  font-size: calc(24 * var(--rem));
 }
 
 .ferxsport-mega__featured-banner {
@@ -443,7 +501,7 @@
   align-items: center;
   background: #111;
   border-radius: calc(999 * var(--rem));
-  color: #fff;
+  color: #fff!important;
   display: inline-flex;
   font-size: calc(14 * var(--rem));
   font-weight: 600;
@@ -453,6 +511,18 @@
   min-width: calc(168 * var(--rem));
   padding: calc(10 * var(--rem)) calc(28 * var(--rem));
   transition: opacity 0.2s ease;
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__footer-btn {
+  font-size: calc(20 * var(--rem));
+  min-height: calc(54 * var(--rem));
+  min-width: calc(200 * var(--rem));
+  padding: calc(18 * var(--rem)) calc(32 * var(--rem));
+}
+
+.ferxsport-mega--drawer .ferxsport-mega__footer-btn svg {
+  height: calc(20 * var(--rem));
+  width: calc(20 * var(--rem));
 }
 
 @media (hover: hover) {
@@ -524,14 +594,18 @@
   font-weight: 700;
   line-height: 1.1;
   margin: 0 0 calc(8 * var(--rem));
+  color: #ffffff;
 }
 
 .ferxsport-mega__about-text {
   font-size: calc(14 * var(--rem));
   line-height: 1.45;
   margin: 0;
-  max-width: 28ch;
+  max-width: 100%;
   opacity: 0.95;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* =========================================================
@@ -603,16 +677,19 @@
   font-size: calc(14 * var(--rem));
   line-height: 1.45;
   margin: 0;
-  max-width: 30ch;
+  max-width: 100%;
   opacity: 0.95;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .ferxsport-mega__support-cta {
   align-items: center;
   align-self: flex-start;
-  background: #fff;
+  background: #ffffff;
   border-radius: calc(999 * var(--rem));
-  color: #111;
+  color: #111!important;
   display: inline-flex;
   font-size: calc(14 * var(--rem));
   font-weight: 600;
@@ -702,6 +779,7 @@
 }
 
 .ferxsport-mega__support-title {
+  color: #111;
   font-size: calc(15 * var(--rem));
   font-weight: 700;
   line-height: 1.25;
@@ -747,7 +825,7 @@
 }
 
 .ferxsport-mega--drawer .ferxsport-mega__products {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .ferxsport-mega--drawer .ferxsport-mega__featured,

@@ -80,9 +80,9 @@
           height="500"
           hidden
         >
-        <div class="electric-ride-hero__hero-placeholder" data-erh-hero-default>
+        {% comment %} <div class="electric-ride-hero__hero-placeholder" data-erh-hero-default>
           {{ 'hero-apparel-1' | placeholder_svg_tag: 'electric-ride-hero__hero-image electric-ride-hero__hero-image--default' }}
-        </div>
+        </div> {% endcomment %}
       </div>
 
       <div
@@ -129,7 +129,8 @@
         {
           "backgroundColor": {{ block.settings.background_color | default: '#3d9a8a' | json }},
           "heroImage": {% if block.settings.hero_image != blank %}{{ block.settings.hero_image | image_url: width: 1600 | json }}{% else %}""{% endif %},
-          "heroAlt": {{ block.settings.hero_image.alt | default: block.settings.card_title | json }},
+          "heroMobileImage": {% if block.settings.hero_mobile_image != blank %}{{ block.settings.hero_mobile_image | image_url: width: 1200 | json }}{% else %}""{% endif %},
+          "heroAlt": {{ block.settings.hero_image.alt | default: block.settings.hero_mobile_image.alt | default: block.settings.card_title | json }},
           "sceneLink": {{ block.settings.scene_link | default: routes.root_url | json }},
           "sceneLinkNewTab": {{ block.settings.scene_link_new_tab | json }}
         }
@@ -376,9 +377,13 @@
         if (heroDefault) heroDefault.classList.add(switchClass);
       }
 
+      const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
       const updateContent = () => {
-        if (scene.heroImage) {
-          heroImage.src = scene.heroImage;
+        const imageSrc = (isMobile() && scene.heroMobileImage) ? scene.heroMobileImage : scene.heroImage;
+
+        if (imageSrc) {
+          heroImage.src = imageSrc;
           heroImage.alt = scene.heroAlt || '';
           heroImage.hidden = false;
           if (heroDefault) heroDefault.hidden = true;
@@ -386,7 +391,6 @@
           heroImage.hidden = true;
           if (heroDefault) heroDefault.hidden = false;
         }
-
       };
 
       if (animate) {
@@ -672,8 +676,14 @@
         {
           "type": "image_picker",
           "id": "hero_image",
-          "label": "Hero image",
+          "label": "Hero image (desktop)",
           "info": "Transparent PNG recommended."
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_mobile_image",
+          "label": "Hero image (mobile)",
+          "info": "Optional portrait image used at 768px and below. Falls back to the desktop image."
         },
         {
           "type": "header",

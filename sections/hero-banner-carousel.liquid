@@ -19,6 +19,11 @@
           {% liquid
             assign media_type = block.settings.media_type | default: 'image'
             assign media_bg = block.settings.media_background | default: '#000000'
+            if forloop.first
+              assign slide_loading = 'eager'
+            else
+              assign slide_loading = 'lazy'
+            endif
           %}
           <li
             class="hero-banner-carousel__slide{% if forloop.first %} is-active{% endif %}"
@@ -38,25 +43,47 @@
                     muted: true,
                     playsinline: true,
                     controls: false,
-                    preload: 'metadata'
+                    preload: 'metadata',
+                    class: 'hero-banner-carousel__desktop-video'
                 }}
+                {% if block.settings.mobile_image != blank %}
+                  {{
+                    block.settings.mobile_image
+                    | image_url: width: 1600
+                    | image_tag:
+                      class: 'hero-banner-carousel__mobile-image',
+                      loading: slide_loading,
+                      widths: '375, 550, 750, 1000, 1200, 1600',
+                      sizes: '100vw',
+                      alt: block.settings.mobile_image.alt | default: block.settings.heading_line_2 | escape
+                  }}
+                {% endif %}
               {% elsif block.settings.image != blank %}
-                {% liquid
-                  if forloop.first
-                    assign slide_loading = 'eager'
-                  else
-                    assign slide_loading = 'lazy'
-                  endif
-                %}
-                {{
-                  block.settings.image
-                  | image_url: width: 3840
-                  | image_tag:
-                    loading: slide_loading,
-                    widths: '832, 1200, 1600, 1920, 2560, 3840',
-                    sizes: '100vw',
-                    alt: block.settings.image.alt | default: block.settings.heading_line_2 | escape
-                }}
+                <picture class="hero-banner-carousel__picture">
+                  {% if block.settings.mobile_image != blank %}
+                    <source
+                      media="(max-width: 768px)"
+                      srcset="
+                        {{ block.settings.mobile_image | image_url: width: 375 }} 375w,
+                        {{ block.settings.mobile_image | image_url: width: 550 }} 550w,
+                        {{ block.settings.mobile_image | image_url: width: 750 }} 750w,
+                        {{ block.settings.mobile_image | image_url: width: 1000 }} 1000w,
+                        {{ block.settings.mobile_image | image_url: width: 1200 }} 1200w,
+                        {{ block.settings.mobile_image | image_url: width: 1600 }} 1600w
+                      "
+                      sizes="100vw"
+                    >
+                  {% endif %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 3840
+                    | image_tag:
+                      loading: slide_loading,
+                      widths: '832, 1200, 1600, 1920, 2560, 3840',
+                      sizes: '100vw',
+                      alt: block.settings.image.alt | default: block.settings.heading_line_2 | escape
+                  }}
+                </picture>
               {% else %}
                 <div class="hero-banner-carousel__placeholder">
                   {{ 'hero-apparel-1' | placeholder_svg_tag }}
@@ -306,9 +333,15 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image",
-          "info": "Displayed at 16:9 without cropping or distortion.",
+          "label": "Desktop image",
+          "info": "Used on desktop and as the mobile fallback.",
           "visible_if": "{{ block.settings.media_type == 'image' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image",
+          "info": "Optional portrait image used at 768px and below. Recommended ratio: 9:16."
         },
         {
           "type": "video",

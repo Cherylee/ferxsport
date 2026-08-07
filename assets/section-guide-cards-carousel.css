@@ -187,8 +187,12 @@
 }
 
 @media screen and (max-width: 768px) {
+  .guide-cards__inner {
+    padding-inline: calc(24 * var(--rem));
+  }
+
   .guide-cards__header {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
   }
 

@@ -120,7 +120,25 @@
       {% else %}
         <div class="ferxsport-mega__featured">
       {% endif %}
-        {% if s.featured_image != blank %}
+        {% if s.featured_image_mobile != blank %}
+          <picture>
+            <source media="(max-width: 768px)" srcset="{{ s.featured_image_mobile | image_url: width: 600 }}">
+            {% if s.featured_image != blank %}
+              {{
+                s.featured_image
+                | image_url: width: 900
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'ferxsport-mega__featured-img',
+                  widths: '400,600,900',
+                  sizes: '(min-width: 769px) 260px, 90vw',
+                  alt: s.featured_title
+              }}
+            {% else %}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'ferxsport-mega__featured-img ferxsport-mega__placeholder' }}
+            {% endif %}
+          </picture>
+        {% elsif s.featured_image != blank %}
           {{
             s.featured_image
             | image_url: width: 900

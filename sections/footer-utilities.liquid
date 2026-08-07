@@ -60,6 +60,23 @@
       align-items: center;
       text-align: left;
     }
+
+    @media screen and (max-width: 749px) {
+      gap: calc(5 * var(--rem));
+
+      .footer-utilities__payment-icons {
+        order: 0;
+        margin-bottom: calc(5 * var(--rem));
+      }
+
+      anchored-popover-component {
+        order: 1;
+      }
+
+      .footer-utilities__group-copyright {
+        order: 2;
+      }
+    }
   }
 
   .utilities a,
@@ -146,6 +163,11 @@
     height: calc(24 * var(--rem));
     min-height: calc(24 * var(--rem));
     width: auto;
+
+    @media screen and (max-width: 749px) {
+      height: calc(36 * var(--rem));
+      min-height: calc(36 * var(--rem));
+    }
   }
 
   @media screen and (min-width: 750px) {

@@ -21,6 +21,20 @@ body:has(.header[transparent]) .header-section {
 
 body:has(.header[transparent]) #header-component.header[transparent] {
   z-index: var(--ferxsport-header-z);
+  /*
+    The theme's base `.header { contain: layout style }` makes this element
+    the containing block for `position: fixed` descendants — including our
+    fixed mega-menu panel (see ferxsport-mega-menu.css). But the panel's
+    top/left are computed via getBoundingClientRect(), which is
+    viewport-relative. With `contain` active, the panel actually renders
+    relative to THIS element instead of the viewport, creating a real gap
+    between the nav bar and the panel. The pointer has to cross that empty
+    gap to reach the panel, which breaks the hover chain on the menu item
+    and closes the dropdown the instant the mouse moves down into it.
+    Removing `contain` here makes the viewport the containing block again,
+    matching what the JS assumes, so there's no gap and no dead zone.
+  */
+  contain: none !important;
 }
 
 /* Top offset outside frosted bar */
@@ -49,15 +63,15 @@ body:has(.header[transparent]) .header__row--top .header__columns.spacing-style.
   background-color: var(--ferxsport-header-sticky-bg);
   border-radius: calc(12 * var(--rem));
   box-shadow: none;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   isolation: isolate;
   margin-inline: auto;
   max-width: var(--ferxsport-header-width);
-  min-width: var(--ferxsport-header-width);
+  min-width: 0;
   padding-inline: var(--ferxsport-header-inline-padding);
   position: relative;
   transform: translateZ(0);
-  width: var(--ferxsport-header-width);
+  width: min(var(--ferxsport-header-width), calc(100vw - 2 * var(--ferxsport-header-inline-padding)));
 }
 
 body:has(.header[transparent]) .header-logo__image {
@@ -237,13 +251,22 @@ body:has(.header[transparent]) #header-component.header[transparent='not-sticky'
   background-color: #ffffff !important;
   /* Flush with mega panel: keep top radii only */
   border-radius: calc(12 * var(--rem)) calc(12 * var(--rem)) 0 0 !important;
-  box-shadow: none;
+  /*
+    Same shadow value as the mega panel below (see ferxsport-mega-menu.css
+    .menu-list__submenu:has(.ferxsport-mega)). Bar + panel sit flush with no
+    gap, so casting the IDENTICAL shadow from both reads as ONE continuous
+    shadow wrapping the whole merged shape — never a shadow on one piece only.
+  */
+  box-shadow:
+    0 calc(12 * var(--rem)) calc(32 * var(--rem)) rgb(0 0 0 / 0.14),
+    0 calc(4 * var(--rem)) calc(12 * var(--rem)) rgb(0 0 0 / 0.08);
   /* Avoid transform clipping fixed/absolute mega panel shadows */
   transform: none !important;
   isolation: auto !important;
   transition:
     background-color 0.2s ease,
-    border-radius 0.15s ease;
+    border-radius 0.15s ease,
+    box-shadow 0.2s ease;
 }
 
 body:has(.header[transparent]) #header-component.header[transparent]:is(
@@ -348,8 +371,26 @@ body:has(.header[transparent])
   }
 
   body:has(.header[transparent]) .header__row--top .header__columns.spacing-style.ferxsport-header-columns {
+    border-radius: 0 !important;
     max-width: 100%;
     min-width: 0;
     width: 100%;
+  }
+}
+
+/* =========================================================
+   Nav typography — responsive rem (scales with viewport)
+   PC baseline 1440 → 16px; scales down on smaller screens.
+   Mobile (≤768px, baseline 750) keeps a readable size.
+   ========================================================= */
+@media screen and (min-width: 769px) {
+  body:has(.header[transparent]) .menu-list__link {
+    font-size: calc(16 * var(--rem));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body:has(.header[transparent]) .menu-list__link {
+    font-size: calc(28 * var(--rem));
   }
 }

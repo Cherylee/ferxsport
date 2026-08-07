@@ -301,13 +301,80 @@
 @media screen and (max-width: 749px) {
   .ferxsport-footer {
     --ferxsport-footer-gap: calc(28 * var(--rem));
+    padding-inline: calc(24 * var(--rem));
   }
 
   .ferxsport-footer__grid {
     grid-template-columns: 1fr;
   }
 
+  .ferxsport-footer__newsletter {
+    order: -1;
+  }
+
   .ferxsport-footer__newsletter-text {
     max-width: none;
+  }
+  .ferxsport-footer__input, .ferxsport-footer__input:hover, .ferxsport-footer__input:focus, .ferxsport-footer__input:focus-visible, .ferxsport-footer__input:active{
+    font-size: calc(24 * var(--rem));
+  }
+  .ferxsport-footer__newsletter-title {
+    font-size: calc(32 * var(--rem));
+  }
+
+  .ferxsport-footer__newsletter-text {
+    font-size: calc(18 * var(--rem));
+  }
+
+  .ferxsport-footer__input-group {
+    border-radius: calc(8 * var(--rem));
+    min-height: calc(80 * var(--rem));
+    padding-inline: calc(24 * var(--rem)) calc(12 * var(--rem));
+  }
+
+  .ferxsport-footer__input {
+    font-size: calc(24 * var(--rem));
+  }
+
+  .ferxsport-footer__submit {
+    font-size: calc(24 * var(--rem));
+    padding: calc(16 * var(--rem)) calc(20 * var(--rem));
+  }
+
+  .ferxsport-footer__consent {
+    font-size: calc(18 * var(--rem));
+  }
+
+  .ferxsport-footer__checkbox,
+  .ferxsport-footer__checkbox:hover,
+  .ferxsport-footer__checkbox:focus,
+  .ferxsport-footer__checkbox:checked,
+  .ferxsport-footer__checkbox:checked:hover,
+  .ferxsport-footer__checkbox:checked:focus {
+    height: calc(20 * var(--rem));
+    width: calc(20 * var(--rem));
+  }
+
+  .ferxsport-footer__heading {
+    font-size: calc(22 * var(--rem));
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .ferxsport-footer__link {
+    font-size: calc(28 * var(--rem));
+  }
+
+  .ferxsport-footer__social {
+    gap: calc(14 * var(--rem));
+  }
+
+  .ferxsport-footer__social-link {
+    height: calc(60 * var(--rem));
+    width: calc(60 * var(--rem));
+  }
+
+  .ferxsport-footer__social-link svg {
+    height: calc(30 * var(--rem));
+    width: calc(30 * var(--rem));
   }
 }

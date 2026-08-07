@@ -82,7 +82,12 @@ html[scroll-lock] .page-wrapper {
 
 @media (min-width: 990px) {
   .page-wrapper {
+    /* Flex item default min-height:auto can grow past 100dvh and force a
+       second (document) scrollbar alongside this container's own scroller. */
+    flex: 1 1 auto;
     height: 100dvh;
+    min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
     scrollbar-width: thin;
