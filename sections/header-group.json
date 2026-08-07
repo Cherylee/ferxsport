@@ -49,8 +49,9 @@
           "blocks": {
             "mega_product": {
               "type": "_mega-menu-product",
+              "static": true,
               "settings": {
-                "menu_item_handle": "Electric Dirt Bike",
+                "menu_item_handle": "electric-dirt-bike",
                 "primary_cta_label": "All Electric Dirt Bikes",
                 "primary_cta_link": "",
                 "product_1": "",
@@ -68,6 +69,7 @@
                 "product_3_spec_1_value": "40 MPH",
                 "product_3_spec_2_label": "Battery",
                 "product_3_spec_2_value": "48V 23.4Ah",
+                "featured_image": "shopify://shop_images/Rectangle_346242025.webp",
                 "featured_link": "",
                 "featured_badge": "Best Seller",
                 "featured_title": "EM-5 Pro",
@@ -82,14 +84,18 @@
             },
             "mega_about": {
               "type": "_mega-menu-about",
+              "static": true,
               "settings": {
-                "menu_item_handle": "About",
+                "menu_item_handle": "about",
+                "card_1_image": "shopify://shop_images/Rectangle_346241664_8336649d-9d42-4ec9-9335-254f77d2b827.webp",
                 "card_1_title": "Blog",
                 "card_1_text": "Trail guides, maintenance tips and rider stories from the dirt.",
                 "card_1_link": "",
+                "card_2_image": "shopify://shop_images/Rectangle_346242028_2.webp",
                 "card_2_title": "About Us",
                 "card_2_text": "Why we build electric dirt bikes — and who rides behind the badge.",
                 "card_2_link": "",
+                "card_3_image": "shopify://shop_images/Rectangle_346242028_2.webp",
                 "card_3_title": "Affiliate",
                 "card_3_text": "Share your ride, grow your following and earn on every referral.",
                 "card_3_link": ""
@@ -98,8 +104,10 @@
             },
             "mega_support": {
               "type": "_mega-menu-support",
+              "static": true,
               "settings": {
                 "menu_item_handle": "support",
+                "featured_image": "shopify://shop_images/Rectangle_346241664_11f3b52f-9b8f-4644-bf26-e5f61538968f.webp",
                 "featured_title": "Riding Into A Question?",
                 "featured_text": "Real humans, real fast. Setup, service or spares - we've got your back.",
                 "featured_button_label": "Contact Support",
@@ -129,11 +137,7 @@
               "blocks": {}
             }
           },
-          "block_order": [
-            "mega_product",
-            "mega_about",
-            "mega_support"
-          ]
+          "block_order": []
         }
       },
       "settings": {
